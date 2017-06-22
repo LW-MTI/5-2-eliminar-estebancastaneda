@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>PMD-Planes</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    </head>
+    <body>
+        <div class="container">
+            <h2>Catálogo de Planes Municipales</h2>
+            <ul class="nav nav-tabs">
+                <li class="active"><a data-toggle="tab" href="#nuevoPlan">Nuevo Plan Municipal</a></li>
+                <li><a data-toggle="tab" href="#consultaPlan">Consulta Planes Municipales</a></li>
+            </ul>
+
+            <div class="tab-content">
+                <div id="nuevoPlan" class="tab-pane fade in active">
+                    <br/><br/>
+                    <form method="GET">
+                        <div class="form-group">
+                            <label for="idadmon">Administración Municipal:</label>
+                            <select class="form-control" name="idadmon" id="idadmon">
+                                <option value="0">-</option>
+                                <option value="1">Gobierno Municipal 2014-2017</option>
+                                <option value="2">H. XXXIX Ayuntamiento de Tepic, Nay.</option>
+                                <option value="3">H. XXXVIII Ayuntamiento de Tepic.</option>
+                                <option value="4">H. XXXVII Ayuntamiento de Tepic.</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="claveplan">Clave Plan:</label>
+                            <input class="form-control" type="text" name="claveplan" id="claveplan"/>
+                        </div>
+                        <div class="form-group">
+                            <label for="nombreplan">Nombre Plan:</label>
+                            <input class="form-control" type="text" name="nombreplan" id="nombreplan"/>
+                        </div>
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-success col-sm-offset-4 col-sm-4">
+                                <span class="glyphicon glyphicon-save"></span> Guardar
+                            </button>
+                        </div>
+                    </form>
+                </div>
+                
+                <div id="consultaPlan" class="tab-pane fade">
+                    <br/>
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Admon. Mpal.</th>
+                                    <th>Clave Plan</th>
+                                    <th>Nombre Plan</th>
+                                    <th>Opciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Gobierno Municipal 2014-2017</td>
+                                    <td>PMD-2014-2017</td>
+                                    <td>Plan Municipal de Desarrollo 2014-2017</td>
+                                    <td>
+                                        <div class="btn-toolbar" role="toolbar">
+                                            <div class="btn-group">
+                                                <button type="button" class="btn btn-default btn-sm">
+                                                    <span class="glyphicon glyphicon-edit"></span> Editar
+                                                </button>
+
+                                                <button type="button" class="btn btn-danger btn-sm">
+                                                    <span class="glyphicon glyphicon-remove"></span> Borrar
+                                                </button>
+                                                
+                                                <button type="button" class="btn btn-default btn-sm">
+                                                    <span class="glyphicon glyphicon-eye-open"></span> Ver Categorías
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>H. XXXIX Ayuntamiento de Tepic, Nay.</td>
+                                    <td>PMD-2011-2014</td>
+                                    <td>Plan Municipal de Desarrollo 2011-2014</td>
+                                    <td>
+                                        <div class="btn-toolbar" role="toolbar">
+                                            <div class="btn-group">
+                                                <button type="button" class="btn btn-default btn-sm">
+                                                    <span class="glyphicon glyphicon-edit"></span> Editar
+                                                </button>
+
+                                                <button type="button" class="btn btn-danger btn-sm">
+                                                    <span class="glyphicon glyphicon-remove"></span> Borrar
+                                                </button>
+                                                
+                                                <button type="button" class="btn btn-default btn-sm">
+                                                    <span class="glyphicon glyphicon-eye-open"></span> Ver Categorías
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>H. XXXVIII Ayuntamiento de Tepic, Nay.</td>
+                                    <td>PMD-2008-2011</td>
+                                    <td>Plan Municipal de Desarrollo 2008-2011</td>
+                                    <td>
+                                        <div class="btn-toolbar" role="toolbar">
+                                            <div class="btn-group">
+                                                <button type="button" class="btn btn-default btn-sm">
+                                                    <span class="glyphicon glyphicon-edit"></span> Editar
+                                                </button>
+
+                                                <button type="button" class="btn btn-danger btn-sm">
+                                                    <span class="glyphicon glyphicon-remove"></span> Borrar
+                                                </button>
+                                                
+                                                <button type="button" class="btn btn-default btn-sm">
+                                                    <span class="glyphicon glyphicon-eye-open"></span> Ver Categorías
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>H. XXXVII Ayuntamiento de Tepic, Nay.</td>
+                                    <td>PMD-2005-2008</td>
+                                    <td>Plan Municipal de Desarrollo 2005-2008</td>
+                                    <td>
+                                        <div class="btn-toolbar" role="toolbar">
+                                            <div class="btn-group">
+                                                <button type="button" class="btn btn-default btn-sm">
+                                                    <span class="glyphicon glyphicon-edit"></span> Editar
+                                                </button>
+
+                                                <button type="button" class="btn btn-danger btn-sm">
+                                                    <span class="glyphicon glyphicon-remove"></span> Borrar
+                                                </button>
+                                                
+                                                <button type="button" class="btn btn-default btn-sm">
+                                                    <span class="glyphicon glyphicon-eye-open"></span> Ver Categorías
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

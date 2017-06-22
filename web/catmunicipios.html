@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>PMD-Municipios</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    </head>
+    <body>
+        <div class="container">
+            <h2>Catálogo de Municipios</h2>
+            <ul class="nav nav-tabs">
+                <li class="active"><a data-toggle="tab" href="#nuevoMun">Nuevo Municipio</a></li>
+                <li><a data-toggle="tab" href="#consultaMun">Consulta Municipios</a></li>
+            </ul>
+
+            <div class="tab-content">
+                <div id="nuevoMun" class="tab-pane fade in active">
+                    <br/><br/>
+                    <form method="GET">
+                        <div class="form-group">
+                            <label for="ident">Entidad:</label>
+                            <select class="form-control" name="ident" id="ident">
+                                <option value="0">-</option>
+                                <option value="1">Aguascalientes</option>
+                                <option value="2">Baja California</option>
+                                <option value="3">Baja California Sur</option>
+                                <option value="4">Campeche</option>
+                                <option value="5">Coahuila</option>
+                                <option value="6">Colima</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="clavemun">Clave Municipio:</label>
+                            <input class="form-control" type="text" name="clavemun" id="clavemun"/>
+                        </div>
+                        <div class="form-group">
+                            <label for="nombremun">Nombre Municipio:</label>
+                            <input class="form-control" type="text" name="nombremun" id="nombremun"/>
+                        </div>
+                        <div class="form-group">
+                            <label for="abrevmun">Abreviación Municipio:</label>
+                            <input class="form-control" type="text" name="abrevmun" id="abrevmun"/>
+                        </div>
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-success col-sm-offset-4 col-sm-4">
+                                <span class="glyphicon glyphicon-save"></span> Guardar
+                            </button>
+                        </div>
+                    </form>
+                </div>
+                
+                <div id="consultaMun" class="tab-pane fade">
+                    <br/>
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Clave Ent.</th>
+                                    <th>Abrev. Ent</th>
+                                    <th>Clave Mun.</th>
+                                    <th>Nombre Mun.</th>
+                                    <th>Abrev. Mun.</th>
+                                    <th>Opciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>01</td>
+                                    <td>Ags.</td>
+                                    <td>001</td>
+                                    <td>Aguascalientes</td>
+                                    <td>Ags.</td>
+                                    <td>
+                                        <div class="btn-toolbar" role="toolbar">
+                                            <div class="btn-group">
+                                                <button type="button" class="btn btn-default btn-sm">
+                                                    <span class="glyphicon glyphicon-edit"></span> Editar
+                                                </button>
+
+                                                <button type="button" class="btn btn-danger btn-sm">
+                                                    <span class="glyphicon glyphicon-remove"></span> Borrar
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>01</td>
+                                    <td>Ags.</td>
+                                    <td>002</td>
+                                    <td>Asientos</td>
+                                    <td></td>
+                                    <td>
+                                        <div class="btn-toolbar" role="toolbar">
+                                            <div class="btn-group">
+                                                <button type="button" class="btn btn-default btn-sm">
+                                                    <span class="glyphicon glyphicon-edit"></span> Editar
+                                                </button>
+
+                                                <button type="button" class="btn btn-danger btn-sm">
+                                                    <span class="glyphicon glyphicon-remove"></span> Borrar
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>01</td>
+                                    <td>Ags.</td>
+                                    <td>003</td>
+                                    <td>Calvillo</td>
+                                    <td>Calv.</td>
+                                    <td>
+                                        <div class="btn-toolbar" role="toolbar">
+                                            <div class="btn-group">
+                                                <button type="button" class="btn btn-default btn-sm">
+                                                    <span class="glyphicon glyphicon-edit"></span> Editar
+                                                </button>
+
+                                                <button type="button" class="btn btn-danger btn-sm">
+                                                    <span class="glyphicon glyphicon-remove"></span> Borrar
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>01</td>
+                                    <td>Ags.</td>
+                                    <td>004</td>
+                                    <td>Cosío</td>
+                                    <td>Cos.</td>
+                                    <td>
+                                        <div class="btn-toolbar" role="toolbar">
+                                            <div class="btn-group">
+                                                <button type="button" class="btn btn-default btn-sm">
+                                                    <span class="glyphicon glyphicon-edit"></span> Editar
+                                                </button>
+
+                                                <button type="button" class="btn btn-danger btn-sm">
+                                                    <span class="glyphicon glyphicon-remove"></span> Borrar
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>01</td>
+                                    <td>Ags.</td>
+                                    <td>005</td>
+                                    <td>Jesús María</td>
+                                    <td>JM</td>
+                                    <td>
+                                        <div class="btn-toolbar" role="toolbar">
+                                            <div class="btn-group">
+                                                <button type="button" class="btn btn-default btn-sm">
+                                                    <span class="glyphicon glyphicon-edit"></span> Editar
+                                                </button>
+
+                                                <button type="button" class="btn btn-danger btn-sm">
+                                                    <span class="glyphicon glyphicon-remove"></span> Borrar
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>PMD-Objetivos</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    </head>
+    <body>
+        <div class="container">
+            <h2>Catálogo de Objetivos</h2>
+           <hr/>
+            <ul class="nav nav-tabs">
+                <li class="active"><a data-toggle="tab" href="#nuevoObj">Nuevo Objetivo</a></li>
+                <li><a data-toggle="tab" href="#consultaObj">Consulta Objetivos</a></li>
+            </ul>
+
+            <div class="tab-content">
+                <div id="nuevoObj" class="tab-pane fade in active">
+                    <br/><br/>
+                    <form method="GET">
+                        <div class="form-group">
+                            <label for="idcat">Categoría:</label>
+                            <select class="form-control" name="idcat" id="idcat">
+                                <option value="0">-</option>
+                                <option value="1">EJ01</option>
+                                <option value="2">EJ01 / PR01</option>
+                                <option value="3">EJ01/ PR02</option>
+                                <option value="4">EJ02</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="claveobj">Clave Objetivo:</label>
+                            <input class="form-control" type="text" name="claveobj" id="claveobj"/>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="nombreobj">Nombre Objetivo:</label>
+                            <input class="form-control" type="text" name="nombreobj" id="nombreobj"/>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="descripobj">Descripción Objetivo:</label>
+                            <input class="form-control" type="text" name="descripobj" id="descripobj"/>
+                        </div>
+                        
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-success col-sm-offset-4 col-sm-4">
+                                <span class="glyphicon glyphicon-save"></span> Guardar
+                            </button>
+                        </div>
+                        
+                    </form>
+                </div>
+                
+                <div id="consultaObj" class="tab-pane fade">
+                    <br/>
+                    <div class="table-responsive">
+                        <table class="table table-hover table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Categoría Objetivo</th>
+                                    <th>Clave Objetivo</th>
+                                    <th>Nombre Objetivo</th>
+                                    <th>Descrip. Objetivo</th>
+                                    <th>Opciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>E1</td>
+                                    <td>E1.O1</td>
+                                    <td>Objetivo E1.O1</td>
+                                    <td>Mejorar el bienestar de la población mediante servicios públicos de calidad e infraestructura 
+                                        social, con énfasis en la inclusión social de los grupos vulnerables e identidad territorial.</td>
+                                    <td>
+                                        <div class="btn-toolbar" role="toolbar">
+                                            <div class="btn-group">
+                                                <button type="button" class="btn btn-default btn-sm">
+                                                    <span class="glyphicon glyphicon-edit"></span> Editar
+                                                </button>
+
+                                                <button type="button" class="btn btn-danger btn-sm">
+                                                    <span class="glyphicon glyphicon-remove"></span> Borrar
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                
+                                <tr>
+                                    <td>E1.P1</td>
+                                    <td>E1.P1.O1</td>
+                                    <td>Objetivo E1.P1.O1</td>
+                                    <td>Dotar a la población de servicios públicos con amplia cobertura y elevados niveles de calidad,
+                                        para disminiuir los desequilibrios sociales entre las diferentes zonas de la ciudad y el municipio.</td>
+                                    <td>
+                                        <div class="btn-toolbar" role="toolbar">
+                                            <div class="btn-group">
+                                                <button type="button" class="btn btn-default btn-sm">
+                                                    <span class="glyphicon glyphicon-edit"></span> Editar
+                                                </button>
+
+                                                <button type="button" class="btn btn-danger btn-sm">
+                                                    <span class="glyphicon glyphicon-remove"></span> Borrar
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                
+                                <tr>
+                                <tr>
+                                    <td>E2</td>
+                                    <td>E2.O1</td>
+                                    <td>Objetivo E2.O1</td>
+                                    <td>Promover una política de seguridad pública para salvaguardar la integridad de los
+                                        ciudadanos en forma efectiva y con apego a la legalidad.</td>
+                                    <td>
+                                        <div class="btn-toolbar" role="toolbar">
+                                            <div class="btn-group">
+                                                <button type="button" class="btn btn-default btn-sm">
+                                                    <span class="glyphicon glyphicon-edit"></span> Editar
+                                                </button>
+
+                                                <button type="button" class="btn btn-danger btn-sm">
+                                                    <span class="glyphicon glyphicon-remove"></span> Borrar
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

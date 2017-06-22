@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>PMD-Estrategias</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    </head>
+    <body>
+        <div class="container">
+            <h2>Catálogo de Estrategias</h2>
+           <hr/>
+            <ul class="nav nav-tabs">
+                <li class="active"><a data-toggle="tab" href="#nuevaEst">Nueva Estrategia</a></li>
+                <li><a data-toggle="tab" href="#consultaEst">Consulta Estrategias</a></li>
+            </ul>
+
+            <div class="tab-content">
+                <div id="nuevaEst" class="tab-pane fade in active">
+                    <br/><br/>
+                    <form method="GET">
+                        <div class="form-group">
+                            <label for="idobj">Objetivo:</label>
+                            <select class="form-control" name="idobj" id="idobj">
+                                <option value="0">-</option>
+                                <option value="1">E1.O1</option>
+                                <option value="2">E1.P1.O1</option>
+                                <option value="3">E1.P2.O1</option>
+                                <option value="4">E2.O1</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="claveest">Clave Estrategia:</label>
+                            <input class="form-control" type="text" name="claveest" id="claveest"/>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="nombreest">Nombre Estrategia:</label>
+                            <input class="form-control" type="text" name="nombreest" id="nombreest"/>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="descripest">Descripción Estrategia:</label>
+                            <input class="form-control" type="text" name="descripest" id="descripest"/>
+                        </div>
+                        
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-success col-sm-offset-4 col-sm-4">
+                                <span class="glyphicon glyphicon-save"></span> Guardar
+                            </button>
+                        </div>
+                        
+                    </form>
+                </div>
+                
+                <div id="consultaEst" class="tab-pane fade">
+                    <br/>
+                    <div class="table-responsive">
+                        <table class="table table-hover table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Objetivo</th>
+                                    <th>Clave Estrategia</th>
+                                    <th>Nombre Estrategia</th>
+                                    <th>Descrip. Estrategia</th>
+                                    <th>Opciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>E1.O1</td>
+                                    <td>E1.O1.ES1</td>
+                                    <td>Estrategia E1.O1.ES1</td>
+                                    <td>Destinar la mayor cantidad de recursos físicos, humanos y financieros en la
+                                        aplicación de las acciones que permitan disminuir el rezago social y los índices de
+                                        marginación y promuevan la inclusión de los grupos vulnerables del municipio de
+                                        Tepic..</td>
+                                    <td>
+                                        <div class="btn-toolbar" role="toolbar">
+                                            <div class="btn-group">
+                                                <button type="button" class="btn btn-default btn-sm">
+                                                    <span class="glyphicon glyphicon-edit"></span> Editar
+                                                </button>
+
+                                                <button type="button" class="btn btn-danger btn-sm">
+                                                    <span class="glyphicon glyphicon-remove"></span> Borrar
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                
+                                <tr>
+                                    <td>E1.P1.O1</td>
+                                    <td>E1.P1.O1.ES1</td>
+                                    <td>Estrategia E1.P1.O1.ES1</td>
+                                    <td>Instrumentar políticas públicas amplias para asegurar la dotación de los
+                                        servicios básicos dirigidos a la población del municipio, incluyendo la 
+                                        rehabilitación de las redes de agua potable y alcantarillado, recolección 
+                                        de basura, así como el sistema de alumbrado público, considerando la 
+                                        ampliación de los mismos sistemas.</td>
+                                    <td>
+                                        <div class="btn-toolbar" role="toolbar">
+                                            <div class="btn-group">
+                                                <button type="button" class="btn btn-default btn-sm">
+                                                    <span class="glyphicon glyphicon-edit"></span> Editar
+                                                </button>
+
+                                                <button type="button" class="btn btn-danger btn-sm">
+                                                    <span class="glyphicon glyphicon-remove"></span> Borrar
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                
+                                <tr>
+                                <tr>
+                                    <td>E2.O1</td>
+                                    <td>E2.O1.ES1</td>
+                                    <td>Objetivo E2.O1.ES1</td>
+                                    <td>Promover una política de seguridad pública para salvaguardar la integridad de los
+                                        ciudadanos en forma efectiva y con apego a la legalidad.</td>
+                                    <td>
+                                        <div class="btn-toolbar" role="toolbar">
+                                            <div class="btn-group">
+                                                <button type="button" class="btn btn-default btn-sm">
+                                                    <span class="glyphicon glyphicon-edit"></span> Editar
+                                                </button>
+
+                                                <button type="button" class="btn btn-danger btn-sm">
+                                                    <span class="glyphicon glyphicon-remove"></span> Borrar
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

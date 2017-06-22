@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>PMD-Administración</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    </head>
+    <body>
+        <div class="container">
+            <h2>Administraciones Municipales</h2>
+            <ul class="nav nav-tabs">
+                <li class="active"><a data-toggle="tab" href="#nuevaAdmon">Nueva Administración</a></li>
+                <li><a data-toggle="tab" href="#consultaAdmon">Consulta Administraciones</a></li>
+            </ul>
+
+            <div class="tab-content">
+                <div id="nuevaAdmon" class="tab-pane fade in active">
+                    <br/><br/>
+                    <form method="GET">
+                        <div class="form-group">
+                            
+                            <label for="idmun">Municipio:</label>
+                            <select class="form-control" name="idmun" id="idmun">
+                                <option value="0">-</option>
+                                <option value="1">18 Nay. - 001 Acaponeta</option>
+                                <option value="2">18 Nay. - 002 Ahuacatlán</option>
+                                <option value="3">18 Nay. - 003 Amatlán de Cañas</option>
+                                <option value="4">18 Nay. - 004 Compostela</option>
+                                <option value="5">18 Nay. - 005 Huajicori</option>
+                                <option value="6">18 Nay. - 006 Ixtlán del Río</option>
+                                <option value="7">18 Nay. - 007 Jala</option>
+                                <option value="8">18 Nay. - 008 Xalisco</option>
+                                <option value="9">18 Nay. - 009 Del Nayar</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="claveadmon">Clave Administración:</label>
+                            <input class="form-control" type="text" name="claveadmon" id="claveadmon"/>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="nombreadmon">Nombre Administración:</label>
+                            <input class="form-control" type="text" name="nombreadmon" id="nombreadmon"/>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="fechaini">Fecha Inicio Administración:</label>
+                            <input class="form-control" type="date" name="fechaini" id="fechaini"/>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="fechafin">Fecha Fin de Administración:</label>
+                            <input class="form-control" type="date" name="fechafin" id="fechafin"/>
+                        </div>
+                        
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-success col-sm-offset-4 col-sm-4">
+                                <span class="glyphicon glyphicon-save"></span> Guardar
+                            </button>
+                        </div>
+                    </form>
+                </div>
+                
+                <div id="consultaAdmon" class="tab-pane fade">
+                    <br/>
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Clave Ent.</th>
+                                    <th>Abrev. Ent</th>
+                                    <th>Clave Mun.</th>
+                                    <th>Nombre Mun.</th>
+                                    <th>Abrev. Mun.</th>
+                                    <th>Opciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>01</td>
+                                    <td>Ags.</td>
+                                    <td>001</td>
+                                    <td>Aguascalientes</td>
+                                    <td>Ags.</td>
+                                    <td>
+                                        <div class="btn-toolbar" role="toolbar">
+                                            <div class="btn-group">
+                                                <button type="button" class="btn btn-default btn-sm">
+                                                    <span class="glyphicon glyphicon-edit"></span> Editar
+                                                </button>
+
+                                                <button type="button" class="btn btn-danger btn-sm">
+                                                    <span class="glyphicon glyphicon-remove"></span> Borrar
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>01</td>
+                                    <td>Ags.</td>
+                                    <td>002</td>
+                                    <td>Asientos</td>
+                                    <td></td>
+                                    <td>
+                                        <div class="btn-toolbar" role="toolbar">
+                                            <div class="btn-group">
+                                                <button type="button" class="btn btn-default btn-sm">
+                                                    <span class="glyphicon glyphicon-edit"></span> Editar
+                                                </button>
+
+                                                <button type="button" class="btn btn-danger btn-sm">
+                                                    <span class="glyphicon glyphicon-remove"></span> Borrar
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>01</td>
+                                    <td>Ags.</td>
+                                    <td>003</td>
+                                    <td>Calvillo</td>
+                                    <td>Calv.</td>
+                                    <td>
+                                        <div class="btn-toolbar" role="toolbar">
+                                            <div class="btn-group">
+                                                <button type="button" class="btn btn-default btn-sm">
+                                                    <span class="glyphicon glyphicon-edit"></span> Editar
+                                                </button>
+
+                                                <button type="button" class="btn btn-danger btn-sm">
+                                                    <span class="glyphicon glyphicon-remove"></span> Borrar
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>01</td>
+                                    <td>Ags.</td>
+                                    <td>004</td>
+                                    <td>Cosío</td>
+                                    <td>Cos.</td>
+                                    <td>
+                                        <div class="btn-toolbar" role="toolbar">
+                                            <div class="btn-group">
+                                                <button type="button" class="btn btn-default btn-sm">
+                                                    <span class="glyphicon glyphicon-edit"></span> Editar
+                                                </button>
+
+                                                <button type="button" class="btn btn-danger btn-sm">
+                                                    <span class="glyphicon glyphicon-remove"></span> Borrar
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>01</td>
+                                    <td>Ags.</td>
+                                    <td>005</td>
+                                    <td>Jesús María</td>
+                                    <td>JM</td>
+                                    <td>
+                                        <div class="btn-toolbar" role="toolbar">
+                                            <div class="btn-group">
+                                                <button type="button" class="btn btn-default btn-sm">
+                                                    <span class="glyphicon glyphicon-edit"></span> Editar
+                                                </button>
+
+                                                <button type="button" class="btn btn-danger btn-sm">
+                                                    <span class="glyphicon glyphicon-remove"></span> Borrar
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

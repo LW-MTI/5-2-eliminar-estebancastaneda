@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>PMD-Categorías Plan</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    </head>
+    <body>
+        <div class="container">
+            <h2>Catálogo de Categorías</h2>
+            <h3 class="text-info">- Plan Municipal de Desarrollo 2014-2017</h3>
+            <hr/>
+            <ul class="nav nav-tabs">
+                <li class="active"><a data-toggle="tab" href="#nuevaCat">Nueva Categoría</a></li>
+                <li><a data-toggle="tab" href="#consultaCat">Consulta Categorías</a></li>
+            </ul>
+
+            <div class="tab-content">
+                <div id="nuevaCat" class="tab-pane fade in active">
+                    <br/><br/>
+                    <form method="GET">
+                        <input type="hidden" id="idplan" name="idplan" value="1"/>
+                        
+                        <div class="form-group">
+                            <label for="idcatpadre">Categoría Padre:</label>
+                            <select class="form-control" name="idcatpadre" id="idcatpadre">
+                                <option value="">-</option>
+                                <option value="0">Ninguna</option>
+                                <option value="1">Eje 1</option>
+                                <option value="2">Eje 1/ Programa 1</option>
+                                <option value="3">Eje 1/ Programa 1/Línea de Acción 1</option>
+                                <option value="4">Eje 1/ Programa 2</option>
+                                <option value="5">Eje 2</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="clavecat">Clave Categoría:</label>
+                            <input class="form-control" type="text" name="clavecat" id="clavecat"/>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="nombrecat">Nombre Categoría:</label>
+                            <input class="form-control" type="text" name="nombrecat" id="nombrecat"/>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="descripcat">Descripción Categoría:</label>
+                            <input class="form-control" type="text" name="descripcat" id="descripcat"/>
+                        </div>
+                        
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-success col-sm-offset-4 col-sm-4">
+                                <span class="glyphicon glyphicon-save"></span> Guardar
+                            </button>
+                        </div>
+                        
+                    </form>
+                </div>
+                
+                <div id="consultaCat" class="tab-pane fade">
+                    <br/>
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Cat.Padre</th>
+                                    <th>Clave Cat.</th>
+                                    <th>Nombre Cat.</th>
+                                    <th>Descrip. Cat.</th>
+                                    <th>Opciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Ninguna</td>
+                                    <td>EJ1</td>
+                                    <td>Eje 1</td>
+                                    <td>El cambio en el bienestar social</td>
+                                    <td>
+                                        <div class="btn-toolbar" role="toolbar">
+                                            <div class="btn-group">
+                                                <button type="button" class="btn btn-default btn-sm">
+                                                    <span class="glyphicon glyphicon-edit"></span> Editar
+                                                </button>
+
+                                                <button type="button" class="btn btn-danger btn-sm">
+                                                    <span class="glyphicon glyphicon-remove"></span> Borrar
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                
+                                <tr>
+                                    <td>EJ1</td>
+                                    <td>PR1.1</td>
+                                    <td>Programa 1.1</td>
+                                    <td>Servicios públicos dignos</td>
+                                    <td>
+                                        <div class="btn-toolbar" role="toolbar">
+                                            <div class="btn-group">
+                                                <button type="button" class="btn btn-default btn-sm">
+                                                    <span class="glyphicon glyphicon-edit"></span> Editar
+                                                </button>
+
+                                                <button type="button" class="btn btn-danger btn-sm">
+                                                    <span class="glyphicon glyphicon-remove"></span> Borrar
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                
+                                <tr>
+                                    <td>EJ1 / PR1.1</td>
+                                    <td>LA1.1.1</td>
+                                    <td>Línea de Acción 1.1.1</td>
+                                    <td>Realizar acciones de rehabilitación de los servicios públicos básicos para su atención a emergencias, así como para avanzar en la sustitución de las redes en prevención de su colapso.</td>
+                                    <td>
+                                        <div class="btn-toolbar" role="toolbar">
+                                            <div class="btn-group">
+                                                <button type="button" class="btn btn-default btn-sm">
+                                                    <span class="glyphicon glyphicon-edit"></span> Editar
+                                                </button>
+
+                                                <button type="button" class="btn btn-danger btn-sm">
+                                                    <span class="glyphicon glyphicon-remove"></span> Borrar
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>EJ1</td>
+                                    <td>PR1.2</td>
+                                    <td>Programa 1.2</td>
+                                    <td>Infraestructura social para el bienestar</td>
+                                    <td>
+                                        <div class="btn-toolbar" role="toolbar">
+                                            <div class="btn-group">
+                                                <button type="button" class="btn btn-default btn-sm">
+                                                    <span class="glyphicon glyphicon-edit"></span> Editar
+                                                </button>
+
+                                                <button type="button" class="btn btn-danger btn-sm">
+                                                    <span class="glyphicon glyphicon-remove"></span> Borrar
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                
+                                <tr>
+                                    <td>Ninguna</td>
+                                    <td>EJ2</td>
+                                    <td>Eje 2</td>
+                                    <td>Municipio con seguridad y confianza</td>
+                                    <td>
+                                        <div class="btn-toolbar" role="toolbar">
+                                            <div class="btn-group">
+                                                <button type="button" class="btn btn-default btn-sm">
+                                                    <span class="glyphicon glyphicon-edit"></span> Editar
+                                                </button>
+
+                                                <button type="button" class="btn btn-danger btn-sm">
+                                                    <span class="glyphicon glyphicon-remove"></span> Borrar
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

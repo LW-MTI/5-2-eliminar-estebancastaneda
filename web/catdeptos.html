@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>PMD-Departamentos</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    </head>
+    <body>
+        <div class="container">
+            <h2>Catálogo de Departamentos</h2>
+            <ul class="nav nav-tabs">
+                <li class="active"><a data-toggle="tab" href="#nuevoDepto">Nuevo Departamento</a></li>
+                <li><a data-toggle="tab" href="#consultaDepto">Consulta Departamentos</a></li>
+            </ul>
+
+            <div class="tab-content">
+                <div id="nuevoDepto" class="tab-pane fade in active">
+                    <br/><br/>
+                    <form method="GET">
+                        <div class="form-group">
+                            <label for="iddepe">Dependencia:</label>
+                            <select class="form-control" name="iddepe" id="iddepe">
+                                <option value="0">-</option>
+                                <option value="1">Instituto Municipal de Planeación</option>
+                                <option value="2">Sistema de Agua Potable y Alcantarillado</option>
+                                <option value="3">Desarrollo Integral de la Familia</option>
+                                <option value="4">Alumbrado Público</option>
+                                <option value="5">Parques y Jardínes</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="clavedepto">Clave Departamento:</label>
+                            <input class="form-control" type="text" name="clavedepto" id="clavedepto"/>
+                        </div>
+                        <div class="form-group">
+                            <label for="nombredepto">Nombre Departamento:</label>
+                            <input class="form-control" type="text" name="nombredepto" id="nombredepto"/>
+                        </div>
+                        <div class="form-group">
+                            <label for="abrevdepto">Abreviación Departamento:</label>
+                            <input class="form-control" type="text" name="abrevdepto" id="abrevdepto"/>
+                        </div>
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-success col-sm-offset-4 col-sm-4">
+                                <span class="glyphicon glyphicon-save"></span> Guardar
+                            </button>
+                        </div>
+                    </form>
+                </div>
+                
+                <div id="consultaDepto" class="tab-pane fade">
+                    <br/>
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Clave Depend.</th>
+                                    <th>Abrev. Depend.</th>
+                                    <th>Clave Depto.</th>
+                                    <th>Nombre Depto.</th>
+                                    <th>Abrev. Depto.</th>
+                                    <th>Opciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>D01</td>
+                                    <td>IMPLAN</td>
+                                    <td>001</td>
+                                    <td>Departamento 01</td>
+                                    <td>Plan.</td>
+                                    <td>
+                                        <div class="btn-toolbar" role="toolbar">
+                                            <div class="btn-group">
+                                                <button type="button" class="btn btn-default btn-sm">
+                                                    <span class="glyphicon glyphicon-edit"></span> Editar
+                                                </button>
+
+                                                <button type="button" class="btn btn-danger btn-sm">
+                                                    <span class="glyphicon glyphicon-remove"></span> Borrar
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>D01</td>
+                                    <td>IMPLAN</td>
+                                    <td>002</td>
+                                    <td>Departamento 02</td>
+                                    <td>Depto02</td>
+                                    <td>
+                                        <div class="btn-toolbar" role="toolbar">
+                                            <div class="btn-group">
+                                                <button type="button" class="btn btn-default btn-sm">
+                                                    <span class="glyphicon glyphicon-edit"></span> Editar
+                                                </button>
+
+                                                <button type="button" class="btn btn-danger btn-sm">
+                                                    <span class="glyphicon glyphicon-remove"></span> Borrar
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>D02</td>
+                                    <td>SIAPA</td>
+                                    <td>001</td>
+                                    <td>Recursos Financieros</td>
+                                    <td>RF</td>
+                                    <td>
+                                        <div class="btn-toolbar" role="toolbar">
+                                            <div class="btn-group">
+                                                <button type="button" class="btn btn-default btn-sm">
+                                                    <span class="glyphicon glyphicon-edit"></span> Editar
+                                                </button>
+
+                                                <button type="button" class="btn btn-danger btn-sm">
+                                                    <span class="glyphicon glyphicon-remove"></span> Borrar
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>PMD-Usuarios</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    </head>
+    <body>
+        <div class="container">
+            <h2>Catálogo de Usuarios</h2>
+           <hr/>
+            <ul class="nav nav-tabs">
+                <li class="active"><a data-toggle="tab" href="#nuevoUsu">Nuevo Usuario</a></li>
+                <li><a data-toggle="tab" href="#consultaUsu">Consulta Usuarios</a></li>
+            </ul>
+
+            <div class="tab-content">
+                <div id="nuevoUsu" class="tab-pane fade in active">
+                    <br/><br/>
+                    <form method="GET">
+                        <div class="form-group">
+                            <label for="idemp">Empleado:</label>
+                            <select class="form-control" name="idemp" id="idemp">
+                                <option>-</option>
+                                <option>Castillo Sergio</option>
+                                <option>Arjona Israel</option>
+                                <option>Montes Jorge</option>
+                                <option>Parra Ma. Elena</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="usuario">Nombre Usuario:</label>
+                            <input class="form-control" type="text" name="usuario" id="usuario"/>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="contrasena">Contraseña:</label>
+                            <input class="form-control" type="password" name="contrasena" id="contrasena"/>
+                        </div>
+                        
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-success col-sm-offset-4 col-sm-4">
+                                <span class="glyphicon glyphicon-save"></span> Guardar
+                            </button>
+                        </div>
+                        
+                    </form>
+                </div>
+                
+                <div id="consultaUsu" class="tab-pane fade">
+                    <br/>
+                    <div class="table-responsive">
+                        <table class="table table-hover table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Empleado</th>
+                                    <th>Nombre Usuario</th>
+                                    <th>Opciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Castañeda Esteban</td>
+                                    <td>ecastaneda</td>
+                                    <td>
+                                        <div class="btn-toolbar" role="toolbar">
+                                            <div class="btn-group">
+                                                <button type="button" class="btn btn-default btn-sm">
+                                                    <span class="glyphicon glyphicon-edit"></span> Editar
+                                                </button>
+
+                                                <button type="button" class="btn btn-danger btn-sm">
+                                                    <span class="glyphicon glyphicon-remove"></span> Borrar
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                
+                                <tr>
+                                    <td>Gutiérrez Juan Pedro</td>
+                                    <td>jgutierrez</td>
+                                    <td>
+                                        <div class="btn-toolbar" role="toolbar">
+                                            <div class="btn-group">
+                                                <button type="button" class="btn btn-default btn-sm">
+                                                    <span class="glyphicon glyphicon-edit"></span> Editar
+                                                </button>
+
+                                                <button type="button" class="btn btn-danger btn-sm">
+                                                    <span class="glyphicon glyphicon-remove"></span> Borrar
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                
+                                <tr>
+                                <tr>
+                                    <td>Sánchez Berenice</td>
+                                    <td>bsanchez</td>
+                                    <td>
+                                        <div class="btn-toolbar" role="toolbar">
+                                            <div class="btn-group">
+                                                <button type="button" class="btn btn-default btn-sm">
+                                                    <span class="glyphicon glyphicon-edit"></span> Editar
+                                                </button>
+
+                                                <button type="button" class="btn btn-danger btn-sm">
+                                                    <span class="glyphicon glyphicon-remove"></span> Borrar
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
