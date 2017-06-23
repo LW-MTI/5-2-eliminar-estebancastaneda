@@ -19,7 +19,7 @@ import mx.edu.ittepic.pmdapp.ejbs.EjbPmd;
  *
  * @author Esteban
  */
-@WebServlet(name = "ConsultaEntidades", urlPatterns = {"/ConsultaEntidades"})
+@WebServlet(name = "ConsultarEntidades", urlPatterns = {"/ConsultarEntidades"})
 public class ConsultarEntidades extends HttpServlet {
     @EJB
     private EjbPmd ejb;
@@ -41,10 +41,10 @@ public class ConsultarEntidades extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet ConsultaEntidades</title>");            
+            out.println("<title>Servlet ConsultarEntidades</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet ConsultaEntidades at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet ConsultarEntidades at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -62,11 +62,10 @@ public class ConsultarEntidades extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
         response.setContentType("application/json; charset=UTF-8");
         response.setHeader("Cache-Control", "no-store");
-        
         PrintWriter p = response.getWriter();
+        
         p.write(ejb.consultarEntidades());
     }
 

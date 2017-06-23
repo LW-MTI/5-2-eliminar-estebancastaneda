@@ -345,17 +345,283 @@ public class EjbPmd {
         }
     }
     
-    public String consultarEntidades() {
+    public String consultarEntidades(){
         GsonBuilder builder = new GsonBuilder();
         Gson gson = builder.create();
-        List<Entidad> listaEntidades
-                = em.createNamedQuery("Entidad.findAll").getResultList();
-
-        for (int i = 0; i < listaEntidades.size(); i++) {
+        List<Entidad> listaEntidades = em.createNamedQuery("Entidad.findAll").getResultList();
+        
+        for(int i=0; i<listaEntidades.size(); i++){
             listaEntidades.get(i).setMunicipioList(null);
         }
-
+        
         return gson.toJson(listaEntidades);
     }
-
+    
+    public String consultarMunicipios(){
+        GsonBuilder builder = new GsonBuilder();
+        Gson gson = builder.create();
+        List<Municipio> listaMunicipios = em.createNamedQuery("Municipio.findAll").getResultList();
+        
+        for(int i=0; i<listaMunicipios.size(); i++){
+            listaMunicipios.get(i).setAdministracionList(null);
+            listaMunicipios.get(i).getIdent().setMunicipioList(null);
+        }
+        return gson.toJson(listaMunicipios);
+    }
+    
+    public String consultarAdministraciones(){
+        GsonBuilder builder = new GsonBuilder();
+        Gson gson = builder.create();
+        List<Administracion> listaAdministraciones = em.createNamedQuery("Administracion.findAll").getResultList();
+        
+        for(int i=0; i<listaAdministraciones.size(); i++){
+            listaAdministraciones.get(i).setAdmondepeList(null);
+            listaAdministraciones.get(i).setPlanList(null);
+            listaAdministraciones.get(i).getIdmun().setAdministracionList(null);
+            listaAdministraciones.get(i).getIdmun().getIdent().setMunicipioList(null);
+        }
+        return gson.toJson(listaAdministraciones);
+    }
+    
+    public String consultarDependencias(){
+        GsonBuilder builder = new GsonBuilder();
+        Gson gson = builder.create();
+        List<Dependencia> listaDepe = em.createNamedQuery("Dependencia.findAll").getResultList();
+        
+        for(int i=0; i<listaDepe.size(); i++){
+            listaDepe.get(i).setActividadList(null);
+            listaDepe.get(i).setAdmondepeList(null);
+            listaDepe.get(i).setDepartamentoList(null);
+            listaDepe.get(i).setParticipacionList(null);
+        }
+        return gson.toJson(listaDepe);
+    }
+    
+    public String consultarAdmondepe(){
+        GsonBuilder builder = new GsonBuilder();
+        Gson gson = builder.create();
+        List<Admondepe> listaAdmondepe = em.createNamedQuery("Admondepe.findAll").getResultList();
+        
+        for(int i=0; i<listaAdmondepe.size(); i++){
+            listaAdmondepe.get(i).getIdadmon().setAdmondepeList(null);
+            listaAdmondepe.get(i).getIdadmon().setPlanList(null);
+            listaAdmondepe.get(i).getIdadmon().getIdmun().setAdministracionList(null);
+            listaAdmondepe.get(i).getIdadmon().getIdmun().getIdent().setMunicipioList(null);
+            
+            listaAdmondepe.get(i).getIddepe().setActividadList(null);
+            listaAdmondepe.get(i).getIddepe().setAdmondepeList(null);
+            listaAdmondepe.get(i).getIddepe().setDepartamentoList(null);
+            listaAdmondepe.get(i).getIddepe().setParticipacionList(null);
+        }
+        return gson.toJson(listaAdmondepe);
+    }
+    
+    public String consultarDepartamentos(){
+        GsonBuilder builder = new GsonBuilder();
+        Gson gson = builder.create();
+        List<Departamento> listaDeptos = em.createNamedQuery("Departamento.findAll").getResultList();
+        
+        for(int i=0; i<listaDeptos.size(); i++){
+            listaDeptos.get(i).setEmpleadoList(null);
+            
+            listaDeptos.get(i).getIddepe().setActividadList(null);
+            listaDeptos.get(i).getIddepe().setAdmondepeList(null);
+            listaDeptos.get(i).getIddepe().setDepartamentoList(null);
+            listaDeptos.get(i).getIddepe().setParticipacionList(null);
+        }
+        return gson.toJson(listaDeptos);
+    }
+    
+    public String consultarEmpleados(){
+        GsonBuilder builder = new GsonBuilder();
+        Gson gson = builder.create();
+        List<Empleado> listaEmpleados = em.createNamedQuery("Empleado.findAll").getResultList();
+        
+        for(int i=0; i<listaEmpleados.size(); i++){
+            listaEmpleados.get(i).setUsuarioList(null);
+            listaEmpleados.get(i).getIddepto().setEmpleadoList(null);
+            listaEmpleados.get(i).getIddepto().getIddepe().setActividadList(null);
+            listaEmpleados.get(i).getIddepto().getIddepe().setAdmondepeList(null);
+            listaEmpleados.get(i).getIddepto().getIddepe().setDepartamentoList(null);
+            listaEmpleados.get(i).getIddepto().getIddepe().setParticipacionList(null);
+        }
+        return gson.toJson(listaEmpleados);
+    }
+    
+    public String consultarRoles(){
+        GsonBuilder builder = new GsonBuilder();
+        Gson gson = builder.create();
+        List<Rol> listaRoles = em.createNamedQuery("Rol.findAll").getResultList();
+        
+        for (Rol rol : listaRoles) {
+            rol.setUsuariorolList(null);
+        }
+        return gson.toJson(listaRoles);
+    }
+    
+    public String consultarUsuarios(){
+        GsonBuilder builder = new GsonBuilder();
+        Gson gson = builder.create();
+        List<Usuario> listaUsuarios = em.createNamedQuery("Usuario.findAll").getResultList();
+        
+        for (Usuario usuario : listaUsuarios) {
+            usuario.setActividadList(null);
+            usuario.setUsuariorolList(null);
+            usuario.getIdemp().setUsuarioList(null);
+            usuario.getIdemp().getIddepto().setEmpleadoList(null);
+            usuario.getIdemp().getIddepto().getIddepe().setActividadList(null);
+            usuario.getIdemp().getIddepto().getIddepe().setAdmondepeList(null);
+            usuario.getIdemp().getIddepto().getIddepe().setDepartamentoList(null);
+            usuario.getIdemp().getIddepto().getIddepe().setParticipacionList(null);
+        }
+        return gson.toJson(listaUsuarios);
+    }
+    
+    public String consultarUsuariorol(){
+        GsonBuilder builder = new GsonBuilder();
+        Gson gson = builder.create();
+        List<Usuariorol> listaUsuariorol = em.createNamedQuery("Usuariorol.findAll").getResultList();
+        
+        for (Usuariorol usuariorol : listaUsuariorol) {
+            usuariorol.getIdrol().setUsuariorolList(null);
+            
+            usuariorol.getIdusuario().setActividadList(null);
+            usuariorol.getIdusuario().setUsuariorolList(null);
+            usuariorol.getIdusuario().getIdemp().setUsuarioList(null);
+            usuariorol.getIdusuario().getIdemp().getIddepto().setEmpleadoList(null);
+            usuariorol.getIdusuario().getIdemp().getIddepto().getIddepe().setActividadList(null);
+            usuariorol.getIdusuario().getIdemp().getIddepto().getIddepe().setAdmondepeList(null);
+            usuariorol.getIdusuario().getIdemp().getIddepto().getIddepe().setDepartamentoList(null);
+            usuariorol.getIdusuario().getIdemp().getIddepto().getIddepe().setParticipacionList(null);
+        }
+        return gson.toJson(listaUsuariorol);
+    }
+    
+    public String consultarPlanes(){
+        GsonBuilder builder = new GsonBuilder();
+        Gson gson = builder.create();
+        List<Plan> listaPlanes = em.createNamedQuery("Plan.findAll").getResultList();
+        
+        for (Plan plan : listaPlanes) {
+            plan.setCategoriaplanList(null);
+            plan.getIdadmon().setAdmondepeList(null);
+            plan.getIdadmon().setPlanList(null);
+            plan.getIdadmon().getIdmun().setAdministracionList(null);
+            plan.getIdadmon().getIdmun().getIdent().setMunicipioList(null);
+        }
+        return gson.toJson(listaPlanes);
+    }
+    
+    public String consultarCategorias(){
+        GsonBuilder builder = new GsonBuilder();
+        Gson gson = builder.create();
+        List<Categoriaplan> listaCategorias = em.createNamedQuery("Categoriaplan.findAll").getResultList();
+        
+        for (Categoriaplan cat : listaCategorias) {
+            cat.setActividadList(null);
+            cat.setObjetivoList(null);
+            cat.setParticipacionList(null);
+            cat.getIdplan().setCategoriaplanList(null);
+            cat.getIdplan().getIdadmon().setAdmondepeList(null);
+            cat.getIdplan().getIdadmon().setPlanList(null);
+            cat.getIdplan().getIdadmon().getIdmun().setAdministracionList(null);
+            cat.getIdplan().getIdadmon().getIdmun().getIdent().setMunicipioList(null);
+        }
+        return gson.toJson(listaCategorias);
+    }
+    
+    public String consultarParticipacion(){
+        GsonBuilder builder = new GsonBuilder();
+        Gson gson = builder.create();
+        List<Participacion> listaParticipaciones = em.createNamedQuery("Participacion.findAll").getResultList();
+        
+        for (Participacion p : listaParticipaciones) {
+            p.getIdcat().setActividadList(null);
+            p.getIdcat().setObjetivoList(null);
+            p.getIdcat().setParticipacionList(null);
+            p.getIdcat().getIdplan().setCategoriaplanList(null);
+            p.getIdcat().getIdplan().getIdadmon().setAdmondepeList(null);
+            p.getIdcat().getIdplan().getIdadmon().setPlanList(null);
+            p.getIdcat().getIdplan().getIdadmon().getIdmun().setAdministracionList(null);
+            p.getIdcat().getIdplan().getIdadmon().getIdmun().getIdent().setMunicipioList(null);
+            
+            p.getIddepe().setActividadList(null);
+            p.getIddepe().setAdmondepeList(null);
+            p.getIddepe().setDepartamentoList(null);
+            p.getIddepe().setParticipacionList(null);
+        }
+        return gson.toJson(listaParticipaciones);
+    }
+    
+    public String consultarObjetivos(){
+        GsonBuilder builder = new GsonBuilder();
+        Gson gson = builder.create();
+        List<Objetivo> listaObjetivos = em.createNamedQuery("Objetivo.findAll").getResultList();
+        
+        for(Objetivo o : listaObjetivos){
+            o.setEstrategiaList(null);
+            o.getIdcat().setActividadList(null);
+            o.getIdcat().setObjetivoList(null);
+            o.getIdcat().setParticipacionList(null);
+            o.getIdcat().getIdplan().setCategoriaplanList(null);
+            o.getIdcat().getIdplan().getIdadmon().setAdmondepeList(null);
+            o.getIdcat().getIdplan().getIdadmon().setPlanList(null);
+            o.getIdcat().getIdplan().getIdadmon().getIdmun().setAdministracionList(null);
+            o.getIdcat().getIdplan().getIdadmon().getIdmun().getIdent().setMunicipioList(null);
+        }
+        return gson.toJson(listaObjetivos);
+    }
+    
+    public String consultarEstrategias(){
+        GsonBuilder builder = new GsonBuilder();
+        Gson gson = builder.create();
+        List<Estrategia> listaEstrategias = em.createNamedQuery("Estrategia.findAll").getResultList();
+        
+        for(Estrategia e : listaEstrategias){
+            e.getIdobjetivo().setEstrategiaList(null);
+            e.getIdobjetivo().getIdcat().setActividadList(null);
+            e.getIdobjetivo().getIdcat().setObjetivoList(null);
+            e.getIdobjetivo().getIdcat().setParticipacionList(null);
+            e.getIdobjetivo().getIdcat().getIdplan().setCategoriaplanList(null);
+            e.getIdobjetivo().getIdcat().getIdplan().getIdadmon().setAdmondepeList(null);
+            e.getIdobjetivo().getIdcat().getIdplan().getIdadmon().setPlanList(null);
+            e.getIdobjetivo().getIdcat().getIdplan().getIdadmon().setPlanList(null);
+            e.getIdobjetivo().getIdcat().getIdplan().getIdadmon().getIdmun().setAdministracionList(null);
+            e.getIdobjetivo().getIdcat().getIdplan().getIdadmon().getIdmun().setAdministracionList(null);
+            e.getIdobjetivo().getIdcat().getIdplan().getIdadmon().getIdmun().getIdent().setMunicipioList(null);
+        }
+        return gson.toJson(listaEstrategias);
+    }
+    
+    public String consultarActividades(){
+        GsonBuilder builder = new GsonBuilder();
+        Gson gson = builder.create();
+        List<Actividad> listaActividades = em.createNamedQuery("Actividad.findAll").getResultList();
+        
+        for(Actividad a : listaActividades){
+            a.getIdcat().setActividadList(null);
+            a.getIdcat().setObjetivoList(null);
+            a.getIdcat().setParticipacionList(null);
+            a.getIdcat().getIdplan().setCategoriaplanList(null);
+            a.getIdcat().getIdplan().getIdadmon().setAdmondepeList(null);
+            a.getIdcat().getIdplan().getIdadmon().setPlanList(null);
+            a.getIdcat().getIdplan().getIdadmon().getIdmun().setAdministracionList(null);
+            a.getIdcat().getIdplan().getIdadmon().getIdmun().getIdent().setMunicipioList(null);
+            
+            a.getIddepe().setActividadList(null);
+            a.getIddepe().setAdmondepeList(null);
+            a.getIddepe().setDepartamentoList(null);
+            a.getIddepe().setParticipacionList(null);
+            
+            a.getIdusuario().setActividadList(null);
+            a.getIdusuario().setUsuariorolList(null);
+            a.getIdusuario().getIdemp().setUsuarioList(null);
+            a.getIdusuario().getIdemp().getIddepto().setEmpleadoList(null);
+            a.getIdusuario().getIdemp().getIddepto().getIddepe().setActividadList(null);
+            a.getIdusuario().getIdemp().getIddepto().getIddepe().setAdmondepeList(null);
+            a.getIdusuario().getIdemp().getIddepto().getIddepe().setDepartamentoList(null);
+            a.getIdusuario().getIdemp().getIddepto().getIddepe().setParticipacionList(null);
+        }
+        return gson.toJson(listaActividades);
+    }
 }

@@ -44,9 +44,6 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Categoriaplan.findByDescripcat", query = "SELECT c FROM Categoriaplan c WHERE c.descripcat = :descripcat")})
 public class Categoriaplan implements Serializable {
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idcat")
-    private List<Actividad> actividadList;
-
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -74,12 +71,18 @@ public class Categoriaplan implements Serializable {
     private Integer idcatpadre;
     @Basic(optional = false)
     @NotNull
-    @Size(max = 500)
+    @Size(min = 1, max = 500)
     @Column(name = "descripcat")
     private String descripcat;
     @JoinColumn(name = "idplan", referencedColumnName = "idplan")
     @ManyToOne(optional = false)
     private Plan idplan;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idcat")
+    private List<Participacion> participacionList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idcat")
+    private List<Actividad> actividadList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idcat")
+    private List<Objetivo> objetivoList;
 
     public Categoriaplan() {
     }
@@ -88,10 +91,11 @@ public class Categoriaplan implements Serializable {
         this.idcat = idcat;
     }
 
-    public Categoriaplan(Integer idcat, String clavecat, String nombrecat) {
+    public Categoriaplan(Integer idcat, String clavecat, String nombrecat, String descripcat) {
         this.idcat = idcat;
         this.clavecat = clavecat;
         this.nombrecat = nombrecat;
+        this.descripcat = descripcat;
     }
 
     public Integer getIdcat() {
@@ -166,6 +170,33 @@ public class Categoriaplan implements Serializable {
         this.idplan = idplan;
     }
 
+    @XmlTransient
+    public List<Participacion> getParticipacionList() {
+        return participacionList;
+    }
+
+    public void setParticipacionList(List<Participacion> participacionList) {
+        this.participacionList = participacionList;
+    }
+
+    @XmlTransient
+    public List<Actividad> getActividadList() {
+        return actividadList;
+    }
+
+    public void setActividadList(List<Actividad> actividadList) {
+        this.actividadList = actividadList;
+    }
+
+    @XmlTransient
+    public List<Objetivo> getObjetivoList() {
+        return objetivoList;
+    }
+
+    public void setObjetivoList(List<Objetivo> objetivoList) {
+        this.objetivoList = objetivoList;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -189,15 +220,6 @@ public class Categoriaplan implements Serializable {
     @Override
     public String toString() {
         return "mx.edu.ittepic.pmdapp.entidades.Categoriaplan[ idcat=" + idcat + " ]";
-    }
-
-    @XmlTransient
-    public List<Actividad> getActividadList() {
-        return actividadList;
-    }
-
-    public void setActividadList(List<Actividad> actividadList) {
-        this.actividadList = actividadList;
     }
     
 }

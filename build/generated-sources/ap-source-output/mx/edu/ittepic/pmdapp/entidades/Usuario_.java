@@ -8,7 +8,7 @@ import mx.edu.ittepic.pmdapp.entidades.Actividad;
 import mx.edu.ittepic.pmdapp.entidades.Empleado;
 import mx.edu.ittepic.pmdapp.entidades.Usuariorol;
 
-@Generated(value="EclipseLink-2.5.2.v20140319-rNA", date="2017-06-21T21:13:08")
+@Generated(value="EclipseLink-2.5.2.v20140319-rNA", date="2017-06-22T23:02:38")
 @StaticMetamodel(Usuario.class)
 public class Usuario_ { 
 
