@@ -9,7 +9,7 @@ import mx.edu.ittepic.pmdapp.entidades.Admondepe;
 import mx.edu.ittepic.pmdapp.entidades.Departamento;
 import mx.edu.ittepic.pmdapp.entidades.Participacion;
 
-@Generated(value="EclipseLink-2.5.2.v20140319-rNA", date="2017-06-22T23:02:38")
+@Generated(value="EclipseLink-2.5.2.v20140319-rNA", date="2017-06-23T21:28:45")
 @StaticMetamodel(Dependencia.class)
 public class Dependencia_ { 
 

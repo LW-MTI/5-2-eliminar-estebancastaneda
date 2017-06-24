@@ -284,40 +284,40 @@ public class EjbPmd {
                     .setParameter("idcat", idcat)
                     .getSingleResult();
             Objetivo objetivo = new Objetivo();
-            
+
             objetivo.setClaveobjetivo(clave);
             objetivo.setObjetivo(obj);
             objetivo.setIdcat(cat);
-            
+
             em.persist(objetivo);
             return "{msg:'OK. Objetivo insertado correctamente.'}";
         } catch (Exception e) {
             return "{msg:'ERROR: No se pudo insertar el Objetivo.\n" + e.getMessage() + "'}";
         }
     }
-    
-    public String insertarEstrategia(String clave, String estrat, int idobjetivo){
-        try{
+
+    public String insertarEstrategia(String clave, String estrat, int idobjetivo) {
+        try {
             Objetivo objetivo = (Objetivo) em.createNamedQuery("Objetivo.findByIdobjetivo")
                     .setParameter("idobjetivo", idobjetivo)
                     .getSingleResult();
             Estrategia estrategia = new Estrategia();
-            
+
             estrategia.setClaveestrategia(clave);
             estrategia.setEstrategia(estrat);
             estrategia.setIdobjetivo(objetivo);
-            
+
             em.persist(estrategia);
             return "{msg:'OK. Estrategia insertada correctamente.'}";
-        }catch(Exception e){
+        } catch (Exception e) {
             return "{msg:'ERROR: No se pudo insertar la Estrategia.\n" + e.getMessage() + "'}";
         }
     }
 
-    public String insertarActividad(String activ, Date inicio, Date fin, 
-            Float latitud, Float longitud, int idcat, int idusuario, int iddepe){
-        
-        try{
+    public String insertarActividad(String activ, Date inicio, Date fin,
+            Float latitud, Float longitud, int idcat, int idusuario, int iddepe) {
+
+        try {
             Categoriaplan cat = (Categoriaplan) em.createNamedQuery("Categoriaplan.findByIdcat")
                     .setParameter("idcat", idcat)
                     .getSingleResult();
@@ -328,7 +328,7 @@ public class EjbPmd {
                     .setParameter("iddepe", iddepe)
                     .getSingleResult();
             Actividad actividad = new Actividad();
-            
+
             actividad.setActividad(activ);
             actividad.setFechaini(inicio);
             actividad.setFechafin(fin);
@@ -337,44 +337,44 @@ public class EjbPmd {
             actividad.setIdcat(cat);
             actividad.setIdusuario(usuario);
             actividad.setIddepe(depe);
-            
+
             em.persist(actividad);
             return "{msg:'OK. Actividad registrada correctamente.'}";
-        }catch(Exception e){
+        } catch (Exception e) {
             return "{msg:'ERROR: No se pudo insertar la actividad.\n" + e.getMessage() + "'}";
         }
     }
-    
-    public String consultarEntidades(){
+
+    public String consultarEntidades() {
         GsonBuilder builder = new GsonBuilder();
         Gson gson = builder.create();
         List<Entidad> listaEntidades = em.createNamedQuery("Entidad.findAll").getResultList();
-        
-        for(int i=0; i<listaEntidades.size(); i++){
+
+        for (int i = 0; i < listaEntidades.size(); i++) {
             listaEntidades.get(i).setMunicipioList(null);
         }
-        
+
         return gson.toJson(listaEntidades);
     }
-    
-    public String consultarMunicipios(){
+
+    public String consultarMunicipios() {
         GsonBuilder builder = new GsonBuilder();
         Gson gson = builder.create();
         List<Municipio> listaMunicipios = em.createNamedQuery("Municipio.findAll").getResultList();
-        
-        for(int i=0; i<listaMunicipios.size(); i++){
+
+        for (int i = 0; i < listaMunicipios.size(); i++) {
             listaMunicipios.get(i).setAdministracionList(null);
             listaMunicipios.get(i).getIdent().setMunicipioList(null);
         }
         return gson.toJson(listaMunicipios);
     }
-    
-    public String consultarAdministraciones(){
+
+    public String consultarAdministraciones() {
         GsonBuilder builder = new GsonBuilder();
         Gson gson = builder.create();
         List<Administracion> listaAdministraciones = em.createNamedQuery("Administracion.findAll").getResultList();
-        
-        for(int i=0; i<listaAdministraciones.size(); i++){
+
+        for (int i = 0; i < listaAdministraciones.size(); i++) {
             listaAdministraciones.get(i).setAdmondepeList(null);
             listaAdministraciones.get(i).setPlanList(null);
             listaAdministraciones.get(i).getIdmun().setAdministracionList(null);
@@ -382,13 +382,13 @@ public class EjbPmd {
         }
         return gson.toJson(listaAdministraciones);
     }
-    
-    public String consultarDependencias(){
+
+    public String consultarDependencias() {
         GsonBuilder builder = new GsonBuilder();
         Gson gson = builder.create();
         List<Dependencia> listaDepe = em.createNamedQuery("Dependencia.findAll").getResultList();
-        
-        for(int i=0; i<listaDepe.size(); i++){
+
+        for (int i = 0; i < listaDepe.size(); i++) {
             listaDepe.get(i).setActividadList(null);
             listaDepe.get(i).setAdmondepeList(null);
             listaDepe.get(i).setDepartamentoList(null);
@@ -396,18 +396,18 @@ public class EjbPmd {
         }
         return gson.toJson(listaDepe);
     }
-    
-    public String consultarAdmondepe(){
+
+    public String consultarAdmondepe() {
         GsonBuilder builder = new GsonBuilder();
         Gson gson = builder.create();
         List<Admondepe> listaAdmondepe = em.createNamedQuery("Admondepe.findAll").getResultList();
-        
-        for(int i=0; i<listaAdmondepe.size(); i++){
+
+        for (int i = 0; i < listaAdmondepe.size(); i++) {
             listaAdmondepe.get(i).getIdadmon().setAdmondepeList(null);
             listaAdmondepe.get(i).getIdadmon().setPlanList(null);
             listaAdmondepe.get(i).getIdadmon().getIdmun().setAdministracionList(null);
             listaAdmondepe.get(i).getIdadmon().getIdmun().getIdent().setMunicipioList(null);
-            
+
             listaAdmondepe.get(i).getIddepe().setActividadList(null);
             listaAdmondepe.get(i).getIddepe().setAdmondepeList(null);
             listaAdmondepe.get(i).getIddepe().setDepartamentoList(null);
@@ -415,15 +415,15 @@ public class EjbPmd {
         }
         return gson.toJson(listaAdmondepe);
     }
-    
-    public String consultarDepartamentos(){
+
+    public String consultarDepartamentos() {
         GsonBuilder builder = new GsonBuilder();
         Gson gson = builder.create();
         List<Departamento> listaDeptos = em.createNamedQuery("Departamento.findAll").getResultList();
-        
-        for(int i=0; i<listaDeptos.size(); i++){
+
+        for (int i = 0; i < listaDeptos.size(); i++) {
             listaDeptos.get(i).setEmpleadoList(null);
-            
+
             listaDeptos.get(i).getIddepe().setActividadList(null);
             listaDeptos.get(i).getIddepe().setAdmondepeList(null);
             listaDeptos.get(i).getIddepe().setDepartamentoList(null);
@@ -431,13 +431,13 @@ public class EjbPmd {
         }
         return gson.toJson(listaDeptos);
     }
-    
-    public String consultarEmpleados(){
+
+    public String consultarEmpleados() {
         GsonBuilder builder = new GsonBuilder();
         Gson gson = builder.create();
         List<Empleado> listaEmpleados = em.createNamedQuery("Empleado.findAll").getResultList();
-        
-        for(int i=0; i<listaEmpleados.size(); i++){
+
+        for (int i = 0; i < listaEmpleados.size(); i++) {
             listaEmpleados.get(i).setUsuarioList(null);
             listaEmpleados.get(i).getIddepto().setEmpleadoList(null);
             listaEmpleados.get(i).getIddepto().getIddepe().setActividadList(null);
@@ -447,23 +447,23 @@ public class EjbPmd {
         }
         return gson.toJson(listaEmpleados);
     }
-    
-    public String consultarRoles(){
+
+    public String consultarRoles() {
         GsonBuilder builder = new GsonBuilder();
         Gson gson = builder.create();
         List<Rol> listaRoles = em.createNamedQuery("Rol.findAll").getResultList();
-        
+
         for (Rol rol : listaRoles) {
             rol.setUsuariorolList(null);
         }
         return gson.toJson(listaRoles);
     }
-    
-    public String consultarUsuarios(){
+
+    public String consultarUsuarios() {
         GsonBuilder builder = new GsonBuilder();
         Gson gson = builder.create();
         List<Usuario> listaUsuarios = em.createNamedQuery("Usuario.findAll").getResultList();
-        
+
         for (Usuario usuario : listaUsuarios) {
             usuario.setActividadList(null);
             usuario.setUsuariorolList(null);
@@ -476,15 +476,15 @@ public class EjbPmd {
         }
         return gson.toJson(listaUsuarios);
     }
-    
-    public String consultarUsuariorol(){
+
+    public String consultarUsuariorol() {
         GsonBuilder builder = new GsonBuilder();
         Gson gson = builder.create();
         List<Usuariorol> listaUsuariorol = em.createNamedQuery("Usuariorol.findAll").getResultList();
-        
+
         for (Usuariorol usuariorol : listaUsuariorol) {
             usuariorol.getIdrol().setUsuariorolList(null);
-            
+
             usuariorol.getIdusuario().setActividadList(null);
             usuariorol.getIdusuario().setUsuariorolList(null);
             usuariorol.getIdusuario().getIdemp().setUsuarioList(null);
@@ -496,12 +496,12 @@ public class EjbPmd {
         }
         return gson.toJson(listaUsuariorol);
     }
-    
-    public String consultarPlanes(){
+
+    public String consultarPlanes() {
         GsonBuilder builder = new GsonBuilder();
         Gson gson = builder.create();
         List<Plan> listaPlanes = em.createNamedQuery("Plan.findAll").getResultList();
-        
+
         for (Plan plan : listaPlanes) {
             plan.setCategoriaplanList(null);
             plan.getIdadmon().setAdmondepeList(null);
@@ -511,12 +511,12 @@ public class EjbPmd {
         }
         return gson.toJson(listaPlanes);
     }
-    
-    public String consultarCategorias(){
+
+    public String consultarCategorias() {
         GsonBuilder builder = new GsonBuilder();
         Gson gson = builder.create();
         List<Categoriaplan> listaCategorias = em.createNamedQuery("Categoriaplan.findAll").getResultList();
-        
+
         for (Categoriaplan cat : listaCategorias) {
             cat.setActividadList(null);
             cat.setObjetivoList(null);
@@ -529,12 +529,12 @@ public class EjbPmd {
         }
         return gson.toJson(listaCategorias);
     }
-    
-    public String consultarParticipacion(){
+
+    public String consultarParticipacion() {
         GsonBuilder builder = new GsonBuilder();
         Gson gson = builder.create();
         List<Participacion> listaParticipaciones = em.createNamedQuery("Participacion.findAll").getResultList();
-        
+
         for (Participacion p : listaParticipaciones) {
             p.getIdcat().setActividadList(null);
             p.getIdcat().setObjetivoList(null);
@@ -544,7 +544,7 @@ public class EjbPmd {
             p.getIdcat().getIdplan().getIdadmon().setPlanList(null);
             p.getIdcat().getIdplan().getIdadmon().getIdmun().setAdministracionList(null);
             p.getIdcat().getIdplan().getIdadmon().getIdmun().getIdent().setMunicipioList(null);
-            
+
             p.getIddepe().setActividadList(null);
             p.getIddepe().setAdmondepeList(null);
             p.getIddepe().setDepartamentoList(null);
@@ -552,13 +552,13 @@ public class EjbPmd {
         }
         return gson.toJson(listaParticipaciones);
     }
-    
-    public String consultarObjetivos(){
+
+    public String consultarObjetivos() {
         GsonBuilder builder = new GsonBuilder();
         Gson gson = builder.create();
         List<Objetivo> listaObjetivos = em.createNamedQuery("Objetivo.findAll").getResultList();
-        
-        for(Objetivo o : listaObjetivos){
+
+        for (Objetivo o : listaObjetivos) {
             o.setEstrategiaList(null);
             o.getIdcat().setActividadList(null);
             o.getIdcat().setObjetivoList(null);
@@ -571,13 +571,13 @@ public class EjbPmd {
         }
         return gson.toJson(listaObjetivos);
     }
-    
-    public String consultarEstrategias(){
+
+    public String consultarEstrategias() {
         GsonBuilder builder = new GsonBuilder();
         Gson gson = builder.create();
         List<Estrategia> listaEstrategias = em.createNamedQuery("Estrategia.findAll").getResultList();
-        
-        for(Estrategia e : listaEstrategias){
+
+        for (Estrategia e : listaEstrategias) {
             e.getIdobjetivo().setEstrategiaList(null);
             e.getIdobjetivo().getIdcat().setActividadList(null);
             e.getIdobjetivo().getIdcat().setObjetivoList(null);
@@ -592,13 +592,13 @@ public class EjbPmd {
         }
         return gson.toJson(listaEstrategias);
     }
-    
-    public String consultarActividades(){
+
+    public String consultarActividades() {
         GsonBuilder builder = new GsonBuilder();
         Gson gson = builder.create();
         List<Actividad> listaActividades = em.createNamedQuery("Actividad.findAll").getResultList();
-        
-        for(Actividad a : listaActividades){
+
+        for (Actividad a : listaActividades) {
             a.getIdcat().setActividadList(null);
             a.getIdcat().setObjetivoList(null);
             a.getIdcat().setParticipacionList(null);
@@ -607,12 +607,12 @@ public class EjbPmd {
             a.getIdcat().getIdplan().getIdadmon().setPlanList(null);
             a.getIdcat().getIdplan().getIdadmon().getIdmun().setAdministracionList(null);
             a.getIdcat().getIdplan().getIdadmon().getIdmun().getIdent().setMunicipioList(null);
-            
+
             a.getIddepe().setActividadList(null);
             a.getIddepe().setAdmondepeList(null);
             a.getIddepe().setDepartamentoList(null);
             a.getIddepe().setParticipacionList(null);
-            
+
             a.getIdusuario().setActividadList(null);
             a.getIdusuario().setUsuariorolList(null);
             a.getIdusuario().getIdemp().setUsuarioList(null);
@@ -623,5 +623,321 @@ public class EjbPmd {
             a.getIdusuario().getIdemp().getIddepto().getIddepe().setParticipacionList(null);
         }
         return gson.toJson(listaActividades);
+    }
+
+    public String actualizarEntidad(int ident, String clave, String nombre, String abrev) {
+        try {
+            Entidad ent = (Entidad) em.createNamedQuery("Entidad.findByIdent")
+                    .setParameter("ident", ident)
+                    .getSingleResult();
+
+            ent.setIdent(ident);
+            ent.setClaveent(clave);
+            ent.setNombreent(nombre);
+            ent.setAbrevent(abrev);
+
+            em.merge(ent);
+            return "{msg:'OK. Entidad actualizada correctamente.'}";
+        } catch (Exception e) {
+            return "{msg:'ERROR: No se pudo actualizar la Entidad.\n" + e.getMessage() + "'}";
+        }
+    }
+
+    public String actualizarMunicipio(int idmun, String clavemun, String nombremun, int ident) {
+        try {
+            Municipio mun = (Municipio) em.createNamedQuery("Municipio.findByIdmun")
+                    .setParameter("idmun", idmun)
+                    .getSingleResult();
+            Entidad ent = (Entidad) em.createNamedQuery("Entidad.findByIdent")
+                    .setParameter("ident", ident)
+                    .getSingleResult();
+
+            mun.setIdmun(idmun);
+            mun.setClavemun(clavemun);
+            mun.setNombremun(nombremun);
+            mun.setIdent(ent);
+
+            em.merge(mun);
+            return "{msg:'OK. Municipio actualizado correctamente.'}";
+        } catch (Exception e) {
+            return "{msg:'ERROR: No se pudo actualizar el Municipio.\n" + e.getMessage() + "'}";
+        }
+    }
+
+    public String actualizarAdministracion(int idadmon, String claveadmon, String nombreadmon,
+            Date fechaini, Date fechafin, int idmun) {
+        try {
+            Administracion admon = (Administracion) em.createNamedQuery("Administracion.findByIdadmon")
+                    .setParameter("idadmon", idadmon)
+                    .getSingleResult();
+            Municipio mun = (Municipio) em.createNamedQuery("Municipio.findByIdmun")
+                    .setParameter("idmun", idmun)
+                    .getSingleResult();
+
+            admon.setIdadmon(idadmon);
+            admon.setClaveadmon(claveadmon);
+            admon.setNombreadmon(nombreadmon);
+            admon.setFechaini(fechaini);
+            admon.setFechafin(fechafin);
+            admon.setIdmun(mun);
+
+            em.merge(admon);
+            return "{msg:'OK. Administración actualizada correctamente.'}";
+        } catch (Exception e) {
+            return "{msg:'ERROR: No se pudo actualizar la Administración.\n" + e.getMessage() + "'}";
+        }
+    }
+
+    public String actualizarDependencia(int iddepe, String clavedepe, String nombredepe) {
+        try {
+            Dependencia depe = (Dependencia) em.createNamedQuery("Dependencia.findByIddepe")
+                    .setParameter("iddepe", iddepe)
+                    .getSingleResult();
+
+            //depe.setIddepe(iddepe);
+            depe.setClavedepe(clavedepe);
+            depe.setNombredepe(nombredepe);
+
+            em.merge(depe);
+            return "{msg:'OK. Dependencia actualizada correctamente.'}";
+        } catch (Exception e) {
+            return "{msg:'ERROR: No se pudo actualizar la Dependencia.\n" + e.getMessage() + "'}";
+        }
+    }
+
+    public String actualizarAdmondepe(int idadmondepe, int idadmon, int iddepe) {
+        try {
+            Admondepe admondepe = (Admondepe) em.createNamedQuery("Admondepe.findByIdadmondepe")
+                    .setParameter("idadmondepe", idadmondepe)
+                    .getSingleResult();
+            Administracion admon = (Administracion) em.createNamedQuery("Administracion.findByIdadmon")
+                    .setParameter("idadmon", idadmon)
+                    .getSingleResult();
+            Dependencia depe = (Dependencia) em.createNamedQuery("Dependencia.findByIddepe")
+                    .setParameter("iddepe", iddepe)
+                    .getSingleResult();
+
+            admondepe.setIdadmon(admon);
+            admondepe.setIddepe(depe);
+
+            em.merge(admondepe);
+            return "{msg:'OK. Administración -> Dependencia actualizada correctamente.'}";
+        } catch (Exception e) {
+            return "{msg:'ERROR: No se pudo actualizar la Administración -> Dependencia.\n" + e.getMessage() + "'}";
+        }
+    }
+
+    public String actualizarDepartamento(int iddepto, String clave, String nombre, int iddepe) {
+        try {
+            Departamento depto = (Departamento) em.createNamedQuery("Departamento.findByIddepto")
+                    .setParameter("iddepto", iddepto)
+                    .getSingleResult();
+            Dependencia depe = (Dependencia) em.createNamedQuery("Dependencia.findByIddepe")
+                    .setParameter("iddepe", iddepe)
+                    .getSingleResult();
+
+            depto.setClavedepto(clave);
+            depto.setNombredepto(nombre);
+            depto.setIddepe(depe);
+
+            em.merge(depto);
+            return "{msg: 'OK. Departamento actualizado correctamente.'}";
+        } catch (Exception e) {
+            return "{msg:'ERROR: No se pudo actualizar el Departamento.\n" + e.getMessage() + "'}";
+        }
+    }
+
+    public String actualizarEmpleado(int idemp, String paterno, String materno, String nombre, int iddepto) {
+        try {
+            Empleado emp = (Empleado) em.createNamedQuery("Empleado.findByIdemp")
+                    .setParameter("idemp", idemp).getSingleResult();
+            Departamento depto = (Departamento) em.createNamedQuery("Departamento.findByIddepto")
+                    .setParameter("iddepto", iddepto).getSingleResult();
+
+            emp.setPaternoemp(paterno);
+            emp.setMaternoemp(materno);
+            emp.setNombreemp(nombre);
+            emp.setIddepto(depto);
+
+            em.merge(emp);
+            return "{msg: 'OK. Empleado actualizado correctamente.'}";
+        } catch (Exception e) {
+            return "{msg:'ERROR: No se pudo actualizar el Empleado.\n" + e.getMessage() + "'}";
+        }
+    }
+
+    public String actualizarRol(int idrol, String claverol, String nombrerol) {
+        try {
+            Rol rol = (Rol) em.createNamedQuery("Rol.findByIdrol")
+                    .setParameter("idrol", idrol).getSingleResult();
+
+            rol.setClaverol(claverol);
+            rol.setNombrerol(nombrerol);
+
+            em.merge(rol);
+            return "{msg: 'OK. Rol actualizado correctamente.'}";
+        } catch (Exception e) {
+            return "{msg: 'ERROR: No se pudo actualizar el Rol.\n" + e.getMessage() + "'}";
+        }
+    }
+
+    public String actualizarUsuario(int idusuario, String usuario, String contrasena, int idemp) {
+        try {
+            Usuario u = (Usuario) em.createNamedQuery("Usuario.findByIdusuario")
+                    .setParameter("idusuario", idusuario).getSingleResult();
+            Empleado e = (Empleado) em.createNamedQuery("Empleado.findByIdemp")
+                    .setParameter("idemp", idemp).getSingleResult();
+
+            u.setUsuario(usuario);
+            u.setContrasena(contrasena);
+            u.setIdemp(e);
+
+            em.merge(u);
+            return "{msg: 'OK. Usuario actualizado correctamente.'}";
+        } catch (Exception e) {
+            return "{msg: 'ERROR: No se pudo actualizar el Usuario.\n" + e.getMessage() + "'}";
+        }
+    }
+
+    public String actualizarUsuariorol(int idusuariorol, int idusuario, int idrol) {
+        try {
+            Usuariorol ur = (Usuariorol) em.createNamedQuery("Usuariorol.findByIdusuariorol")
+                    .setParameter("idusuariorol", idusuariorol).getSingleResult();
+            Usuario u = (Usuario) em.createNamedQuery("Usuario.findByIdusuario")
+                    .setParameter("idusuario", idusuario).getSingleResult();
+            Rol r = (Rol) em.createNamedQuery("Rol.findByIdrol")
+                    .setParameter("idrol", idrol).getSingleResult();
+
+            ur.setIdusuario(u);
+            ur.setIdrol(r);
+
+            em.merge(ur);
+            return "{msg: 'OK. Usuario -> Rol actualizado correctamente.'}";
+        } catch (Exception e) {
+            return "{msg: 'ERROR: No se pudo actualizar el Usuario -> Rol.\n" + e.getMessage() + "'}";
+        }
+    }
+
+    public String actualizarPlan(int idplan, String claveplan, String nombreplan, int idadmon) {
+        try {
+            Plan p = (Plan) em.createNamedQuery("Plan.findByIdplan")
+                    .setParameter("idplan", idplan).getSingleResult();
+            Administracion a = (Administracion) em.createNamedQuery("Administracion.findByIdadmon")
+                    .setParameter("idadmon", idadmon).getSingleResult();
+
+            p.setClaveplan(claveplan);
+            p.setNombreplan(nombreplan);
+            p.setIdadmon(a);
+
+            em.merge(p);
+            return "{msg: 'OK. Plan actualizado correctamente.'}";
+        } catch (Exception e) {
+            return "{msg: 'ERROR: No se pudo actualizar el Plan.\n" + e.getMessage() + "'}";
+        }
+    }
+
+    public String actualizarCategoriaplan(int idcat, String clavecat, String nombrecat, int idcatpadre, int idplan, String descripcat) {
+        try {
+            Categoriaplan cat = (Categoriaplan) em.createNamedQuery("Categoriaplan.findByIdcat")
+                    .setParameter("idcat", idcat).getSingleResult();
+            Plan plan = (Plan) em.createNamedQuery("Plan.findByIdplan")
+                    .setParameter("idplan", idplan).getSingleResult();
+
+            cat.setClavecat(clavecat);
+            cat.setNombrecat(nombrecat);
+            cat.setIdcatpadre(idcatpadre);
+            cat.setIdplan(plan);
+            cat.setDescripcat(descripcat);
+
+            em.merge(cat);
+            return "{msg: 'OK. Categoría del Plan actualizada correctamente.'}";
+        } catch (Exception e) {
+            return "{msg: 'ERROR: No se pudo actualizar la Categoría.\n" + e.getMessage() + "'}";
+        }
+    }
+
+    public String actualizarParticipacion(int idparticipacion, int iddepe, int idcat) {
+        try {
+            Participacion p = (Participacion) em.createNamedQuery("Participacion.findByIdparticipacion")
+                    .setParameter("idparticipacion", idparticipacion).getSingleResult();
+            Dependencia d = (Dependencia) em.createNamedQuery("Dependencia.findByIddepe")
+                    .setParameter("iddepe", iddepe).getSingleResult();
+            Categoriaplan c = (Categoriaplan) em.createNamedQuery("Categoriaplan.findByIdcat")
+                    .setParameter("idcat", idcat).getSingleResult();
+
+            p.setIddepe(d);
+            p.setIdcat(c);
+
+            em.merge(p);
+            return "{msg: 'OK. Participación Dependencia -> Categoría actualizada correctamente.'}";
+        } catch (Exception e) {
+            return "{msg: 'ERROR: No se pudo actualizar la Participación de la Dependencia en la Categoría.\n"
+                    + e.getMessage() + "'}";
+        }
+
+    }
+
+    public String actualizarObjetivo(int id, String clave, String objetivo, int idcat) {
+        try {
+            Objetivo o = (Objetivo) em.createNamedQuery("Objetivo.findByIdobjetivo")
+                    .setParameter("idobjetivo", id).getSingleResult();
+            Categoriaplan c = (Categoriaplan) em.createNamedQuery("Categoriaplan.findByIdcat")
+                    .setParameter("idcat", idcat).getSingleResult();
+
+            o.setClaveobjetivo(clave);
+            o.setObjetivo(objetivo);
+            o.setIdcat(c);
+
+            em.merge(o);
+            return "{msg: 'OK. Objetivo actualizado correctamente.'}";
+        } catch (Exception e) {
+            return "{msg: 'ERROR: No se pudo actualizar el Objetivo.\n" + e.getMessage() + "'}";
+        }
+    }
+
+    public String actualizarEstrategia(int idestrategia, String claveestrategia, String estrategia, int idobjetivo) {
+        try {
+            Estrategia e = (Estrategia) em.createNamedQuery("Estrategia.findByIdestrategia")
+                    .setParameter("idestrategia", idestrategia).getSingleResult();
+            Objetivo o = (Objetivo) em.createNamedQuery("Objetivo.findByIdobjetivo")
+                    .setParameter("idobjetivo", idobjetivo).getSingleResult();
+            
+            e.setClaveestrategia(claveestrategia);
+            e.setEstrategia(estrategia);
+            e.setIdobjetivo(o);
+            
+            em.merge(e);
+            return "{msg: 'OK. Estrategia actualizada correctamente.'}";
+        } catch (Exception e) {
+            return "{msg: 'ERROR: No se pudo actualizar la Estrategia.\n" + e.getMessage() + "'}";
+        }
+    }
+    
+    public String actualizarActividad(int idact, String activ, Date inicio, Date fin,
+            Float latitud, Float longitud, int idcat, int idusuario, int iddepe){
+        try{
+            Actividad act = (Actividad) em.createNamedQuery("Actividad.findByIdactividad")
+                    .setParameter("idactividad", idact).getSingleResult();
+            Categoriaplan cat = (Categoriaplan) em.createNamedQuery("Categoriaplan.findByIdcat")
+                    .setParameter("idcat", idcat).getSingleResult();
+            Usuario usu = (Usuario) em.createNamedQuery("Usuario.findByIdusuario")
+                    .setParameter("idusuario", idusuario).getSingleResult();
+            Dependencia dep = (Dependencia) em.createNamedQuery("Dependencia.findByIddepe")
+                    .setParameter("iddepe", iddepe).getSingleResult();
+            
+            act.setActividad(activ);
+            act.setFechaini(inicio);
+            act.setFechafin(fin);
+            act.setLatitud(latitud);
+            act.setLongitud(longitud);
+            act.setIdcat(cat);
+            act.setIdusuario(usu);
+            act.setIddepe(dep);
+            
+            em.merge(act);
+            return "{msg: 'OK. Actividad actualizada correctamente.'}";
+        }catch(Exception e){
+            return "{msg: 'ERROR: No se pudo actualizar la Actividad.\n" + e.getMessage() + "'}";
+        }
     }
 }
