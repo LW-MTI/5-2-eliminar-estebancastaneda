@@ -940,4 +940,196 @@ public class EjbPmd {
             return "{msg: 'ERROR: No se pudo actualizar la Actividad.\n" + e.getMessage() + "'}";
         }
     }
+    
+    public String eliminarEntidad(String ident){
+        try{
+            Entidad ent = (Entidad) em.createNamedQuery("Entidad.findByIdent")
+                    .setParameter("ident", Integer.parseInt(ident)).getSingleResult();
+            
+            em.remove(ent);
+            return "{msg: 'OK. La Entidad fue eliminada correctamente.'}";
+        }catch(NumberFormatException e){
+            return "{msg: 'ERROR: El ID de la Entidad debe ser numérico.\n" + e.getMessage() + "'}";
+        }
+    }
+    
+    public String eliminarMunicipio(String idmun){
+        try{
+            Municipio mun = (Municipio) em.createNamedQuery("Municipio.findByIdmun")
+                    .setParameter("idmun", Integer.parseInt(idmun)).getSingleResult();
+            
+            em.remove(mun);
+            return "{msg: 'OK. El Municipio fue eliminado correctamente.'}";
+        }catch(NumberFormatException e){
+            return "{msg: 'ERROR: El ID del Municipio debe ser numérico.\n" + e.getMessage() + "'}";
+        }
+    }
+    
+    public String eliminarAdministracion(String idadmon){
+        try{
+            Administracion admon = (Administracion) em.createNamedQuery("Administracion.findByIdadmon")
+                    .setParameter("idadmon", Integer.parseInt(idadmon)).getSingleResult();
+            
+            em.remove(admon);
+            return "{msg: 'OK. La Administración fue eliminada correctamente.'}";
+        }catch(NumberFormatException e){
+            return "{msg: 'ERROR: El ID de la Administración debe ser numérico.\n" + e.getMessage() + "'}";
+        }
+    }
+    
+    public String eliminarDependencia(String iddepe){
+        try{
+            Dependencia depe = (Dependencia) em.createNamedQuery("Dependencia.findByIddepe")
+                    .setParameter("iddepe", Integer.parseInt(iddepe)).getSingleResult();
+            
+            em.remove(depe);
+            return "{msg: 'OK. La Dependencia fue eliminada correctamente.'}";
+        }catch(NumberFormatException e){
+            return "{msg: 'ERROR: El ID de la Dependencia debe ser numérico.\n" + e.getMessage() + "'}";
+        }
+    }
+    
+    public String eliminarAdmondepe(String idadmondepe){
+        try{
+            Admondepe ad = (Admondepe) em.createNamedQuery("Admondepe.findByIdadmondepe")
+                    .setParameter("idadmondepe", Integer.parseInt(idadmondepe)).getSingleResult();
+            
+            em.remove(ad);
+            return "{msg: 'OK. La relación Administración -> Dependencia fue eliminada correctamente.'}";
+        }catch(NumberFormatException e){
+            return "{msg: 'ERROR: El ID de Administracion -> Dependencia debe ser numérico.\n" + e.getMessage() + "'}";
+        }
+    }
+    
+    public String eliminarDepartamento(String iddepto){
+        try{
+            Departamento d = (Departamento) em.createNamedQuery("Departamento.findByIddepto")
+                    .setParameter("iddepto", Integer.parseInt(iddepto)).getSingleResult();
+            
+            em.remove(d);
+            return "{msg: 'OK. El Departamento fue eliminado correctamente.'}";
+        }catch(NumberFormatException e){
+            return "{msg: 'ERROR: El ID del Departamento debe ser numérico.\n" + e.getMessage() + "'}";
+        }
+    }
+    
+    public String eliminarEmpleado(String idemp){
+        try{
+            Empleado e = (Empleado) em.createNamedQuery("Empleado.findByIdemp")
+                    .setParameter("idemp", Integer.parseInt(idemp)).getSingleResult();
+            
+            em.remove(e);
+            return "{msg: 'OK. El Empleado fue eliminado correctamente.'}";
+        }catch(NumberFormatException e){
+            return "{msg: 'ERROR: El ID del Empleado debe ser numérico.\n" + e.getMessage() + "'}";
+        }
+    }
+    
+    public String eliminarRol(String idrol){
+        try{
+            Rol r = (Rol) em.createNamedQuery("Rol.findByIdrol")
+                    .setParameter("idrol", Integer.parseInt(idrol)).getSingleResult();
+            
+            em.remove(r);
+            return "{msg: 'OK. El Rol fue eliminado correctamente.'}";
+        }catch(NumberFormatException e){
+            return "{msg: 'ERROR: El ID del Rol debe ser numérico.\n" + e.getMessage() + "'}";
+        }
+    }
+    
+    public String eliminarUsuario(String idusuario){
+        try{
+            Usuario u = (Usuario) em.createNamedQuery("Usuario.findByIdusuario")
+                    .setParameter("idusuario", Integer.parseInt(idusuario)).getSingleResult();
+            
+            em.remove(u);
+            return "{msg: 'OK. El Usuario fue eliminado correctamente.'}";
+        }catch(NumberFormatException e){
+            return "{msg: 'ERROR: El ID del Usuario debe ser numérico.\n" + e.getMessage() + "'}";
+        }
+    }
+
+    public String eliminarUsuariorol(String idusuariorol){
+        try{
+            Usuariorol ur = (Usuariorol) em.createNamedQuery("Usuariorol.findByIdusuariorol")
+                    .setParameter("idusuariorol", Integer.parseInt(idusuariorol)).getSingleResult();
+            
+            em.remove(ur);
+            return "{msg: 'OK. El Usuario -> Rol fue eliminado correctamente.'}";
+        }catch(NumberFormatException e){
+            return "{msg: 'ERROR: El ID del Usuario -> Rol debe ser numérico.\n" + e.getMessage() + "'}";
+        }
+    }
+    
+    public String eliminarPlan(String idplan){
+        try{
+            Plan p = (Plan) em.createNamedQuery("Plan.findByIdplan")
+                    .setParameter("idplan", Integer.parseInt(idplan)).getSingleResult();
+            
+            em.remove(p);
+            return "{msg: 'OK. El Plan fue eliminado correctamente.'}";
+        }catch(NumberFormatException e){
+            return "{msg: 'ERROR: El ID del Plan debe ser numérico.\n" + e.getMessage() + "'}";
+        }
+    }
+    
+    public String eliminarCategoriaplan(String idcat){
+        try{
+            Categoriaplan c = (Categoriaplan) em.createNamedQuery("Categoriaplan.findByIdcat")
+                    .setParameter("idcat", Integer.parseInt(idcat)).getSingleResult();
+            
+            em.remove(c);
+            return "{msg: 'OK. La Categoría fue eliminada correctamente.'}";
+        }catch(NumberFormatException e){
+            return "{msg: 'ERROR: El ID de la Categoría debe ser numérico.\n" + e.getMessage() + "'}";
+        }
+    }
+    
+    public String eliminarParticipacion(String idparticipacion){
+        try{
+            Participacion p = (Participacion) em.createNamedQuery("Participacion.findByIdparticipacion")
+                    .setParameter("idparticipacion", Integer.parseInt(idparticipacion)).getSingleResult();
+            
+            em.remove(p);
+            return "{msg: 'OK. La Participación Dependencia -> Categoría fue eliminada correctamente.'}";
+        }catch(NumberFormatException e){
+            return "{msg: 'ERROR: El ID de la Participación debe ser numérico.\n" + e.getMessage() + "'}";
+        }
+    }
+    
+    public String eliminarObjetivo(String idobjetivo){
+        try{
+            Objetivo o = (Objetivo) em.createNamedQuery("Objetivo.findByIdobjetivo")
+                    .setParameter("idobjetivo", Integer.parseInt(idobjetivo)).getSingleResult();
+            
+            em.remove(o);
+            return "{msg: 'OK. El Objetivo fue eliminado correctamente.'}";
+        }catch(NumberFormatException e){
+            return "{msg: 'ERROR: El ID del Objetivo debe ser numérico.\n" + e.getMessage() + "'}";
+        }
+    }
+    
+    public String eliminarEstrategia(String idestrategia){
+        try{
+            Estrategia e = (Estrategia) em.createNamedQuery("Estrategia.findByIdestrategia")
+                    .setParameter("idestrategia", Integer.parseInt(idestrategia)).getSingleResult();
+            
+            em.remove(e);
+            return "{msg: 'OK. La Estrategia fue eliminada correctamente.'}";
+        }catch(NumberFormatException e){
+            return "{msg: 'ERROR: El ID de la Estrategia debe ser numérico.\n" + e.getMessage() + "'}";
+        }
+    }
+    
+    public String eliminarActividad(String idactividad){
+        try{
+            Actividad a = (Actividad) em.createNamedQuery("Actividad.findByIdactividad")
+                    .setParameter("idactividad", Integer.parseInt(idactividad)).getSingleResult();
+            
+            em.remove(a);
+            return "{msg: 'OK. La Actividad fue eliminada correctamente.'}";
+        }catch(NumberFormatException e){
+            return "{msg: 'ERROR: El ID de la Actividad debe ser numérico.\n" + e.getMessage() + "'}";
+        }
+    }
 }
