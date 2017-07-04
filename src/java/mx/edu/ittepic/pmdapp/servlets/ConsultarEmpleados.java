@@ -67,7 +67,7 @@ public class ConsultarEmpleados extends HttpServlet {
         response.setHeader("Cache-Control", "no-store");
         PrintWriter p = response.getWriter();
         
-        p.write(ejb.consultarEmpleados());
+        p.write("{\"data\": " + ejb.consultarEmpleados() + "}");
     }
 
     /**

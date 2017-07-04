@@ -67,7 +67,7 @@ public class ConsultarObjetivos extends HttpServlet {
         response.setHeader("Cache-Control", "no-store");
         PrintWriter p = response.getWriter();
         
-        p.write(ejb.consultarObjetivos());
+        p.write("{\"data\": " + ejb.consultarObjetivos() + "}");
     }
 
     /**

@@ -67,7 +67,7 @@ public class ConsultarEstrategias extends HttpServlet {
         response.setHeader("Cache-Control", "no-store");
         PrintWriter p = response.getWriter();
         
-        p.write(ejb.consultarEstrategias());
+        p.write("{\"data\": " + ejb.consultarEstrategias() + "}");
     }
 
     /**

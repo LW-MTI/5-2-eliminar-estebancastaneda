@@ -66,7 +66,7 @@ public class ConsultarEntidades extends HttpServlet {
         response.setHeader("Cache-Control", "no-store");
         PrintWriter p = response.getWriter();
         
-        p.write(ejb.consultarEntidades());
+        p.write("{\"data\":"+ejb.consultarEntidades()+"}");
     }
 
     /**

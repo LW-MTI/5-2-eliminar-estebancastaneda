@@ -7,7 +7,7 @@ import javax.persistence.metamodel.StaticMetamodel;
 import mx.edu.ittepic.pmdapp.entidades.Dependencia;
 import mx.edu.ittepic.pmdapp.entidades.Empleado;
 
-@Generated(value="EclipseLink-2.5.2.v20140319-rNA", date="2017-06-23T21:28:45")
+@Generated(value="EclipseLink-2.5.2.v20140319-rNA", date="2017-06-28T22:37:05")
 @StaticMetamodel(Departamento.class)
 public class Departamento_ { 
 

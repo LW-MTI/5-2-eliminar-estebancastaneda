@@ -67,7 +67,7 @@ public class ConsultarActividades extends HttpServlet {
         response.setHeader("Cache-Control", "no-store");
         PrintWriter p = response.getWriter();
         
-        p.write(ejb.consultarActividades());
+        p.write("{\"data\": " + ejb.consultarActividades() + "}");
     }
 
     /**

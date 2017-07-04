@@ -9,9 +9,36 @@ and open the template in the editor.
         <title>PMD-Empleados</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+        <script src="//code.jquery.com/jquery-1.12.4.js"></script>
+        <script src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.15/css/jquery.dataTables.min.css">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <script>
+            $(document).ready(function () {
+                $('#tbEmpleados').DataTable({
+                    "ajax": "ConsultarEmpleados",
+                    "columns": [
+                        {"data": "idemp", "visible": false},
+                        {"data": "paternoemp"},
+                        {"data": "maternoemp"},
+                        {"data": "nombreemp"},
+                        {"data": "iddepto.clavedepto"},
+                        {"data": "iddepto.iddepe.clavedepe"},
+                        {"data": function (r1) {
+                                //var r = r1['id'] + "-" + r1['name'];
+                                var botones = "<button id='btnBorrar' class='btn btn-sm btn-danger' \n\
+                                                            onClick=''>Borrar</button>";
+                                botones += "<button id='btnEditar' class='btn btn-sm btn-warning' \n\
+                                                        onClick=''>Editar</button>";
+                                return botones;
+                            }
+                        }
+                    ]
+                });
+            });
+        </script>
     </head>
     <body>
         <div class="container">
@@ -60,94 +87,18 @@ and open the template in the editor.
                 <div id="consultaEmp" class="tab-pane fade">
                     <br/>
                     <div class="table-responsive">
-                        <table class="table">
+                        <table class="table" id="tbEmpleados">
                             <thead>
                                 <tr>
-                                    <th>Depen./Depto.</th>
+                                    <th>ID</th>
                                     <th>Apellido paterno</th>
                                     <th>Apellido materno</th>
                                     <th>Nombre(s)</th>
+                                    <th>Departamento</th>
+                                    <th>Dependencia</th>
                                     <th>Opciones</th>
                                 </tr>
                             </thead>
-                            <tbody>
-                                <tr>
-                                    <td>IMPLAN / Planeación</td>
-                                    <td>Castañeda</td>
-                                    <td>Montaño</td>
-                                    <td>Esteban Alejandro</td>
-                                    <td>
-                                        <div class="btn-toolbar" role="toolbar">
-                                            <div class="btn-group">
-                                                <button type="button" class="btn btn-default btn-sm">
-                                                    <span class="glyphicon glyphicon-edit"></span> Editar
-                                                </button>
-
-                                                <button type="button" class="btn btn-danger btn-sm">
-                                                    <span class="glyphicon glyphicon-remove"></span> Borrar
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>IMPLAN / Programación</td>
-                                    <td>Parra</td>
-                                    <td>Urías</td>
-                                    <td>Ma. Elena</td>
-                                    <td>
-                                        <div class="btn-toolbar" role="toolbar">
-                                            <div class="btn-group">
-                                                <button type="button" class="btn btn-default btn-sm">
-                                                    <span class="glyphicon glyphicon-edit"></span> Editar
-                                                </button>
-
-                                                <button type="button" class="btn btn-danger btn-sm">
-                                                    <span class="glyphicon glyphicon-remove"></span> Borrar
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>IMPLAN / Programación</td>
-                                    <td>Gutiérrez</td>
-                                    <td>Salas</td>
-                                    <td>Juan Pedro</td>
-                                    <td>
-                                        <div class="btn-toolbar" role="toolbar">
-                                            <div class="btn-group">
-                                                <button type="button" class="btn btn-default btn-sm">
-                                                    <span class="glyphicon glyphicon-edit"></span> Editar
-                                                </button>
-
-                                                <button type="button" class="btn btn-danger btn-sm">
-                                                    <span class="glyphicon glyphicon-remove"></span> Borrar
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>IMPLAN / Presupuestos</td>
-                                    <td>Arjona</td>
-                                    <td>Vizcaíno</td>
-                                    <td>Israel</td>
-                                    <td>
-                                        <div class="btn-toolbar" role="toolbar">
-                                            <div class="btn-group">
-                                                <button type="button" class="btn btn-default btn-sm">
-                                                    <span class="glyphicon glyphicon-edit"></span> Editar
-                                                </button>
-
-                                                <button type="button" class="btn btn-danger btn-sm">
-                                                    <span class="glyphicon glyphicon-remove"></span> Borrar
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </td>
-                                </tr>
-                            </tbody>
                         </table>
                     </div>
                 </div>

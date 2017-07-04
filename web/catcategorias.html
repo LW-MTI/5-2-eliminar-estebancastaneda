@@ -9,14 +9,41 @@ and open the template in the editor.
         <title>PMD-Categorías Plan</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+        <script src="//code.jquery.com/jquery-1.12.4.js"></script>
+        <script src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.15/css/jquery.dataTables.min.css">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <script>
+            $(document).ready(function () {
+                $('#tbCategorias').DataTable({
+                    "ajax": "ConsultarCategorias",
+                    "columns": [
+                        {"data": "idcat", "visible": false},
+                        {"data": "clavecat"},
+                        {"data": "nombrecat"},
+                        {"data": "idcatpadre", "visible": false},
+                        {"data": "descripcat"},
+                        {"data": "idplan.claveplan"},
+                        {"data": function (r1) {
+                                //var r = r1['id'] + "-" + r1['name'];
+                                var botones = "<button id='btnBorrar' class='btn btn-sm btn-danger' \n\
+                                                            onClick=''>Borrar</button>";
+                                botones += "<button id='btnEditar' class='btn btn-sm btn-warning' \n\
+                                                        onClick=''>Editar</button>";
+                                return botones;
+                            }
+                        }
+                    ]
+                });
+            });
+        </script>
     </head>
     <body>
         <div class="container">
             <h2>Catálogo de Categorías</h2>
-            <h3 class="text-info">- Plan Municipal de Desarrollo 2014-2017</h3>
+            <!--<h3 class="text-info">- Plan Municipal de Desarrollo 2014-2017</h3>-->
             <hr/>
             <ul class="nav nav-tabs">
                 <li class="active"><a data-toggle="tab" href="#nuevaCat">Nueva Categoría</a></li>
@@ -69,117 +96,18 @@ and open the template in the editor.
                 <div id="consultaCat" class="tab-pane fade">
                     <br/>
                     <div class="table-responsive">
-                        <table class="table">
+                        <table class="table" id="tbCategorias">
                             <thead>
                                 <tr>
-                                    <th>Cat.Padre</th>
-                                    <th>Clave Cat.</th>
-                                    <th>Nombre Cat.</th>
-                                    <th>Descrip. Cat.</th>
+                                    <th>ID</th>
+                                    <th>Clave</th>
+                                    <th>Nombre</th>
+                                    <th>idcatpadre</th>
+                                    <th>Descripción</th>
+                                    <th>Plan Municipal</th>
                                     <th>Opciones</th>
                                 </tr>
                             </thead>
-                            <tbody>
-                                <tr>
-                                    <td>Ninguna</td>
-                                    <td>EJ1</td>
-                                    <td>Eje 1</td>
-                                    <td>El cambio en el bienestar social</td>
-                                    <td>
-                                        <div class="btn-toolbar" role="toolbar">
-                                            <div class="btn-group">
-                                                <button type="button" class="btn btn-default btn-sm">
-                                                    <span class="glyphicon glyphicon-edit"></span> Editar
-                                                </button>
-
-                                                <button type="button" class="btn btn-danger btn-sm">
-                                                    <span class="glyphicon glyphicon-remove"></span> Borrar
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </td>
-                                </tr>
-                                
-                                <tr>
-                                    <td>EJ1</td>
-                                    <td>PR1.1</td>
-                                    <td>Programa 1.1</td>
-                                    <td>Servicios públicos dignos</td>
-                                    <td>
-                                        <div class="btn-toolbar" role="toolbar">
-                                            <div class="btn-group">
-                                                <button type="button" class="btn btn-default btn-sm">
-                                                    <span class="glyphicon glyphicon-edit"></span> Editar
-                                                </button>
-
-                                                <button type="button" class="btn btn-danger btn-sm">
-                                                    <span class="glyphicon glyphicon-remove"></span> Borrar
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </td>
-                                </tr>
-                                
-                                <tr>
-                                    <td>EJ1 / PR1.1</td>
-                                    <td>LA1.1.1</td>
-                                    <td>Línea de Acción 1.1.1</td>
-                                    <td>Realizar acciones de rehabilitación de los servicios públicos básicos para su atención a emergencias, así como para avanzar en la sustitución de las redes en prevención de su colapso.</td>
-                                    <td>
-                                        <div class="btn-toolbar" role="toolbar">
-                                            <div class="btn-group">
-                                                <button type="button" class="btn btn-default btn-sm">
-                                                    <span class="glyphicon glyphicon-edit"></span> Editar
-                                                </button>
-
-                                                <button type="button" class="btn btn-danger btn-sm">
-                                                    <span class="glyphicon glyphicon-remove"></span> Borrar
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>EJ1</td>
-                                    <td>PR1.2</td>
-                                    <td>Programa 1.2</td>
-                                    <td>Infraestructura social para el bienestar</td>
-                                    <td>
-                                        <div class="btn-toolbar" role="toolbar">
-                                            <div class="btn-group">
-                                                <button type="button" class="btn btn-default btn-sm">
-                                                    <span class="glyphicon glyphicon-edit"></span> Editar
-                                                </button>
-
-                                                <button type="button" class="btn btn-danger btn-sm">
-                                                    <span class="glyphicon glyphicon-remove"></span> Borrar
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </td>
-                                </tr>
-                                
-                                <tr>
-                                    <td>Ninguna</td>
-                                    <td>EJ2</td>
-                                    <td>Eje 2</td>
-                                    <td>Municipio con seguridad y confianza</td>
-                                    <td>
-                                        <div class="btn-toolbar" role="toolbar">
-                                            <div class="btn-group">
-                                                <button type="button" class="btn btn-default btn-sm">
-                                                    <span class="glyphicon glyphicon-edit"></span> Editar
-                                                </button>
-
-                                                <button type="button" class="btn btn-danger btn-sm">
-                                                    <span class="glyphicon glyphicon-remove"></span> Borrar
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </td>
-                                </tr>
-                                
-                            </tbody>
                         </table>
                     </div>
                 </div>

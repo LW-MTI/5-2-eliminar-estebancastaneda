@@ -67,7 +67,7 @@ public class ConsultarUsuariorol extends HttpServlet {
         response.setHeader("Cache-Control", "no-store");
         PrintWriter p = response.getWriter();
         
-        p.write(ejb.consultarUsuariorol());
+        p.write("{\"data\": " + ejb.consultarUsuariorol() + "}");
     }
 
     /**

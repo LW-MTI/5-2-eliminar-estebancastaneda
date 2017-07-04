@@ -42,6 +42,7 @@ public class EjbPmd {
     // Add business logic below. (Right-click in editor and choose
     // "Insert Code > Add Business Method")
     public String insertarEntidad(String clave, String nombre, String abrev) {
+        String msg;
         Entidad entidad = new Entidad();
 
         entidad.setClaveent(clave);
@@ -50,9 +51,9 @@ public class EjbPmd {
 
         try {
             em.persist(entidad);
-            return "{msg:'OK. Entidad insertada correctamente.'}";
+            return "{\"msg\": \"OK. Entidad insertada correctamente.\"}";
         } catch (Exception e) {
-            return "{msg:'ERROR: No se pudo insertar la Entidad.\n" + e.getMessage() + "'}";
+            return "{\"msg\": \"ERROR: No se pudo insertar la Entidad.\n" + e.getMessage() + "\"}";
         }
     }
 

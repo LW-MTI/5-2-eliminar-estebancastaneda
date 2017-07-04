@@ -9,9 +9,35 @@ and open the template in the editor.
         <title>PMD-Municipios</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+        <script src="//code.jquery.com/jquery-1.12.4.js"></script>
+        <script src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.15/css/jquery.dataTables.min.css">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <script>
+            $(document).ready(function () {
+                $('#tbMunicipios').DataTable({
+                    "ajax": "ConsultarMunicipios",
+                    "columns": [
+                        {"data": "idmun", "visible": false},
+                        {"data": "ident.claveent"},
+                        {"data": "ident.abrevent"},
+                        {"data": "clavemun"},
+                        {"data": "nombremun"},
+                        {"data": function (r1) {
+                                //var r = r1['id'] + "-" + r1['name'];
+                                var botones = "<button id='btnBorrar' class='btn btn-sm btn-danger' \n\
+                                                            onClick=''>Borrar</button>";
+                                botones += "<button id='btnEditar' class='btn btn-sm btn-warning' \n\
+                                                        onClick=''>Editar</button>";
+                                return botones;
+                            }
+                        }
+                    ]
+                });
+            });
+        </script>
     </head>
     <body>
         <div class="container">
@@ -46,137 +72,31 @@ and open the template in the editor.
                             <input class="form-control" type="text" name="nombremun" id="nombremun"/>
                         </div>
                         <div class="form-group">
-                            <label for="abrevmun">Abreviación Municipio:</label>
-                            <input class="form-control" type="text" name="abrevmun" id="abrevmun"/>
-                        </div>
-                        <div class="form-group">
                             <button type="submit" class="btn btn-success col-sm-offset-4 col-sm-4">
                                 <span class="glyphicon glyphicon-save"></span> Guardar
                             </button>
                         </div>
                     </form>
                 </div>
-                
+
                 <div id="consultaMun" class="tab-pane fade">
                     <br/>
                     <div class="table-responsive">
-                        <table class="table">
+                        <table class="table" id="tbMunicipios">
                             <thead>
                                 <tr>
+                                    <th>ID</th>
                                     <th>Clave Ent.</th>
-                                    <th>Abrev. Ent</th>
+                                    <th>Entidad</th>
                                     <th>Clave Mun.</th>
                                     <th>Nombre Mun.</th>
-                                    <th>Abrev. Mun.</th>
                                     <th>Opciones</th>
                                 </tr>
                             </thead>
-                            <tbody>
-                                <tr>
-                                    <td>01</td>
-                                    <td>Ags.</td>
-                                    <td>001</td>
-                                    <td>Aguascalientes</td>
-                                    <td>Ags.</td>
-                                    <td>
-                                        <div class="btn-toolbar" role="toolbar">
-                                            <div class="btn-group">
-                                                <button type="button" class="btn btn-default btn-sm">
-                                                    <span class="glyphicon glyphicon-edit"></span> Editar
-                                                </button>
-
-                                                <button type="button" class="btn btn-danger btn-sm">
-                                                    <span class="glyphicon glyphicon-remove"></span> Borrar
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>01</td>
-                                    <td>Ags.</td>
-                                    <td>002</td>
-                                    <td>Asientos</td>
-                                    <td></td>
-                                    <td>
-                                        <div class="btn-toolbar" role="toolbar">
-                                            <div class="btn-group">
-                                                <button type="button" class="btn btn-default btn-sm">
-                                                    <span class="glyphicon glyphicon-edit"></span> Editar
-                                                </button>
-
-                                                <button type="button" class="btn btn-danger btn-sm">
-                                                    <span class="glyphicon glyphicon-remove"></span> Borrar
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>01</td>
-                                    <td>Ags.</td>
-                                    <td>003</td>
-                                    <td>Calvillo</td>
-                                    <td>Calv.</td>
-                                    <td>
-                                        <div class="btn-toolbar" role="toolbar">
-                                            <div class="btn-group">
-                                                <button type="button" class="btn btn-default btn-sm">
-                                                    <span class="glyphicon glyphicon-edit"></span> Editar
-                                                </button>
-
-                                                <button type="button" class="btn btn-danger btn-sm">
-                                                    <span class="glyphicon glyphicon-remove"></span> Borrar
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>01</td>
-                                    <td>Ags.</td>
-                                    <td>004</td>
-                                    <td>Cosío</td>
-                                    <td>Cos.</td>
-                                    <td>
-                                        <div class="btn-toolbar" role="toolbar">
-                                            <div class="btn-group">
-                                                <button type="button" class="btn btn-default btn-sm">
-                                                    <span class="glyphicon glyphicon-edit"></span> Editar
-                                                </button>
-
-                                                <button type="button" class="btn btn-danger btn-sm">
-                                                    <span class="glyphicon glyphicon-remove"></span> Borrar
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>01</td>
-                                    <td>Ags.</td>
-                                    <td>005</td>
-                                    <td>Jesús María</td>
-                                    <td>JM</td>
-                                    <td>
-                                        <div class="btn-toolbar" role="toolbar">
-                                            <div class="btn-group">
-                                                <button type="button" class="btn btn-default btn-sm">
-                                                    <span class="glyphicon glyphicon-edit"></span> Editar
-                                                </button>
-
-                                                <button type="button" class="btn btn-danger btn-sm">
-                                                    <span class="glyphicon glyphicon-remove"></span> Borrar
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </td>
-                                </tr>
-                            </tbody>
                         </table>
                     </div>
                 </div>
             </div>
-        </div>
+        </div> <!--div container -->
     </body>
 </html>

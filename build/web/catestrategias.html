@@ -9,9 +9,34 @@ and open the template in the editor.
         <title>PMD-Estrategias</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+        <script src="//code.jquery.com/jquery-1.12.4.js"></script>
+        <script src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.15/css/jquery.dataTables.min.css">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <script>
+            $(document).ready(function () {
+                $('#tbEstrategias').DataTable({
+                    "ajax": "ConsultarEstrategias",
+                    "columns": [
+                        {"data": "idestrategia", "visible": false},
+                        {"data": "claveestrategia"},
+                        {"data": "estrategia"},
+                        {"data": "idobjetivo.claveobjetivo"},
+                        {"data": function (r1) {
+                                //var r = r1['id'] + "-" + r1['name'];
+                                var botones = "<button id='btnBorrar' class='btn btn-sm btn-danger' \n\
+                                                            onClick=''>Borrar</button>";
+                                botones += "<button id='btnEditar' class='btn btn-sm btn-warning' \n\
+                                                        onClick=''>Editar</button>";
+                                return botones;
+                            }
+                        }
+                    ]
+                });
+            });
+        </script>
     </head>
     <body>
         <div class="container">
@@ -64,87 +89,16 @@ and open the template in the editor.
                 <div id="consultaEst" class="tab-pane fade">
                     <br/>
                     <div class="table-responsive">
-                        <table class="table table-hover table-bordered">
+                        <table class="table table-hover table-bordered" id="tbEstrategias">
                             <thead>
                                 <tr>
+                                    <th>ID</th>
+                                    <th>Clave</th>
+                                    <th>Estrategia</th>
                                     <th>Objetivo</th>
-                                    <th>Clave Estrategia</th>
-                                    <th>Nombre Estrategia</th>
-                                    <th>Descrip. Estrategia</th>
                                     <th>Opciones</th>
                                 </tr>
                             </thead>
-                            <tbody>
-                                <tr>
-                                    <td>E1.O1</td>
-                                    <td>E1.O1.ES1</td>
-                                    <td>Estrategia E1.O1.ES1</td>
-                                    <td>Destinar la mayor cantidad de recursos físicos, humanos y financieros en la
-                                        aplicación de las acciones que permitan disminuir el rezago social y los índices de
-                                        marginación y promuevan la inclusión de los grupos vulnerables del municipio de
-                                        Tepic..</td>
-                                    <td>
-                                        <div class="btn-toolbar" role="toolbar">
-                                            <div class="btn-group">
-                                                <button type="button" class="btn btn-default btn-sm">
-                                                    <span class="glyphicon glyphicon-edit"></span> Editar
-                                                </button>
-
-                                                <button type="button" class="btn btn-danger btn-sm">
-                                                    <span class="glyphicon glyphicon-remove"></span> Borrar
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </td>
-                                </tr>
-                                
-                                <tr>
-                                    <td>E1.P1.O1</td>
-                                    <td>E1.P1.O1.ES1</td>
-                                    <td>Estrategia E1.P1.O1.ES1</td>
-                                    <td>Instrumentar políticas públicas amplias para asegurar la dotación de los
-                                        servicios básicos dirigidos a la población del municipio, incluyendo la 
-                                        rehabilitación de las redes de agua potable y alcantarillado, recolección 
-                                        de basura, así como el sistema de alumbrado público, considerando la 
-                                        ampliación de los mismos sistemas.</td>
-                                    <td>
-                                        <div class="btn-toolbar" role="toolbar">
-                                            <div class="btn-group">
-                                                <button type="button" class="btn btn-default btn-sm">
-                                                    <span class="glyphicon glyphicon-edit"></span> Editar
-                                                </button>
-
-                                                <button type="button" class="btn btn-danger btn-sm">
-                                                    <span class="glyphicon glyphicon-remove"></span> Borrar
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </td>
-                                </tr>
-                                
-                                <tr>
-                                <tr>
-                                    <td>E2.O1</td>
-                                    <td>E2.O1.ES1</td>
-                                    <td>Objetivo E2.O1.ES1</td>
-                                    <td>Promover una política de seguridad pública para salvaguardar la integridad de los
-                                        ciudadanos en forma efectiva y con apego a la legalidad.</td>
-                                    <td>
-                                        <div class="btn-toolbar" role="toolbar">
-                                            <div class="btn-group">
-                                                <button type="button" class="btn btn-default btn-sm">
-                                                    <span class="glyphicon glyphicon-edit"></span> Editar
-                                                </button>
-
-                                                <button type="button" class="btn btn-danger btn-sm">
-                                                    <span class="glyphicon glyphicon-remove"></span> Borrar
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </td>
-                                </tr>
-                                
-                            </tbody>
                         </table>
                     </div>
                 </div>

@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>PMD-Administración</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="//code.jquery.com/jquery-1.12.4.js"></script>
+        <script src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.15/css/jquery.dataTables.min.css">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <script>
+            $(document).ready(function () {
+                $('#tbActividades').DataTable({
+                    "ajax": "ConsultarActividades",
+                    "columns": [
+                        {"data": "idactividad", "visible": false},
+                        {"data": "actividad"},
+                        {"data": "fechaini"},
+                        {"data": "fechafin"},
+                        {"data": "latitud"},
+                        {"data": "longitud"},
+                        {"data": "idcat.clavecat"},
+                        {"data": "idusuario.usuario"},
+                        {"data": "iddepe.clavedepe"},
+                        {"data": function (r1) {
+                                //var r = r1['id'] + "-" + r1['name'];
+                                var botones = "<button id='btnBorrar' class='btn btn-sm btn-danger' \n\
+                                                            onClick=''>Borrar</button>";
+                                botones += "<button id='btnEditar' class='btn btn-sm btn-warning' \n\
+                                                        onClick=''>Editar</button>";
+                                return botones;
+                            }
+                        }
+                    ]
+                });
+            });
+        </script>
+    </head>
+    <body>
+        <div class="container">
+            <h2>Actividades</h2>
+            <ul class="nav nav-tabs">
+                <li class="active"><a data-toggle="tab" href="#nuevaActividad">Nueva Actividad</a></li>
+                <li><a data-toggle="tab" href="#consultaActividad">Consulta Actividades</a></li>
+            </ul>
+
+            <div class="tab-content">
+                <div id="nuevaActividad" class="tab-pane fade in active">
+                    <br/><br/>
+                    <form method="GET">
+                        
+                        <div class="form-group">
+                            <label for="actividad">Actividad</label>
+                            <textarea class="form-control" rows="5" name="actividad" id="actividad"></textarea>
+                        </div>
+                        
+                        <div class="form-group col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                            <label for="fechaini">Inicio:</label>
+                            <input class="form-control" type="date" name="fechaini" id="fechaini"/>
+                        </div>
+                        
+                        <div class="form-group col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                            <label for="fechafin">Fin:</label>
+                            <input class="form-control" type="date" name="fechafin" id="fechafin"/>
+                        </div>
+                        
+                        <div class="form-group col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                            <label for="latitud">Latitud:</label>
+                            <input class="form-control" type="number" name="latitud" id="latitud"/>
+                        </div>
+                        
+                        <div class="form-group col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                            <label for="longitud">Longitud:</label>
+                            <input class="form-control" type="number" name="longitud" id="longitud"/>
+                        </div>
+                        
+                        <div class="form-group col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                            <label for="idcat">Categoría:</label>
+                            <select class="form-control" name="idcat" id="idcat">
+                                <option value="0">-</option>
+                                <option value="1">EJ01</option>
+                                <option value="2">EJ01 / PR01</option>
+                                <option value="3">EJ01/ PR02</option>
+                                <option value="4">EJ02</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                            <label for="idusuario">Usuario:</label>
+                            <select class="form-control" name="idusuario" id="idusuario">
+                                <option value="0">-</option>
+                                <option value="1">esteban</option>
+                                <option value="2">pabloalejandro</option>
+                                <option value="3">maparra</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                            <label for="iddepe">Dependencia:</label>
+                            <select class="form-control" name="iddepe" id="iddepe">
+                                <option value="0">-</option>
+                                <option value="1">SIAPA</option>
+                                <option value="2">IMPLAN</option>
+                                <option value="3">DIF</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-success col-sm-offset-4 col-sm-4">
+                                <span class="glyphicon glyphicon-save"></span> Guardar
+                            </button>
+                        </div>
+                    </form>
+                </div>
+                
+                <div id="consultaActividad" class="tab-pane fade">
+                    <br/>
+                    <div class="table-responsive">
+                        <table class="table"  id="tbActividades">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Actividad</th>
+                                    <th>Inicio</th>
+                                    <th>Fin</th>
+                                    <th>Latitud</th>
+                                    <th>Longitud</th>
+                                    <th>Categoría</th>
+                                    <th>Usuario</th>
+                                    <th>Dependencia</th>
+                                    <th>Opciones</th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

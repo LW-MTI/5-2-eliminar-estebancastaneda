@@ -67,7 +67,7 @@ public class ConsultarParticipacion extends HttpServlet {
         response.setHeader("Cache-Control", "no-store");
         PrintWriter p = response.getWriter();
         
-        p.write(ejb.consultarParticipacion());
+        p.write("{\"data\": " + ejb.consultarParticipacion() + "}");
     }
 
     /**

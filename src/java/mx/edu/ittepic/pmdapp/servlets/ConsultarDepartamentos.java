@@ -67,7 +67,7 @@ public class ConsultarDepartamentos extends HttpServlet {
         response.setHeader("Cache-Control", "no-store");
         PrintWriter p = response.getWriter();
         
-        p.write(ejb.consultarDepartamentos());
+        p.write("{\"data\": " + ejb.consultarDepartamentos() + "}");
     }
 
     /**

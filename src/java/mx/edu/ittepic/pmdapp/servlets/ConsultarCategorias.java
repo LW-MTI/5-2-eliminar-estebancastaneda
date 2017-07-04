@@ -67,7 +67,7 @@ public class ConsultarCategorias extends HttpServlet {
         response.setHeader("Cache-Control", "no-store");
         PrintWriter p = response.getWriter();
         
-        p.write(ejb.consultarCategorias());
+        p.write("{\"data\": " + ejb.consultarCategorias() + "}");
     }
 
     /**

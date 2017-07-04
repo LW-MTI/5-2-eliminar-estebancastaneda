@@ -6,7 +6,7 @@ and open the template in the editor.
 -->
 <html>
     <head>
-        <title>PMD-Roles</title>
+        <title>PMD-Usuarios</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <script src="//code.jquery.com/jquery-1.12.4.js"></script>
@@ -17,12 +17,12 @@ and open the template in the editor.
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
         <script>
             $(document).ready(function () {
-                $('#tbRoles').DataTable({
-                    "ajax": "ConsultarRoles",
+                $('#tbUsuarioRol').DataTable({
+                    "ajax": "ConsultarUsuariorol",
                     "columns": [
-                        {"data": "idrol", "visible": false},
-                        {"data": "claverol"},
-                        {"data": "nombrerol"},
+                        {"data": "idusuariorol", "visible": false},
+                        {"data": "idusuario.usuario"},
+                        {"data": "idrol.nombrerol"},
                         {"data": function (r1) {
                                 //var r = r1['id'] + "-" + r1['name'];
                                 var botones = "<button id='btnBorrar' class='btn btn-sm btn-danger' \n\
@@ -39,30 +39,35 @@ and open the template in the editor.
     </head>
     <body>
         <div class="container">
-            <h2>Catálogo de Roles</h2>
+            <h2>Usuario - Rol</h2>
            <hr/>
             <ul class="nav nav-tabs">
-                <li class="active"><a data-toggle="tab" href="#nuevoRol">Nuevo Rol</a></li>
-                <li><a data-toggle="tab" href="#consultaRol">Consulta Roles</a></li>
+                <li class="active"><a data-toggle="tab" href="#nuevoUsuarioRol">Nuevo Usuario-Rol</a></li>
+                <li><a data-toggle="tab" href="#consultaUsuarioRol">Consulta Usuario-Rol</a></li>
             </ul>
 
             <div class="tab-content">
-                <div id="nuevoRol" class="tab-pane fade in active">
+                <div id="nuevoUsuarioRol" class="tab-pane fade in active">
                     <br/><br/>
                     <form method="GET">
                         <div class="form-group">
-                            <label for="claverol">Clave Rol</label>
-                            <input class="form-control" type="text" name="claverol" id="claverol"/>
+                            <label for="idusuario">Usuario:</label>
+                            <select class="form-control" name="idusuario" id="idusuario">
+                                <option value="0">-</option>
+                                <option value="1">esteban</option>
+                                <option value="2">pabloalejandro</option>
+                                <option value="3">maparra</option>
+                            </select>
                         </div>
                         
                         <div class="form-group">
-                            <label for="nombrerol">Nombre Rol</label>
-                            <input class="form-control" type="text" name="nombrerol" id="nombrerol"/>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="descriprol">Descripción Rol</label>
-                            <input class="form-control" type="text" name="descriprol" id="descriprol"/>
+                            <label for="idrol">Rol:</label>
+                            <select class="form-control" name="idrol" id="idrol">
+                                <option value="0">-</option>
+                                <option value="1">Administrador</option>
+                                <option value="2">Responsable de Área</option>
+                                <option value="3">Enlace</option>
+                            </select>
                         </div>
                         
                         <div class="form-group">
@@ -74,15 +79,15 @@ and open the template in the editor.
                     </form>
                 </div>
                 
-                <div id="consultaRol" class="tab-pane fade">
+                <div id="consultaUsuarioRol" class="tab-pane fade">
                     <br/>
                     <div class="table-responsive">
-                        <table class="table table-hover table-bordered" id="tbRoles">
+                        <table class="table table-hover table-bordered" id="tbUsuarioRol">
                             <thead>
                                 <tr>
                                     <th>ID</th>
-                                    <th>Clave</th>
-                                    <th>Nombre</th>
+                                    <th>Usuario</th>
+                                    <th>Rol</th>
                                     <th>Opciones</th>
                                 </tr>
                             </thead>

@@ -6,7 +6,7 @@ import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
 import mx.edu.ittepic.pmdapp.entidades.Usuariorol;
 
-@Generated(value="EclipseLink-2.5.2.v20140319-rNA", date="2017-06-23T21:28:45")
+@Generated(value="EclipseLink-2.5.2.v20140319-rNA", date="2017-06-28T22:37:05")
 @StaticMetamodel(Rol.class)
 public class Rol_ { 
 

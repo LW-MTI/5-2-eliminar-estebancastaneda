@@ -9,9 +9,34 @@ and open the template in the editor.
         <title>PMD-Objetivos</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+        <script src="//code.jquery.com/jquery-1.12.4.js"></script>
+        <script src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.15/css/jquery.dataTables.min.css">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <script>
+            $(document).ready(function () {
+                $('#tbObjetivos').DataTable({
+                    "ajax": "ConsultarObjetivos",
+                    "columns": [
+                        {"data": "idobjetivo", "visible": false},
+                        {"data": "claveobjetivo"},
+                        {"data": "objetivo"},
+                        {"data": "idcat.clavecat"},
+                        {"data": function (r1) {
+                                //var r = r1['id'] + "-" + r1['name'];
+                                var botones = "<button id='btnBorrar' class='btn btn-sm btn-danger' \n\
+                                                            onClick=''>Borrar</button>";
+                                botones += "<button id='btnEditar' class='btn btn-sm btn-warning' \n\
+                                                        onClick=''>Editar</button>";
+                                return botones;
+                            }
+                        }
+                    ]
+                });
+            });
+        </script>
     </head>
     <body>
         <div class="container">
@@ -64,82 +89,16 @@ and open the template in the editor.
                 <div id="consultaObj" class="tab-pane fade">
                     <br/>
                     <div class="table-responsive">
-                        <table class="table table-hover table-bordered">
+                        <table class="table table-hover table-bordered" id="tbObjetivos">
                             <thead>
                                 <tr>
-                                    <th>Categoría Objetivo</th>
-                                    <th>Clave Objetivo</th>
-                                    <th>Nombre Objetivo</th>
-                                    <th>Descrip. Objetivo</th>
+                                    <th>ID</th>
+                                    <th>Clave</th>
+                                    <th>Objetivo</th>
+                                    <th>Categoría</th>
                                     <th>Opciones</th>
                                 </tr>
                             </thead>
-                            <tbody>
-                                <tr>
-                                    <td>E1</td>
-                                    <td>E1.O1</td>
-                                    <td>Objetivo E1.O1</td>
-                                    <td>Mejorar el bienestar de la población mediante servicios públicos de calidad e infraestructura 
-                                        social, con énfasis en la inclusión social de los grupos vulnerables e identidad territorial.</td>
-                                    <td>
-                                        <div class="btn-toolbar" role="toolbar">
-                                            <div class="btn-group">
-                                                <button type="button" class="btn btn-default btn-sm">
-                                                    <span class="glyphicon glyphicon-edit"></span> Editar
-                                                </button>
-
-                                                <button type="button" class="btn btn-danger btn-sm">
-                                                    <span class="glyphicon glyphicon-remove"></span> Borrar
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </td>
-                                </tr>
-                                
-                                <tr>
-                                    <td>E1.P1</td>
-                                    <td>E1.P1.O1</td>
-                                    <td>Objetivo E1.P1.O1</td>
-                                    <td>Dotar a la población de servicios públicos con amplia cobertura y elevados niveles de calidad,
-                                        para disminiuir los desequilibrios sociales entre las diferentes zonas de la ciudad y el municipio.</td>
-                                    <td>
-                                        <div class="btn-toolbar" role="toolbar">
-                                            <div class="btn-group">
-                                                <button type="button" class="btn btn-default btn-sm">
-                                                    <span class="glyphicon glyphicon-edit"></span> Editar
-                                                </button>
-
-                                                <button type="button" class="btn btn-danger btn-sm">
-                                                    <span class="glyphicon glyphicon-remove"></span> Borrar
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </td>
-                                </tr>
-                                
-                                <tr>
-                                <tr>
-                                    <td>E2</td>
-                                    <td>E2.O1</td>
-                                    <td>Objetivo E2.O1</td>
-                                    <td>Promover una política de seguridad pública para salvaguardar la integridad de los
-                                        ciudadanos en forma efectiva y con apego a la legalidad.</td>
-                                    <td>
-                                        <div class="btn-toolbar" role="toolbar">
-                                            <div class="btn-group">
-                                                <button type="button" class="btn btn-default btn-sm">
-                                                    <span class="glyphicon glyphicon-edit"></span> Editar
-                                                </button>
-
-                                                <button type="button" class="btn btn-danger btn-sm">
-                                                    <span class="glyphicon glyphicon-remove"></span> Borrar
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </td>
-                                </tr>
-                                
-                            </tbody>
                         </table>
                     </div>
                 </div>
