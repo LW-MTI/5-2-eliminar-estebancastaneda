@@ -77,23 +77,18 @@ public class InsertarCategoriaplan extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
+        request.setCharacterEncoding("UTF-8");
         response.setContentType("application/json; charset=UTF-8");
         response.setHeader("Cache-Control", "no-store");
         PrintWriter p = response.getWriter();
         
-        String clave = request.getParameter("clavecat");
-        String nombre = request.getParameter("nombrecat");
-        String descrip = request.getParameter("descripcat");
-        try{
-            //int idcatpadre = Integer.parseInt(request.getParameter("idcatpadre"));
-            String sIdcatpadre = request.getParameter("idcatpadre");
-            int idcatpadre = sIdcatpadre != null? Integer.parseInt(sIdcatpadre):0;
-            int idplan = Integer.parseInt(request.getParameter("idplan"));
-            
-            p.write(ejb.insertarCategoriaplan(clave, nombre, idcatpadre, idplan, descrip));
-        }catch(NumberFormatException e){
-            p.write("{msg:'ERROR: Los ID de Categoría Padre o del Plan, deben ser numéricos.'}");
-        }
+        String clavecat = request.getParameter("clavecat");
+        String nombrecat = request.getParameter("nombrecat");
+        String descripcat = request.getParameter("descripcat");
+        String idcatpadre = request.getParameter("idcatpadre");
+        String idplan = request.getParameter("idplan");
+        
+        p.write(ejb.insertarCategoriaplan(clavecat, nombrecat, idcatpadre, idplan, descripcat));
     }
 
     /**

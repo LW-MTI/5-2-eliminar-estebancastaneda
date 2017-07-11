@@ -78,18 +78,15 @@ public class InsertarAdmondepe extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
+        request.setCharacterEncoding("UTF-8");
         response.setContentType("application/json; charset=UTF-8");
         response.setHeader("Cache-Control", "no-store");
         PrintWriter p = response.getWriter();
 
-        try {
-            int idadmon = Integer.parseInt(request.getParameter("idadmon"));
-            int iddepe = Integer.parseInt(request.getParameter("iddepe"));
+            String idadmon = request.getParameter("idadmon");
+            String iddepe = request.getParameter("iddepe");
 
             p.write(ejb.insertarAdmondepe(idadmon, iddepe));
-        } catch (NumberFormatException e) {
-            p.write("{msg:'ERROR: Los ID de Administración y Dependencia deben ser numéricos.\n" + e.getMessage() + "'}");
-        }
     }
 
     /**

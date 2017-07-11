@@ -37,7 +37,102 @@ and open the template in the editor.
                         }
                     ]
                 });
+                
+                $('#frmInsertar').validate({
+                    rules: {
+                        idplan: {required: true},
+                        idcatpadre: {required: true},
+                        clavecat: {required: true},
+                        nombrecat: {required: true},
+                        descripcat: {required: true}
+                    },
+                    messages: {
+                        idplan: {required: 'El Plan es requerido'},
+                        idcatpadre: {required: 'La Categoría Padre es requerida'},
+                        clavecat: {required: 'La clave es requerida'},
+                        nombrecat: {required: 'El nombre es requerido'},
+                        descripcat: {required: 'La descripción es requerida'}
+                    },
+                    highlight: function (element) {
+                        $(element).closest('.form-group').addClass('has-error');
+                    },
+                    unhighlight: function (element) {
+                        $(element).closest('.form-group').removeClass('has-error');
+                    },
+                    errorElement: 'span',
+                    errorClass: 'help-block',
+                    errorPlacement: function (error, element) {
+                        if (element.parent('.input-group'.length)) {
+                            error.insertAfter(element.parent());
+                        } else {
+                            error.insertAfter(element);
+                        }
+                    },
+                    submitHandler: function (form) {
+                        console.log('InsertarCategoríaplan - Formulario válido.');
+                        //alert('Formulario válido.');
+                        // llamar función para insertar registro
+                        newCategoriaplan();
+                        return false;
+                    }
+                });
+
+                /*Llenar select (combo box)*/
+                $.getJSON('ConsultarPlanes', function (data) {
+                    $.each(data, function (data, element) {
+                        for (i = 0; i < element.length; i++) {
+                            $('#idplan').append("<option value='" + element[i].idplan + "'>" +
+                                    element[i].nombreplan + " (" + element[i].claveplan + ")</option>");
+                        }
+                    });
+                });
+                
+                /*Llenar select dependiente (combo box)*/
+                $('#idplan').change(function () {
+                    $('#idcatpadre').empty();
+                    $('#idcatpadre').append("<option value='0'>Ninguna</option>");
+                    $.getJSON("ConsultarCategoriasXIdplan", {idplan: $('#idplan').val()}, function (data) {
+                        $.each(data, function (key, element) {
+                            for (i = 0; i < element.length; i++) {
+                                $('#idcatpadre').append("<option value='" + element[i].idcat + "'>" +
+                                        element[i].nombrecat + " (" + element[i].clavecat + ")</option>");
+                            }
+                        });
+                    });
+                });
+
             });
+            
+            function newCategoriaplan() {
+                if ($('#idplan').val() <= 0) {
+                    alert("¡Debe elegir un Plan Municipal de Desarrollo!");
+                    $('#idplan').focus();
+                    return;
+                } else {
+                    $.ajax({
+                        url: "InsertarCategoriaplan",
+                        type: "POST",
+                        data: {
+                            idplan: $('#idplan').val(),
+                            idcatpadre: $('#idcatpadre').val(),
+                            clavecat: $('#clavecat').val(),
+                            nombrecat: $('#nombrecat').val(),
+                            descripcat: $('#descripcat').val()
+                        }
+                    }).done(function (json) {
+                        alert(json.msg);
+                        $('#idplan').val(0);
+                        $('#idcatpadre').val(0);
+                        $('#clavecat').val("");
+                        $('#nombrecat').val("");
+                        $('#descripcat').val("");
+                        $('#tbCategorias').dataTable().api().ajax.reload();
+                    }).fail(function (json) {
+                        alert(json.msg);
+                    });
+                }
+
+            }
         </script>
     </head>
     <body>
@@ -53,19 +148,20 @@ and open the template in the editor.
             <div class="tab-content">
                 <div id="nuevaCat" class="tab-pane fade in active">
                     <br/><br/>
-                    <form method="GET">
-                        <input type="hidden" id="idplan" name="idplan" value="1"/>
+                    <form method="POST" id="frmInsertar">
+<!--                        <input type="hidden" id="idplan" name="idplan" value="1"/>-->
+                        
+                        <div class="form-group">
+                            <label for="idplan">Plan Municipal de Desarrollo:</label>
+                            <select class="form-control" name="idplan" id="idplan">
+                                <option value="0">Seleccione...</option>
+                            </select>
+                        </div>
                         
                         <div class="form-group">
                             <label for="idcatpadre">Categoría Padre:</label>
                             <select class="form-control" name="idcatpadre" id="idcatpadre">
-                                <option value="">-</option>
                                 <option value="0">Ninguna</option>
-                                <option value="1">Eje 1</option>
-                                <option value="2">Eje 1/ Programa 1</option>
-                                <option value="3">Eje 1/ Programa 1/Línea de Acción 1</option>
-                                <option value="4">Eje 1/ Programa 2</option>
-                                <option value="5">Eje 2</option>
                             </select>
                         </div>
                         

@@ -77,22 +77,18 @@ public class InsertarUsuario extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
+        
+        request.setCharacterEncoding("UTF-8");
         response.setContentType("application/json; charset=UTF-8");
         response.setHeader("Cache-Control", "no-store");
         PrintWriter p = response.getWriter();
 
-        try {
             String usuario = request.getParameter("usuario");
             String contrasena = request.getParameter("contrasena");
-            int idemp = Integer.parseInt(request.getParameter("idemp"));
+            String idemp = request.getParameter("idemp");
             
             p.write(ejb.insertarUsuario(usuario, contrasena, idemp));
             
-        } catch (NumberFormatException e) {
-            p.write("{msg:'ERROR: El ID del Empleado debe ser numérico.'}");
-        }
-
     }
 
     /**

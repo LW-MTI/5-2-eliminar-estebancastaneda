@@ -21,6 +21,7 @@ import mx.edu.ittepic.pmdapp.ejbs.EjbPmd;
  */
 @WebServlet(name = "InsertarUsuariorol", urlPatterns = {"/InsertarUsuariorol"})
 public class InsertarUsuariorol extends HttpServlet {
+
     @EJB
     private EjbPmd ejb;
 
@@ -41,7 +42,7 @@ public class InsertarUsuariorol extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet InsertarUsuariorol</title>");            
+            out.println("<title>Servlet InsertarUsuariorol</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet InsertarUsuariorol at " + request.getContextPath() + "</h1>");
@@ -76,19 +77,15 @@ public class InsertarUsuariorol extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+
         response.setContentType("application/json; charset=UTF-8");
         response.setHeader("Cache-Control", "no-store");
         PrintWriter p = response.getWriter();
-        
-        try{
-            int idusuario = Integer.parseInt(request.getParameter("idusuario"));
-            int idrol = Integer.parseInt(request.getParameter("idrol"));
-            
-            p.write(ejb.insertarUsuariorol(idusuario, idrol));
-        }catch(NumberFormatException e){
-            p.write("{msg:'ERROR: El ID de Usuario o de Rol deben ser numéricos.'}");
-        }
+
+        String idusuario = request.getParameter("idusuario");
+        String idrol = request.getParameter("idrol");
+
+        p.write(ejb.insertarUsuariorol(idusuario, idrol));
     }
 
     /**

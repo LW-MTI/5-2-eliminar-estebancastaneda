@@ -77,19 +77,17 @@ public class InsertarDepartamento extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
+        
+        request.setCharacterEncoding("UTF-8");
         response.setContentType("application/json; charset=UTF-8");
         response.setHeader("Cache-Control", "no-store");
         PrintWriter p = response.getWriter();
 
+        String iddepe = request.getParameter("iddepe");
         String clave = request.getParameter("clavedepto");
         String nombre = request.getParameter("nombredepto");
-        try {
-            int iddepe = Integer.parseInt(request.getParameter("iddepe"));
-            p.write(ejb.insertarDepartamento(clave, nombre, iddepe));
-        }catch(Exception e){
-            p.write("{msg:'ERROR: El ID de la Dependencia debe ser numérico.'}");
-        }
+        
+        p.write(ejb.insertarDepartamento(clave, nombre, iddepe));
     }
 
     /**

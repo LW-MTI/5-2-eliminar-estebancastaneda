@@ -21,6 +21,7 @@ import mx.edu.ittepic.pmdapp.ejbs.EjbPmd;
  */
 @WebServlet(name = "InsertarPlan", urlPatterns = {"/InsertarPlan"})
 public class InsertarPlan extends HttpServlet {
+
     @EJB
     private EjbPmd ejb;
 
@@ -41,7 +42,7 @@ public class InsertarPlan extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet InsertarPlan</title>");            
+            out.println("<title>Servlet InsertarPlan</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet InsertarPlan at " + request.getContextPath() + "</h1>");
@@ -76,20 +77,16 @@ public class InsertarPlan extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+
         response.setContentType("application/json; charset=UTF-8");
         response.setHeader("Cache-Control", "no-store");
         PrintWriter p = response.getWriter();
-        
+
         String clave = request.getParameter("claveplan");
         String nombre = request.getParameter("nombreplan");
-        
-        try{
-            int idadmon = Integer.parseInt(request.getParameter("idadmon"));
-            p.write(ejb.insertarPlan(clave, nombre, idadmon));
-        }catch(NumberFormatException e){
-            p.write("{msg:'ERROR: El ID de la Administración debe ser numérico.'}");
-        }
+        String idadmon = request.getParameter("idadmon");
+
+        p.write(ejb.insertarPlan(clave, nombre, idadmon));
     }
 
     /**

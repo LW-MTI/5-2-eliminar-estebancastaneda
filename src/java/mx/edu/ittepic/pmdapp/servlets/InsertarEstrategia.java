@@ -21,6 +21,7 @@ import mx.edu.ittepic.pmdapp.ejbs.EjbPmd;
  */
 @WebServlet(name = "InsertarEstrategia", urlPatterns = {"/InsertarEstrategia"})
 public class InsertarEstrategia extends HttpServlet {
+
     @EJB
     private EjbPmd ejb;
 
@@ -41,7 +42,7 @@ public class InsertarEstrategia extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet InsertarEstrategia</title>");            
+            out.println("<title>Servlet InsertarEstrategia</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet InsertarEstrategia at " + request.getContextPath() + "</h1>");
@@ -76,20 +77,17 @@ public class InsertarEstrategia extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+
         request.setCharacterEncoding("UTF-8");
         response.setContentType("application/json; charset=UTF-8");
         response.setHeader("Cache-Control", "no-store");
         PrintWriter p = response.getWriter();
-        
+
         String clave = request.getParameter("claveestrategia");
         String estrategia = request.getParameter("estrategia");
-        try{
-            int idobj = Integer.parseInt(request.getParameter("idobjetivo"));
-            p.write(ejb.insertarEstrategia(clave, estrategia, idobj));
-        }catch(NumberFormatException e){
-            p.write("{msg:'ERROR: El ID de Objetivo debe ser numérico.'}");
-        }
+        String idobjetivo = request.getParameter("idobjetivo");
+
+        p.write(ejb.insertarEstrategia(clave, estrategia, idobjetivo));
     }
 
     /**

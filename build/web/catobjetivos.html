@@ -35,7 +35,87 @@ and open the template in the editor.
                         }
                     ]
                 });
+
+                $('#frmInsertar').validate({
+                    rules: {
+                        idcat: {required: true},
+                        claveobjetivo: {required: true},
+                        objetivo: {required: true}
+                    },
+                    messages: {
+                        idcat: {required: 'La Categoría es requerida'},
+                        claveobjetivo: {required: 'La clave es requerida'},
+                        objetivo: {required: 'El Objetivo es requerido'}
+                    },
+                    highlight: function (element) {
+                        $(element).closest('.form-group').addClass('has-error');
+                    },
+                    unhighlight: function (element) {
+                        $(element).closest('.form-group').removeClass('has-error');
+                    },
+                    errorElement: 'span',
+                    errorClass: 'help-block',
+                    errorPlacement: function (error, element) {
+                        if (element.parent('.input-group'.length)) {
+                            error.insertAfter(element.parent());
+                        } else {
+                            error.insertAfter(element);
+                        }
+                    },
+                    submitHandler: function (form) {
+                        console.log('Formulario válido.');
+                        //alert('Formulario válido.');
+                        // llamar función para insertar registro
+                        newObjetivo();
+                        return false;
+                    }
+                });
+                
+                /*Llenar select (combo box)*/
+                $.getJSON('ConsultarPlanes', function (data) {
+                    $.each(data, function (data, element) {
+                        for (i = 0; i < element.length; i++) {
+                            $('#idplan').append("<option value='" + element[i].idplan + "'>" +
+                                    element[i].nombreplan + " (" + element[i].claveplan + ")</option>");
+                        }
+                    });
+                });
+                
+                /*Llenar select dependiente (combo box)*/
+                $('#idplan').change(function () {
+                    $('#idcat').empty();
+                    $('#idcat').append("<option value='0'>Seleccione...</option>");
+                    $.getJSON("ConsultarCategoriasXIdplan", {idplan: $('#idplan').val()}, function (data) {
+                        $.each(data, function (key, element) {
+                            for (i = 0; i < element.length; i++) {
+                                $('#idcat').append("<option value='" + element[i].idcat + "'>" +
+                                        element[i].nombrecat + " (" + element[i].clavecat + ")</option>");
+                            }
+                        });
+                    });
+                });
             });
+            
+            function newObjetivo() {
+                $.ajax({
+                    url: "InsertarObjetivo",
+                    type: "POST",
+                    data: {
+                        idcat: $('#idcat').val(),
+                        claveobjetivo: $('#claveobjetivo').val(),
+                        objetivo: $('#objetivo').val()
+                    }
+                }).done(function (json) {
+                    alert(json.msg);
+                    $('#idcat').val(0);
+                    $('#claveobjetivo').val("");
+                    $('#objetivo').val("");
+                    $('#tbObjetivos').dataTable().api().ajax.reload();
+                }).fail(function (json) {
+                    alert(json.msg);
+                });
+            }
+            
         </script>
     </head>
     <body>
@@ -50,31 +130,29 @@ and open the template in the editor.
             <div class="tab-content">
                 <div id="nuevoObj" class="tab-pane fade in active">
                     <br/><br/>
-                    <form method="GET">
+                    <form method="POST" id="frmInsertar">
                         <div class="form-group">
-                            <label for="idcat">Categoría:</label>
-                            <select class="form-control" name="idcat" id="idcat">
-                                <option value="0">-</option>
-                                <option value="1">EJ01</option>
-                                <option value="2">EJ01 / PR01</option>
-                                <option value="3">EJ01/ PR02</option>
-                                <option value="4">EJ02</option>
+                            <label for="idplan">Plan:</label>
+                            <select class="form-control" name="idplan" id="idplan">
+                                <option value="0">Seleccione...</option>
                             </select>
                         </div>
                         
                         <div class="form-group">
-                            <label for="claveobj">Clave Objetivo:</label>
-                            <input class="form-control" type="text" name="claveobj" id="claveobj"/>
+                            <label for="idcat">Categoría:</label>
+                            <select class="form-control" name="idcat" id="idcat">
+                                <option value="0">Seleccione...</option>
+                            </select>
                         </div>
                         
                         <div class="form-group">
-                            <label for="nombreobj">Nombre Objetivo:</label>
-                            <input class="form-control" type="text" name="nombreobj" id="nombreobj"/>
+                            <label for="claveobjetivo">Clave Objetivo:</label>
+                            <input class="form-control" type="text" name="claveobjetivo" id="claveobjetivo"/>
                         </div>
                         
                         <div class="form-group">
-                            <label for="descripobj">Descripción Objetivo:</label>
-                            <input class="form-control" type="text" name="descripobj" id="descripobj"/>
+                            <label for="objetivo">Objetivo:</label>
+                            <input class="form-control" type="text" name="objetivo" id="objetivo"/>
                         </div>
                         
                         <div class="form-group">

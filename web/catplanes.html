@@ -37,7 +37,111 @@ and open the template in the editor.
                         }
                     ]
                 });
+
+                $('#frmInsertar').validate({
+                    rules: {
+                        idadmon: {required: true},
+                        claveplan: {required: true},
+                        nombreplan: {required: true}
+                    },
+                    messages: {
+                        idadmon: {required: 'La Administración es requerida'},
+                        claveplan: {required: 'La clave es requerida'},
+                        nombreplan: {required: 'El nombre es requerido'}
+                    },
+                    highlight: function (element) {
+                        $(element).closest('.form-group').addClass('has-error');
+                    },
+                    unhighlight: function (element) {
+                        $(element).closest('.form-group').removeClass('has-error');
+                    },
+                    errorElement: 'span',
+                    errorClass: 'help-block',
+                    errorPlacement: function (error, element) {
+                        if (element.parent('.input-group'.length)) {
+                            error.insertAfter(element.parent());
+                        } else {
+                            error.insertAfter(element);
+                        }
+                    },
+                    submitHandler: function (form) {
+                        console.log('InsertarPlan - Formulario válido.');
+                        //alert('Formulario válido.');
+                        // llamar función para insertar registro
+                        newPlan();
+                        return false;
+                    }
+                });
+
+                /*Llenar select (combo box)*/
+                $.getJSON('ConsultarEntidades', function (data) {
+                    $.each(data, function (data, element) {
+                        for (i = 0; i < element.length; i++) {
+                            $('#ident').append("<option value='" + element[i].ident + "'>" +
+                                    element[i].nombreent + " (" + element[i].claveent + ")</option>");
+                        }
+                    });
+                });
+
+                /*Llenar select dependiente (combo box)*/
+                $('#ident').change(function () {
+                    $('#idmun').empty();
+                    $('#idmun').append("<option value='0'>Seleccione...</option>");
+                    $('#idadmon').empty();
+                    $('#idadmon').append("<option value='0'>Seleccione...</option>");
+                    $.getJSON("ConsultarMunicipiosXIdent", {ident: $('#ident').val()}, function (data) {
+                        $.each(data, function (key, element) {
+                            for (i = 0; i < element.length; i++) {
+                                $('#idmun').append("<option value='" + element[i].idmun + "'>" +
+                                        element[i].nombremun + " (" + element[i].clavemun + ")</option>");
+                            }
+                        });
+                    });
+                });
+
+                /*Llenar select dependiente (combo box)*/
+                $('#idmun').change(function () {
+                    $('#idadmon').empty();
+                    $('#idadmon').append("<option value='0'>Seleccione...</option>");
+                    $.getJSON("ConsultarAdministracionesXIdmun", {idmun: $('#idmun').val()}, function (data) {
+                        $.each(data, function (key, element) {
+                            for (i = 0; i < element.length; i++) {
+                                $('#idadmon').append("<option value='" + element[i].idadmon + "'>" +
+                                        element[i].claveadmon + " - " + element[i].nombreadmon + "</option>");
+                            }
+                        });
+                    });
+                });
+
             });
+            
+            function newPlan() {
+                if ($('#idadmon').val() <= 0) {
+                    alert("¡Debe elegir una Administración!");
+                    $('#idadmon').focus();
+                    return;
+                } else {
+                    $.ajax({
+                        url: "InsertarPlan",
+                        type: "POST",
+                        data: {
+                            idadmon: $('#idadmon').val(),
+                            claveplan: $('#claveplan').val(),
+                            nombreplan: $('#nombreplan').val()
+                        }
+                    }).done(function (json) {
+                        alert(json.msg);
+                        $('#idadmon').val(0);
+                        $('#claveplan').val("");
+                        $('#nombreplan').val("");
+                        $('#tbPlanes').dataTable().api().ajax.reload();
+                    }).fail(function (json) {
+                        alert(json.msg);
+                    });
+                }
+
+            }
+
         </script>
     </head>
     <body>
@@ -51,30 +155,45 @@ and open the template in the editor.
             <div class="tab-content">
                 <div id="nuevoPlan" class="tab-pane fade in active">
                     <br/><br/>
-                    <form method="GET">
+                    <form method="POST" id="frmInsertar">
+
+                        <div class="form-group">
+                            <label for="ident">Entidad:</label>
+                            <select class="form-control" name="ident" id="ident">
+                                <option value="0">Seleccione...</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="idmun">Municipio:</label>
+                            <select class="form-control" name="idmun" id="idmun">
+                                <option value="0">Seleccione...</option>
+                            </select>
+                        </div>
+
                         <div class="form-group">
                             <label for="idadmon">Administración Municipal:</label>
                             <select class="form-control" name="idadmon" id="idadmon">
-                                <option value="0">-</option>
-                                <option value="1">Gobierno Municipal 2014-2017</option>
-                                <option value="2">H. XXXIX Ayuntamiento de Tepic, Nay.</option>
-                                <option value="3">H. XXXVIII Ayuntamiento de Tepic.</option>
-                                <option value="4">H. XXXVII Ayuntamiento de Tepic.</option>
+                                <option value="0">Seleccione...</option>
                             </select>
                         </div>
+
                         <div class="form-group">
                             <label for="claveplan">Clave Plan:</label>
                             <input class="form-control" type="text" name="claveplan" id="claveplan"/>
                         </div>
+
                         <div class="form-group">
                             <label for="nombreplan">Nombre Plan:</label>
                             <input class="form-control" type="text" name="nombreplan" id="nombreplan"/>
                         </div>
+
                         <div class="form-group">
                             <button type="submit" class="btn btn-success col-sm-offset-4 col-sm-4">
                                 <span class="glyphicon glyphicon-save"></span> Guardar
                             </button>
                         </div>
+
                     </form>
                 </div>
 

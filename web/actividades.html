@@ -40,7 +40,113 @@ and open the template in the editor.
                         }
                     ]
                 });
+
+                $('#frmInsertar').validate({
+                    rules: {
+                        actividad: {required: true},
+                        fechaini: {required: true},
+                        fechafin: {required: true},
+                        latitud: {required: true},
+                        longitud: {required: true},
+                        idcat: {required: true},
+                        idusuario: {required: true},
+                        iddepe: {required: true}
+                    },
+                    messages: {
+                        actividad: {required: "La Actividad es requerida"},
+                        fechaini: {required: "La fecha de inicio es requerida"},
+                        fechafin: {required: "La fecha final es requerida"},
+                        latitud: {required: "La latitud es requerida"},
+                        longitud: {required: "La longitud es requerida"},
+                        idcat: {required: "La Categoría es requerida"},
+                        idusuario: {required: "El Usuario es requerido"},
+                        iddepe: {required: "La Dependencia es requerida"}
+                    },
+                    highlight: function (element) {
+                        $(element).closest('.form-group').addClass('has-error');
+                    },
+                    unhighlight: function (element) {
+                        $(element).closest('.form-group').removeClass('has-error');
+                    },
+                    errorElement: 'span',
+                    errorClass: 'help-block',
+                    errorPlacement: function (error, element) {
+                        if (element.parent('.input-group'.length)) {
+                            error.insertAfter(element.parent());
+                        } else {
+                            error.insertAfter(element);
+                        }
+                    },
+                    submitHandler: function (form) {
+                        console.log('Formulario válido.');
+                        //alert('Formulario válido.');
+                        // llamar función para insertar registro
+                        newActividad();
+                        return false;
+                    }
+                });
+                
+                $.getJSON("ConsultarCategorias", function (data) {
+                    $.each(data, function (key, element) {
+                        for (i = 0; i < element.length; i++) {
+                            $('#idcat').append("<option value='" + element[i].idcat + "'>" +
+                                    element[i].nombrecat + " (" + element[i].idplan.claveplan + ")</option>");
+                        }
+                    });
+                });
+                
+                /*Llenar select principal (combo box)*/
+                $.getJSON('ConsultarUsuarios', function (data) {
+                    $.each(data, function (data, element) {
+                        for (i = 0; i < element.length; i++) {
+                            $('#idusuario').append("<option value='" + element[i].idusuario + "'>" +
+                                    element[i].usuario + "</option>");
+                        }
+                    });
+                });
+                
+                /*Llenar select Dependencias(combo box)*/
+                $.getJSON('ConsultarDependencias', function (data) {
+                    $.each(data, function (data, element) {
+                        for (i = 0; i < element.length; i++) {
+                            $('#iddepe').append("<option value='" + element[i].iddepe + "'>" +
+                                    element[i].nombredepe + " (" + element[i].clavedepe + ")</option>");
+                        }
+                    });
+                });
+
             });
+            
+            function newActividad() {
+                $.ajax({
+                    url: "InsertarActividad",
+                    type: "POST",
+                    data: {
+                        actividad: $('#actividad').val(),
+                        fechaini: $('#fechaini').val(),
+                        fechafin: $('#fechafin').val(),
+                        latitud: $('#latitud').val(),
+                        longitud: $('#longitud').val(),
+                        idcat: $('#idcat').val(),
+                        idusuario: $('#idusuario').val(),
+                        iddepe: $('#iddepe').val()
+                    }
+                }).done(function (json) {
+                    alert(json.msg);
+                    $('#actividad').val("");
+                    $('#fechaini').val("");
+                    $('#fechafin').val("");
+                    $('#latitud').val("");
+                    $('#longitud').val("");
+                    $('#idcat').val(0);
+                    $('#idusuario').val(0);
+                    $('#iddepe').val(0);
+                    $('#tbActividades').dataTable().api().ajax.reload();
+                }).fail(function (json) {
+                    alert(json.msg);
+                });
+            }
+            
         </script>
     </head>
     <body>
@@ -54,7 +160,7 @@ and open the template in the editor.
             <div class="tab-content">
                 <div id="nuevaActividad" class="tab-pane fade in active">
                     <br/><br/>
-                    <form method="GET">
+                    <form method="POST" id="frmInsertar">
                         
                         <div class="form-group">
                             <label for="actividad">Actividad</label>
@@ -84,31 +190,21 @@ and open the template in the editor.
                         <div class="form-group col-lg-4 col-md-4 col-sm-4 col-xs-12">
                             <label for="idcat">Categoría:</label>
                             <select class="form-control" name="idcat" id="idcat">
-                                <option value="0">-</option>
-                                <option value="1">EJ01</option>
-                                <option value="2">EJ01 / PR01</option>
-                                <option value="3">EJ01/ PR02</option>
-                                <option value="4">EJ02</option>
+                                <option value="0">Seleccione...</option>
                             </select>
                         </div>
                         
                         <div class="form-group col-lg-4 col-md-4 col-sm-4 col-xs-12">
                             <label for="idusuario">Usuario:</label>
                             <select class="form-control" name="idusuario" id="idusuario">
-                                <option value="0">-</option>
-                                <option value="1">esteban</option>
-                                <option value="2">pabloalejandro</option>
-                                <option value="3">maparra</option>
+                                <option value="0">Seleccione...</option>
                             </select>
                         </div>
                         
                         <div class="form-group col-lg-4 col-md-4 col-sm-4 col-xs-12">
                             <label for="iddepe">Dependencia:</label>
                             <select class="form-control" name="iddepe" id="iddepe">
-                                <option value="0">-</option>
-                                <option value="1">SIAPA</option>
-                                <option value="2">IMPLAN</option>
-                                <option value="3">DIF</option>
+                                <option value="0">Seleccione...</option>
                             </select>
                         </div>
                         

@@ -77,20 +77,17 @@ public class InsertarObjetivo extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+
         request.setCharacterEncoding("UTF-8");
         response.setContentType("application/json; charset=UTF-8");
         response.setHeader("Cache-Control", "no-store");
         PrintWriter p = response.getWriter();
-        
+
         String clave = request.getParameter("claveobjetivo");
         String objetivo = request.getParameter("objetivo");
-        try{
-            int idcat = Integer.parseInt(request.getParameter("idcat"));
-            p.write(ejb.insertarObjetivo(clave, objetivo, idcat));
-        }catch(NumberFormatException e){
-            p.write("{msg:'ERROR: El ID de la Categoría debe ser numérico.'}");
-        }
+        String idcat = request.getParameter("idcat");
+        
+        p.write(ejb.insertarObjetivo(clave, objetivo, idcat));
     }
 
     /**

@@ -31,14 +31,14 @@ and open the template in the editor.
                                                 var botones = "<button id='btnBorrar' class='btn btn-sm btn-danger' \n\
                                                             onClick=''>Borrar</button>";
                                                 botones += "<button id='btnEditar' class='btn btn-sm btn-warning' \n\
-                                                        onClick=''>Editar</button>";
+                                                        onClick='showEntidad(" + r1['ident'] + ",\"" + r1['claveent'] + "\""+ ",\"" + r1['nombreent'] + "\"" + ",\"" + r1['abrevent'] + "\")'>Editar</button>";
                                                 return botones;
                                             }
                                 }
                             ]
                         });
 
-                        $('#frmNuevaEnt').validate({
+                        $('#frmInsertar').validate({
                             rules: {
                                 claveent: {required: true},
                                 nombreent: {required: true},
@@ -66,17 +66,63 @@ and open the template in the editor.
                             },
                             submitHandler: function (form) {
                                 console.log('Formulario válido.');
-                                alert('Formulario válido.');
+                                //alert('Formulario válido.');
                                 // llamar función para insertar registro
                                 newEntidad();
                                 return false;
                             }
                         });
+                        
+                        $('#frmActualizar').validate({
+                            rules: {
+                                claveent2: {required: true},
+                                nombreent2: {required: true},
+                                abrevent2: {required: true}
+                            },
+                            messages: {
+                                claveent2: {required: 'La clave es requerida.'},
+                                nombreent2: {required: 'El nombre es requerido.'},
+                                abrevent2: {required: 'La abreviatura es requerida.'}
+                            },
+                            highlight: function (element) {
+                                $(element).closest('.form-group').addClass('has-error');
+                            },
+                            unhighlight: function (element) {
+                                $(element).closest('.form-group').removeClass('has-error');
+                            },
+                            errorElement: 'span',
+                            errorClass: 'help-block',
+                            errorPlacement: function (error, element) {
+                                if (element.parent('.input-group'.length)) {
+                                    error.insertAfter(element.parent());
+                                } else {
+                                    error.insertAfter(element);
+                                }
+                            },
+                            submitHandler: function (form) {
+                                console.log('Formulario válido.');
+                                //alert('Formulario válido.');
+                                // llamar función para insertar registro
+                                updateEntidad();
+                                return false;
+                            }
+                        });
+                        
+                        $('#btnGuardar').on('click', function () {
+                            $('#frmActualizar').submit();
+                        });
                     }
             );
-
+            
+            function showEntidad(ident, claveent, nombreent, abrevent){
+                $('#ident').val(ident)
+                $('#claveent2').val(claveent);
+                $('#nombreent2').val(nombreent);
+                $('#abrevent2').val(abrevent);
+                $('#modalEntidad').modal("show");
+            }
+            
             function newEntidad() {
-                alert('En newEntidad');
                 $.ajax({
                     url: "InsertarEntidad",
                     type: "POST",
@@ -87,16 +133,88 @@ and open the template in the editor.
                     }
                 }).done(function (json) {
                     alert(json.msg);
+                    $('#claveent').val("");
+                    $('#nombreent').val("");
+                    $('#abrevent').val("");
                     $('#tbEntidades').dataTable().api().ajax.reload();
                 }).fail(function (json) {
                     alert(json.msg);
                 });
             }
+            
+            function updateEntidad(){
+                $.ajax({
+                    url: "ActualizarEntidad",
+                    type: "POST",
+                    data: {
+                        ident: $('#ident').val(),
+                        claveent: $('#claveent2').val(),
+                        nombreent: $('#nombreent2').val(),
+                        abrevent: $('#abrevent2').val()
+                    }
+                }).done( function (json) {
+                    alert(json.msg);
+                    $('#tbEntidades').dataTable().api().ajax.reload();
+                    $('#modalEntidad').modal('toggle');
+                }).fail(function(json){
+                    alert(json.msg);
+                });
+            }
+            
         </script>
     </head>
     <body>
-        <div class="container">
+        <div id="modalEntidad" class="modal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal"
+                                aria-hidden="true">&times;</button>
+                        <h3>Modificar Entidad</h3>
+                    </div>
+                    <div class="modal-body">
+                        <form class="col-lg-12" id="frmActualizar" method="POST">
+                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                <div class="form-group">
+                                    <label class="control-label" for="claveent2">Clave Entidad</label>
+                                    <div class="input-group col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                        <span class="input-group-addon">C</span>
+                                        <input class="form-control" id="claveent2" name="claveent2">
+                                        <input type="hidden" id="ident" name="ident">
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                <div class="form-group">
+                                    <label class="control-label" for="nombreent2">Nombre Entidad</label>
+                                    <div class="input-group col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                        <span class="input-group-addon">N</span>
+                                        <input class="form-control" id="nombreent2" name="nombreent2">
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                <div class="form-group">
+                                    <label class="control-label" for="abrevent2">Abreviación</label>
+                                    <div class="input-group col-lg-12 col-md-12 col-sm-12 col-xs-12l">
+                                        <span class="input-group-addon">A</span>
+                                        <input class="form-control" id="abrevent2" name="abrevent2">
+                                    </div>
+                                </div>
+                            </div>
+                            
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" id="btnGuardar" class="btn btn-sm btn-primary">Guardar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
 
+        <div class="container">
             <h2>Catálogo de Entidades Federativas</h2>
             <hr/>
             <ul class="nav nav-tabs">
@@ -109,7 +227,7 @@ and open the template in the editor.
                     <h3>Entidad</h3>
                     <h4>Registrar nueva</h4>
                     <hr/>
-                    <form id="frmNuevaEnt">
+                    <form id="frmInsertar">
                         <div class="form-group">
                             <label for="claveent">Clave Entidad:</label>
                             <input class="form-control" type="text" name="claveent" id="claveent"/>

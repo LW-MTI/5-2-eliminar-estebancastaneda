@@ -19,9 +19,8 @@ import mx.edu.ittepic.pmdapp.ejbs.EjbPmd;
  *
  * @author Esteban
  */
-@WebServlet(name = "InsertarEmpleado", urlPatterns = {"/InsertarEmpleado"})
-public class InsertarEmpleado extends HttpServlet {
-
+@WebServlet(name = "ConsultarCategoriasXIdplan", urlPatterns = {"/ConsultarCategoriasXIdplan"})
+public class ConsultarCategoriasXIdplan extends HttpServlet {
     @EJB
     private EjbPmd ejb;
 
@@ -42,10 +41,10 @@ public class InsertarEmpleado extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet InsertarEmpleado</title>");
+            out.println("<title>Servlet ConsultarCategoriasXIdplan</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet InsertarEmpleado at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet ConsultarCategoriasXIdplan at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -63,7 +62,15 @@ public class InsertarEmpleado extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        
+        request.setCharacterEncoding("UTF-8");
+        response.setContentType("application/json; charset=UTF-8");
+        response.setHeader("Cache-Control", "no-store");
+        PrintWriter p = response.getWriter();
+        
+        String idplan = request.getParameter("idplan");
+        
+        p.write("{\"data\" : "+ ejb.consultarCategoriasXIdplan(idplan) + "}");
     }
 
     /**
@@ -77,18 +84,7 @@ public class InsertarEmpleado extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
-        request.setCharacterEncoding("UTF-8");
-        response.setContentType("application/json; charset=UTF-8");
-        response.setHeader("Cache-Control", "no-store");
-        PrintWriter p = response.getWriter();
-
-        String paterno = request.getParameter("paternoemp");
-        String materno = request.getParameter("maternoemp");
-        String nombre = request.getParameter("nombreemp");
-        String iddepto = request.getParameter("iddepto");
-                
-        p.write(ejb.insertarEmpleado(paterno, materno, nombre, iddepto));
+        processRequest(request, response);
     }
 
     /**

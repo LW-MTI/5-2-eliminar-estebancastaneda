@@ -35,6 +35,7 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = "Categoriaplan.findAll", query = "SELECT c FROM Categoriaplan c")
     , @NamedQuery(name = "Categoriaplan.findByIdcat", query = "SELECT c FROM Categoriaplan c WHERE c.idcat = :idcat")
+    , @NamedQuery(name = "Categoriaplan.findByIdplan", query = "SELECT c FROM Categoriaplan c WHERE c.idplan = :idplan")
     , @NamedQuery(name = "Categoriaplan.findByClavecat", query = "SELECT c FROM Categoriaplan c WHERE c.clavecat = :clavecat")
     , @NamedQuery(name = "Categoriaplan.findByNombrecat", query = "SELECT c FROM Categoriaplan c WHERE c.nombrecat = :nombrecat")
     , @NamedQuery(name = "Categoriaplan.findByNivelcat", query = "SELECT c FROM Categoriaplan c WHERE c.nivelcat = :nivelcat")

@@ -3,13 +3,14 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Esteban/Google%20Drive/EstebanDrive/01%20ITT/MTI/Sem2/LenguajesWeb/U4/pmdapp/src/java/mx/edu/ittepic/pmdapp/servlets/ConsultarEstrategias.java</file>
-            <file>file:/C:/Users/Esteban/Google%20Drive/EstebanDrive/01%20ITT/MTI/Sem2/LenguajesWeb/U4/pmdapp/src/java/mx/edu/ittepic/pmdapp/servlets/ConsultarAdmondepe.java</file>
-            <file>file:/C:/Users/Esteban/Google%20Drive/EstebanDrive/01%20ITT/MTI/Sem2/LenguajesWeb/U4/pmdapp/web/index.html</file>
+            <file>file:/C:/Users/Esteban/Google%20Drive/EstebanDrive/01%20ITT/MTI/Sem2/LenguajesWeb/U4/pmdapp/src/java/mx/edu/ittepic/pmdapp/entidades/Categoriaplan.java</file>
+            <file>file:/C:/Users/Esteban/Google%20Drive/EstebanDrive/01%20ITT/MTI/Sem2/LenguajesWeb/U4/pmdapp/web/catcategorias.html</file>
+            <file>file:/C:/Users/Esteban/Google%20Drive/EstebanDrive/01%20ITT/MTI/Sem2/LenguajesWeb/U4/pmdapp/web/catadmon.html</file>
+            <file>file:/C:/Users/Esteban/Google%20Drive/EstebanDrive/01%20ITT/MTI/Sem2/LenguajesWeb/U4/pmdapp/src/java/mx/edu/ittepic/pmdapp/servlets/InsertarAdministracion.java</file>
+            <file>file:/C:/Users/Esteban/Google%20Drive/EstebanDrive/01%20ITT/MTI/Sem2/LenguajesWeb/U4/pmdapp/web/catplanes.html</file>
             <file>file:/C:/Users/Esteban/Google%20Drive/EstebanDrive/01%20ITT/MTI/Sem2/LenguajesWeb/U4/pmdapp/src/java/mx/edu/ittepic/pmdapp/ejbs/EjbPmd.java</file>
-            <file>file:/C:/Users/Esteban/Google%20Drive/EstebanDrive/01%20ITT/MTI/Sem2/LenguajesWeb/U4/pmdapp/web/admondepe.html</file>
-            <file>file:/C:/Users/Esteban/Google%20Drive/EstebanDrive/01%20ITT/MTI/Sem2/LenguajesWeb/U4/pmdapp/web/catestrategias.html</file>
-            <file>file:/C:/Users/Esteban/Google%20Drive/EstebanDrive/01%20ITT/MTI/Sem2/LenguajesWeb/U4/pmdapp/web/usuariorol.html</file>
+            <file>file:/C:/Users/Esteban/Google%20Drive/EstebanDrive/01%20ITT/MTI/Sem2/LenguajesWeb/U4/pmdapp/src/java/mx/edu/ittepic/pmdapp/servlets/InsertarCategoriaplan.java</file>
+            <file>file:/C:/Users/Esteban/Google%20Drive/EstebanDrive/01%20ITT/MTI/Sem2/LenguajesWeb/U4/pmdapp/src/java/mx/edu/ittepic/pmdapp/servlets/InsertarPlan.java</file>
         </group>
     </open-files>
 </project-private>

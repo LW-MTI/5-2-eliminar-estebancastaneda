@@ -9,8 +9,6 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.ParseException;
 import java.util.Date;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -88,25 +86,18 @@ public class InsertarActividad extends HttpServlet {
         response.setHeader("Cache-Control", "no-store");
         PrintWriter p = response.getWriter();
 
-        try {
             String actividad = request.getParameter("actividad");
-            Date fechaini = Util.strToDate(request.getParameter("fechaini"), "dd-MM-yyyy");
-            Date fechafin = Util.strToDate(request.getParameter("fechafin"), "dd-MM-yyyy");
+            String fechaini = request.getParameter("fechaini");
+            String fechafin = request.getParameter("fechafin");
             //int latitud = Integer.parseInt(request.getParameter("latitud"));
             //int longitud = Integer.parseInt(request.getParameter("longitud"));
-            Float latitud = Float.parseFloat(request.getParameter("latitud"));
-            Float longitud = Float.parseFloat(request.getParameter("longitud"));
-            int idcat = Integer.parseInt(request.getParameter("idcat"));
-            int idusuario = Integer.parseInt(request.getParameter("idusuario"));
-            int iddepe = Integer.parseInt(request.getParameter("iddepe"));
+            String latitud = request.getParameter("latitud");
+            String longitud = request.getParameter("longitud");
+            String idcat = request.getParameter("idcat");
+            String idusuario = request.getParameter("idusuario");
+            String iddepe = request.getParameter("iddepe");
             
             p.write(ejb.insertarActividad(actividad, fechaini, fechafin, latitud, longitud, idcat, idusuario, iddepe));
-
-        } catch (ParseException e) {
-            p.write("{msg:'ERROR: Error al obtener la fecha inicial o final.\n" + e.getMessage() + "'}");
-        } catch(NumberFormatException e){
-            p.write("{msg:'ERROR: ID de la Actividad debe ser numérico.\n" + e.getMessage() + "'}");
-        }
     }
 
     /**

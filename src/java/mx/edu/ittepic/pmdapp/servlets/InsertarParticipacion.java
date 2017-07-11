@@ -21,6 +21,7 @@ import mx.edu.ittepic.pmdapp.ejbs.EjbPmd;
  */
 @WebServlet(name = "InsertarParticipacion", urlPatterns = {"/InsertarParticipacion"})
 public class InsertarParticipacion extends HttpServlet {
+
     @EJB
     private EjbPmd ejb;
 
@@ -41,7 +42,7 @@ public class InsertarParticipacion extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet InsertarParticipacion</title>");            
+            out.println("<title>Servlet InsertarParticipacion</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet InsertarParticipacion at " + request.getContextPath() + "</h1>");
@@ -79,15 +80,11 @@ public class InsertarParticipacion extends HttpServlet {
         response.setContentType("application/json; charset=UTF-8");
         response.setHeader("Cache-Control", "no-store");
         PrintWriter p = response.getWriter();
-        
-        try{
-            int iddepe = Integer.parseInt(request.getParameter("iddepe"));
-            int idcat = Integer.parseInt(request.getParameter("idcat"));
-            
-            p.write(ejb.insertarParticipacion(iddepe, idcat));
-        }catch(NumberFormatException e){
-            p.write("{msg:'Los ID de Dependencia y Categoría deben ser numéricos.'}");
-        }
+
+        String iddepe = request.getParameter("iddepe");
+        String idcat = request.getParameter("idcat");
+
+        p.write(ejb.insertarParticipacion(iddepe, idcat));
     }
 
     /**
