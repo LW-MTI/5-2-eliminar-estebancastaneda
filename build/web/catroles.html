@@ -26,9 +26,9 @@ and open the template in the editor.
                         {"data": function (r1) {
                                 //var r = r1['id'] + "-" + r1['name'];
                                 var botones = "<button id='btnBorrar' class='btn btn-sm btn-danger' \n\
-                                                            onClick=''>Borrar</button>";
+                                                            onClick='deleteRegistro(<idrol>)'>Borrar</button>";
                                 botones += "<button id='btnEditar' class='btn btn-sm btn-warning' onClick='showRol(<idrol>, \"<claverol>\", \"<nombrerol>\")'>Editar</button>";
-                                botones = botones.replace('<idrol>', r1['idrol']);
+                                botones = botones.replace(/<idrol>/g, r1['idrol']);
                                 botones = botones.replace('<claverol>', r1['claverol']);
                                 botones = botones.replace('<nombrerol>', r1['nombrerol']);
                                 return botones;
@@ -150,6 +150,24 @@ and open the template in the editor.
                 });
             }
 
+            function deleteRegistro(id) {
+                var eliminar = confirm('¿Deseas eliminar el registro?');
+
+                if (eliminar) {
+                    $.ajax({
+                        url: "EliminarRol",
+                        type: "POST",
+                        data: {
+                            idrol: id
+                        }
+                    }).done(function (json) {
+                        alert(json.msg);
+                        $('#tbRoles').dataTable().api().ajax.reload();
+                    }).fail(function (json) {
+                        alert(json.msg);
+                    });
+                }
+            }
         </script>
     </head>
     <body>

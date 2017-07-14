@@ -27,9 +27,9 @@ and open the template in the editor.
                         {"data": function (r1) {
                                 //var r = r1['id'] + "-" + r1['name'];
                                 var botones = "<button id='btnBorrar' class='btn btn-sm btn-danger' \n\
-                                                            onClick=''>Borrar</button>";
+                                                            onClick='deleteRegistro(<iddepto>)'>Borrar</button>";
                                 botones += "<button id='btnEditar' class='btn btn-sm btn-warning' onClick='showDepartamento(<iddepto>, <iddepe>, \"<clavedepto>\", \"<nombredepto>\")'>Editar</button>";
-                                botones = botones.replace('<iddepto>', r1['iddepto']);
+                                botones = botones.replace(/<iddepto>/g, r1['iddepto']);
                                 botones = botones.replace('<iddepe>', r1['iddepe'].iddepe);
                                 botones = botones.replace('<clavedepto>', r1['clavedepto']);
                                 botones = botones.replace('<nombredepto>', r1['nombredepto']);
@@ -170,6 +170,24 @@ and open the template in the editor.
                 });
             }
 
+            function deleteRegistro(id) {
+                var eliminar = confirm('¿Deseas eliminar el registro?');
+
+                if (eliminar) {
+                    $.ajax({
+                        url: "EliminarDepartamento",
+                        type: "POST",
+                        data: {
+                            iddepto: id
+                        }
+                    }).done(function (json) {
+                        alert(json.msg);
+                        $('#tbDepartamentos').dataTable().api().ajax.reload();
+                    }).fail(function (json) {
+                        alert(json.msg);
+                    });
+                }
+            }
         </script>
     </head>
     <body>

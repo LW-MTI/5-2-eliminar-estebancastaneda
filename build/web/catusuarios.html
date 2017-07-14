@@ -27,10 +27,9 @@ and open the template in the editor.
                         {"data": "idemp.iddepto.iddepe.clavedepe"},
                         {"data": function (r1) {
                                 //var r = r1['id'] + "-" + r1['name'];
-                                var botones = "<button id='btnBorrar' class='btn btn-sm btn-danger' \n\
-                                                            onClick=''>Borrar</button>";
+                                var botones = "<button id='btnBorrar' class='btn btn-sm btn-danger' onClick='deleteRegistro(<idusuario>)'>Borrar</button>";
                                 botones += "<button id='btnEditar' class='btn btn-sm btn-warning' onClick='showUsuario(<idusuario>, <idemp>, <iddepto>, \"<usuario>\", \"<contrasena>\")'>Editar</button>";
-                                botones = botones.replace('<idusuario>', r1['idusuario']);
+                                botones = botones.replace(/<idusuario>/g, r1['idusuario']);
                                 botones = botones.replace('<idemp>', r1['idemp'].idemp);
                                 botones = botones.replace('<iddepto>', r1['idemp'].iddepto.iddepto);
                                 botones = botones.replace('<usuario>', r1['usuario']);
@@ -147,6 +146,24 @@ and open the template in the editor.
                 $('#mdlActualizar').modal('show');
             }
 
+            function deleteRegistro(id) {
+                var eliminar = confirm('¿Deseas eliminar el registro?');
+
+                if (eliminar) {
+                    $.ajax({
+                        url: "EliminarUsuario",
+                        type: "POST",
+                        data: {
+                            idusuario: id
+                        }
+                    }).done(function (json) {
+                        alert(json.msg);
+                        $('#tbUsuarios').dataTable().api().ajax.reload();
+                    }).fail(function (json) {
+                        alert(json.msg);
+                    });
+                }
+            }
         </script>
     </head>
     <body>

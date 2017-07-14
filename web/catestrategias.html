@@ -26,11 +26,10 @@ and open the template in the editor.
                         {"data": "idobjetivo.claveobjetivo"},
                         {"data": function (r1) {
                                 //var r = r1['id'] + "-" + r1['name'];
-                                var botones = "<button id='btnBorrar' class='btn btn-sm btn-danger' \n\
-                                                            onClick=''>Borrar</button>";
+                                var botones = "<button id='btnBorrar' class='btn btn-sm btn-danger' onClick='deleteRegistro(<idestrategia>)'>Borrar</button>";
                                 botones += "<button id='btnEditar' class='btn btn-sm btn-warning' \n\
                                                         onClick='showEstrategia(<idestrategia>, <idobjetivo>, \"<claveestrategia>\", \"<estrategia>\")'>Editar</button>";
-                                botones = botones.replace('<idestrategia>', r1['idestrategia']);
+                                botones = botones.replace(/<idestrategia>/g, r1['idestrategia']);
                                 botones = botones.replace('<idobjetivo>', r1['idobjetivo'].idobjetivo);
                                 botones = botones.replace('<claveestrategia>', r1['claveestrategia']);
                                 botones = botones.replace('<estrategia>', r1['estrategia']);
@@ -172,6 +171,24 @@ and open the template in the editor.
                 });
             }
 
+            function deleteRegistro(id) {
+                var eliminar = confirm('¿Deseas eliminar el registro?');
+
+                if (eliminar) {
+                    $.ajax({
+                        url: "EliminarEstrategia",
+                        type: "POST",
+                        data: {
+                            idestrategia: id
+                        }
+                    }).done(function (json) {
+                        alert(json.msg);
+                        $('#tbEstrategias').dataTable().api().ajax.reload();
+                    }).fail(function (json) {
+                        alert(json.msg);
+                    });
+                }
+            }
         </script>
     </head>
     <body>

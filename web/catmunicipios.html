@@ -27,10 +27,10 @@ and open the template in the editor.
                         {"data": "nombremun"},
                         {"data": function (r1) {
                                 //var r = r1['id'] + "-" + r1['name'];
-                                var botones = "<button id='btnBorrar' class='btn btn-sm btn-danger' onClick=''>Borrar</button>";
+                                var botones = "<button id='btnBorrar' class='btn btn-sm btn-danger' onClick='deleteRegistro(<idmun>)'>Borrar</button>";
                                 //botones += "<button id='btnEditar' class='btn btn-sm btn-warning' onClick='showMunicipio(" + r1['idmun'] + ", \"" + r1['clavemun'] + "\"" + ", \"" + r1['nombremun'] + "\"," + r1['ident'].ident + ")'>Editar</button>";
                                 botones += "<button id='btnEditar' class='btn btn-sm btn-warning' onClick='showMunicipio(<idmun>, \"<clavemun>\", \"<nombremun>\", <ident>)'>Editar</button>";
-                                botones = botones.replace('<idmun>', r1['idmun']);
+                                botones = botones.replace(/<idmun>/g, r1['idmun']);
                                 botones = botones.replace('<clavemun>', r1['clavemun']);
                                 botones = botones.replace('<nombremun>', r1['nombremun']);
                                 botones = botones.replace('<ident>', r1['ident'].ident);
@@ -174,7 +174,25 @@ and open the template in the editor.
                     alert(json.msg);
                 });
             }
-            
+
+            function deleteRegistro(id) {
+                var eliminar = confirm('¿Deseas eliminar el registro?');
+
+                if (eliminar) {
+                    $.ajax({
+                        url: "EliminarMunicipio",
+                        type: "POST",
+                        data: {
+                            idmun: id
+                        }
+                    }).done(function (json) {
+                        alert(json.msg);
+                        $('#tbMunicipios').dataTable().api().ajax.reload();
+                    }).fail(function (json) {
+                        alert(json.msg);
+                    });
+                }
+            }
         </script>
     </head>
     <body>

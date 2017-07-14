@@ -26,10 +26,9 @@ and open the template in the editor.
                         {"data": "idcat.clavecat"},
                         {"data": function (r1) {
                                 //var r = r1['id'] + "-" + r1['name'];
-                                var botones = "<button id='btnBorrar' class='btn btn-sm btn-danger' \n\
-                                                            onClick=''>Borrar</button>";
-                                botones += "<button id='btnEditar' class='btn btn-sm btn-warning' \n\
-                                                        onClick=''>Editar</button>";
+                                var botones = "<button id='btnBorrar' class='btn btn-sm btn-danger' onClick='deleteRegistro(<idobjetivo>)'>Borrar</button>";
+                                botones += "<button id='btnEditar' class='btn btn-sm btn-warning' onClick=''>Editar</button>";
+                                botones = botones.replace(/<idobjetivo>/, r1['idobjetivo']);
                                 return botones;
                             }
                         }
@@ -115,7 +114,25 @@ and open the template in the editor.
                     alert(json.msg);
                 });
             }
-            
+
+            function deleteRegistro(id) {
+                var eliminar = confirm('¿Deseas eliminar el registro?');
+
+                if (eliminar) {
+                    $.ajax({
+                        url: "EliminarObjetivo",
+                        type: "POST",
+                        data: {
+                            idobjetivo: id
+                        }
+                    }).done(function (json) {
+                        alert(json.msg);
+                        $('#tbObjetivos').dataTable().api().ajax.reload();
+                    }).fail(function (json) {
+                        alert(json.msg);
+                    });
+                }
+            }
         </script>
     </head>
     <body>

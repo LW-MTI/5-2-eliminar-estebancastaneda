@@ -29,9 +29,9 @@ and open the template in the editor.
                         {"data": function (r1) {
                                 //var r = r1['id'] + "-" + r1['name'];
                                 var botones = "<button id='btnBorrar' class='btn btn-sm btn-danger' \n\
-                                                            onClick=''>Borrar</button>";
+                                                            onClick='deleteRegistro(<idemp>)'>Borrar</button>";
                                 botones += "<button id='btnEditar' class='btn btn-sm btn-warning' onClick='showEmpleado(<idemp>, <iddepto>, \"<paternoemp>\", \"<maternoemp>\", \"<nombreemp>\")'>Editar</button>";
-                                botones = botones.replace('<idemp>', r1['idemp']);
+                                botones = botones.replace(/<idemp>/g, r1['idemp']);
                                 botones = botones.replace('<iddepto>', r1['iddepto'].iddepto);
                                 botones = botones.replace('<paternoemp>', r1['paternoemp']);
                                 botones = botones.replace('<maternoemp>', r1['maternoemp']);
@@ -183,6 +183,24 @@ and open the template in the editor.
                 });
             }
 
+            function deleteRegistro(id) {
+                var eliminar = confirm('¿Deseas eliminar el registro?');
+
+                if (eliminar) {
+                    $.ajax({
+                        url: "EliminarEmpleado",
+                        type: "POST",
+                        data: {
+                            idemp: id
+                        }
+                    }).done(function (json) {
+                        alert(json.msg);
+                        $('#tbEmpleados').dataTable().api().ajax.reload();
+                    }).fail(function (json) {
+                        alert(json.msg);
+                    });
+                }
+            }
         </script>
     </head>
     <body>

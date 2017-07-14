@@ -32,9 +32,9 @@ and open the template in the editor.
                         {"data": function (r1) {
                                 //var r = r1['id'] + "-" + r1['name'];
                                 var botones = "<button id='btnBorrar' class='btn btn-sm btn-danger' \n\
-                                                            onClick=''>Borrar</button>";
-                                botones += "<button id='btnEditar' class='btn btn-sm btn-warning' \n\
-                                                        onClick=''>Editar</button>";
+                                                            onClick='deleteRegistro(<idactividad>)'>Borrar</button>";
+                                botones += "<button id='btnEditar' class='btn btn-sm btn-warning' onClick=''>Editar</button>";
+                                botones = botones.replace(/<idactividad>/g, r1['idactividad']);
                                 return botones;
                             }
                         }
@@ -146,7 +146,25 @@ and open the template in the editor.
                     alert(json.msg);
                 });
             }
-            
+
+            function deleteRegistro(id) {
+                var eliminar = confirm('¿Deseas eliminar el registro?');
+
+                if (eliminar) {
+                    $.ajax({
+                        url: "EliminarActividad",
+                        type: "POST",
+                        data: {
+                            idactividad: id
+                        }
+                    }).done(function (json) {
+                        alert(json.msg);
+                        $('#tbActividades').dataTable().api().ajax.reload();
+                    }).fail(function (json) {
+                        alert(json.msg);
+                    });
+                }
+            }
         </script>
     </head>
     <body>

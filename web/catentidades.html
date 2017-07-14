@@ -28,9 +28,13 @@ and open the template in the editor.
                                 {"data":
                                             function (r1) {
                                                 //var r = r1['id'] + "-" + r1['name'];
-                                                var botones = "<button id='btnBorrar' class='btn btn-sm btn-danger' \n\
-                                                            onClick=''>Borrar</button>";
-                                                botones += "<button id='btnEditar' class='btn btn-sm btn-warning' onClick='showEntidad(" + r1['ident'] + ",\"" + r1['claveent'] + "\"" + ",\"" + r1['nombreent'] + "\"" + ",\"" + r1['abrevent'] + "\")'>Editar</button>";
+                                                var botones = "<button id='btnBorrar' class='btn btn-sm btn-danger' onClick='deleteEntidad(<ident>)'>Borrar</button>";
+                                                //botones += "<button id='btnEditar' class='btn btn-sm btn-warning' onClick='showEntidad(" + r1['ident'] + ",\"" + r1['claveent'] + "\"" + ",\"" + r1['nombreent'] + "\"" + ",\"" + r1['abrevent'] + "\")'>Editar</button>";
+                                                botones += "<button id='btnEditar' class='btn btn-sm btn-warning' onClick='showEntidad(<ident>, \"<claveent>\", \"<nombreent>\", \"<abrevent>\")'>Editar</button>";
+                                                botones = botones.replace(/<ident>/g, r1['ident']); //reemplaza todas las ocurrencias de <ident>.
+                                                botones = botones.replace('<claveent>', r1['claveent']);
+                                                botones = botones.replace('<nombreent>', r1['nombreent']);
+                                                botones = botones.replace('<abrevent>', r1['abrevent']);
                                                 return botones;
                                             }
                                 }
@@ -160,6 +164,24 @@ and open the template in the editor.
                 });
             }
 
+            function deleteEntidad(id) {
+                var eliminar = confirm('¿Deseas eliminar el registro?');
+
+                if (eliminar) {
+                    $.ajax({
+                        url: "EliminarEntidad",
+                        type: "POST",
+                        data: {
+                            ident: id
+                        }
+                    }).done(function (json) {
+                        alert(json.msg);
+                        $('#tbEntidades').dataTable().api().ajax.reload();
+                    }).fail(function (json) {
+                        alert(json.msg);
+                    });
+                }
+            }
         </script>
     </head>
     <body>
@@ -214,7 +236,7 @@ and open the template in the editor.
                     </div>
                 </div>
             </div>
-            
+
             <!-- Modal window -->
             <div id="mdlActualizar" class="modal">
                 <div class="modal-dialog">

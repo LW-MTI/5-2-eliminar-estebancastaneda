@@ -31,9 +31,9 @@ and open the template in the editor.
 //                        {"data": "idmun.ident.ident"},
                         {"data": function (r1) {
                                 //var r = r1['id'] + "-" + r1['name'];
-                                var botones = "<button id='btnBorrar' class='btn btn-sm btn-danger' onClick=''>Borrar</button>";
+                                var botones = "<button id='btnBorrar' class='btn btn-sm btn-danger' onClick='deleteRegistro(<idadmon>)'>Borrar</button>";
                                 botones += "<button id='btnEditar' class='btn btn-sm btn-warning' onClick='showAdministracion(<idadmon>, <ident>, <idmun>, \"<claveadmon>\", \"<nombreadmon>\", \"<fechaini>\", \"<fechafin>\")'>Editar</button>";
-                                botones = botones.replace('<idadmon>', r1['idadmon']);
+                                botones = botones.replace(/<idadmon>/g, r1['idadmon']);
                                 botones = botones.replace('<ident>', r1['idmun'].ident.ident);
                                 botones = botones.replace('<idmun>', r1['idmun'].idmun);
                                 botones = botones.replace('<claveadmon>', r1['claveadmon']);
@@ -239,7 +239,25 @@ and open the template in the editor.
                     alert(json.msg);
                 });
             }
-            
+
+            function deleteRegistro(id) {
+                var eliminar = confirm('¿Deseas eliminar el registro?');
+
+                if (eliminar) {
+                    $.ajax({
+                        url: "EliminarAdministracion",
+                        type: "POST",
+                        data: {
+                            idadmon: id
+                        }
+                    }).done(function (json) {
+                        alert(json.msg);
+                        $('#tbAdministraciones').dataTable().api().ajax.reload();
+                    }).fail(function (json) {
+                        alert(json.msg);
+                    });
+                }
+            }
         </script>
     </head>
     <body>

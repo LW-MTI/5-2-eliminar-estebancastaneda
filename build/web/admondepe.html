@@ -28,9 +28,9 @@ and open the template in the editor.
                         {"data": function (r1) {
                                 //var r = r1['id'] + "-" + r1['name'];
                                 var botones = "<button id='btnBorrar' class='btn btn-sm btn-danger' \n\
-                                                            onClick=''>Borrar</button>";
+                                                            onClick='deleteRegistro(<idadmondepe>)'>Borrar</button>";
                                 botones += "<button id='btnEditar' class='btn btn-sm btn-warning' onClick='showAdmondepe(<idadmondepe>, <idadmon>, <iddepe>)'>Editar</button>";
-                                botones = botones.replace('<idadmondepe>', r1['idadmondepe']);
+                                botones = botones.replace(/<idadmondepe>/g, r1['idadmondepe']);
                                 botones = botones.replace('<idadmon>', r1['idadmon'].idadmon);
                                 botones = botones.replace('<iddepe>', r1['iddepe'].iddepe);
                                 return botones;
@@ -173,6 +173,24 @@ and open the template in the editor.
                 });
             }
 
+            function deleteRegistro(id) {
+                var eliminar = confirm('¿Deseas eliminar el registro?');
+
+                if (eliminar) {
+                    $.ajax({
+                        url: "EliminarAdmondepe",
+                        type: "POST",
+                        data: {
+                            idadmondepe: id
+                        }
+                    }).done(function (json) {
+                        alert(json.msg);
+                        $('#tbAdmondepe').dataTable().api().ajax.reload();
+                    }).fail(function (json) {
+                        alert(json.msg);
+                    });
+                }
+            }
         </script>
     </head>
     <body>

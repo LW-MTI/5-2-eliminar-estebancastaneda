@@ -25,10 +25,9 @@ and open the template in the editor.
                         {"data": "idrol.nombrerol"},
                         {"data": function (r1) {
                                 //var r = r1['id'] + "-" + r1['name'];
-                                var botones = "<button id='btnBorrar' class='btn btn-sm btn-danger' \n\
-                                                            onClick=''>Borrar</button>";
+                                var botones = "<button id='btnBorrar' class='btn btn-sm btn-danger' onClick='deleteRegistro(<idusuariorol>)'>Borrar</button>";
                                 botones += "<button id='btnEditar' class='btn btn-sm btn-warning' onClick='showUsuariorol(<idusuariorol>, <idusuario>, <idrol>)'>Editar</button>";
-                                botones = botones.replace('<idusuariorol>', r1['idusuariorol']);
+                                botones = botones.replace(/<idusuariorol>/g, r1['idusuariorol']);
                                 botones = botones.replace('<idusuario>', r1['idusuario'].idusuario);
                                 botones = botones.replace('<idrol>', r1['idrol'].idrol);
                                 return botones;
@@ -172,6 +171,24 @@ and open the template in the editor.
                 });
             }
 
+            function deleteRegistro(id) {
+                var eliminar = confirm('¿Deseas eliminar el registro?');
+
+                if (eliminar) {
+                    $.ajax({
+                        url: "EliminarUsuariorol",
+                        type: "POST",
+                        data: {
+                            idusuariorol: id
+                        }
+                    }).done(function (json) {
+                        alert(json.msg);
+                        $('#tbUsuariorol').dataTable().api().ajax.reload();
+                    }).fail(function (json) {
+                        alert(json.msg);
+                    });
+                }
+            }
         </script>
     </head>
     <body>

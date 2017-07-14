@@ -28,10 +28,9 @@ and open the template in the editor.
                         {"data": "idadmon.idmun.ident.abrevent"},
                         {"data": function (r1) {
                                 //var r = r1['id'] + "-" + r1['name'];
-                                var botones = "<button id='btnBorrar' class='btn btn-sm btn-danger' \n\
-                                                            onClick=''>Borrar</button>";
-                                botones += "<button id='btnEditar' class='btn btn-sm btn-warning' \n\
-                                                        onClick=''>Editar</button>";
+                                var botones = "<button id='btnBorrar' class='btn btn-sm btn-danger' onClick='deleteRegistro(<idplan>)'>Borrar</button>";
+                                botones += "<button id='btnEditar' class='btn btn-sm btn-warning' onClick=''>Editar</button>";
+                                botones = botones.replace(/<idplan>/g, r1['idplan']);
                                 return botones;
                             }
                         }
@@ -142,6 +141,24 @@ and open the template in the editor.
 
             }
 
+            function deleteRegistro(id) {
+                var eliminar = confirm('¿Deseas eliminar el registro?');
+
+                if (eliminar) {
+                    $.ajax({
+                        url: "EliminarPlan",
+                        type: "POST",
+                        data: {
+                            idplan: id
+                        }
+                    }).done(function (json) {
+                        alert(json.msg);
+                        $('#tbPlanes').dataTable().api().ajax.reload();
+                    }).fail(function (json) {
+                        alert(json.msg);
+                    });
+                }
+            }
         </script>
     </head>
     <body>

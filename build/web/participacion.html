@@ -25,11 +25,9 @@ and open the template in the editor.
                         {"data": "idcat.nombrecat"},
                         {"data": function (r1) {
                                 //var r = r1['id'] + "-" + r1['name'];
-                                var botones = "<button id='btnBorrar' class='btn btn-sm btn-danger' \n\
-                                                            onClick=''>Borrar</button>";
-                                botones += "<button id='btnEditar' class='btn btn-sm btn-warning' \n\
-                                                        onClick='showParticipacion(<idparticipacion>, <iddepe>, <idcat>)'>Editar</button>";
-                                botones = botones.replace('<idparticipacion>', r1['idparticipacion']);
+                                var botones = "<button id='btnBorrar' class='btn btn-sm btn-danger' onClick='deleteRegistro(<idparticipacion>)'>Borrar</button>";
+                                botones += "<button id='btnEditar' class='btn btn-sm btn-warning' onClick='showParticipacion(<idparticipacion>, <iddepe>, <idcat>)'>Editar</button>";
+                                botones = botones.replace(/<idparticipacion>/g, r1['idparticipacion']);
                                 botones = botones.replace('<iddepe>', r1['iddepe'].iddepe);
                                 botones = botones.replace('<idcat>', r1['idcat'].idcat);
                                 return botones;
@@ -171,6 +169,24 @@ and open the template in the editor.
                 });
             }
 
+            function deleteRegistro(id) {
+                var eliminar = confirm('¿Deseas eliminar el registro?');
+
+                if (eliminar) {
+                    $.ajax({
+                        url: "EliminarParticipacion",
+                        type: "POST",
+                        data: {
+                            idparticipacion: id
+                        }
+                    }).done(function (json) {
+                        alert(json.msg);
+                        $('#tbParticipacion').dataTable().api().ajax.reload();
+                    }).fail(function (json) {
+                        alert(json.msg);
+                    });
+                }
+            }
         </script>
     </head>
     <body>

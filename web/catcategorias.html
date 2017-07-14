@@ -28,10 +28,9 @@ and open the template in the editor.
                         {"data": "idplan.claveplan"},
                         {"data": function (r1) {
                                 //var r = r1['id'] + "-" + r1['name'];
-                                var botones = "<button id='btnBorrar' class='btn btn-sm btn-danger' \n\
-                                                            onClick=''>Borrar</button>";
-                                botones += "<button id='btnEditar' class='btn btn-sm btn-warning' \n\
-                                                        onClick=''>Editar</button>";
+                                var botones = "<button id='btnBorrar' class='btn btn-sm btn-danger' onClick='deleteRegistro(<idcat>)'>Borrar</button>";
+                                botones += "<button id='btnEditar' class='btn btn-sm btn-warning' onClick=''>Editar</button>";
+                                botones = botones.replace(/<idcat>/g, r1['idcat']);
                                 return botones;
                             }
                         }
@@ -132,6 +131,25 @@ and open the template in the editor.
                     });
                 }
 
+            }
+
+            function deleteRegistro(id) {
+                var eliminar = confirm('¿Deseas eliminar el registro?');
+
+                if (eliminar) {
+                    $.ajax({
+                        url: "EliminarCategoriaplan",
+                        type: "POST",
+                        data: {
+                            idcat: id
+                        }
+                    }).done(function (json) {
+                        alert(json.msg);
+                        $('#tbCategorias').dataTable().api().ajax.reload();
+                    }).fail(function (json) {
+                        alert(json.msg);
+                    });
+                }
             }
         </script>
     </head>

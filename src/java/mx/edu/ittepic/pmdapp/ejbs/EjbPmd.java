@@ -1033,9 +1033,9 @@ public class EjbPmd {
                     .setParameter("ident", Integer.parseInt(ident)).getSingleResult();
 
             em.remove(ent);
-            return "{msg: 'OK. La Entidad fue eliminada correctamente.'}";
+            return "{\"msg\" : \"OK. La Entidad fue eliminada correctamente.\"}";
         } catch (NumberFormatException e) {
-            return "{msg: 'ERROR: El ID de la Entidad debe ser numérico.\n" + e.getMessage() + "'}";
+            return "{\"msg\" : \"ERROR: El ID de la Entidad debe ser numérico.\n" + e.getMessage() + "\"}";
         }
     }
 
@@ -1045,9 +1045,9 @@ public class EjbPmd {
                     .setParameter("idmun", Integer.parseInt(idmun)).getSingleResult();
 
             em.remove(mun);
-            return "{msg: 'OK. El Municipio fue eliminado correctamente.'}";
+            return "{\"msg\" : \"OK. El Municipio fue eliminado correctamente.\"}";
         } catch (NumberFormatException e) {
-            return "{msg: 'ERROR: El ID del Municipio debe ser numérico.\n" + e.getMessage() + "'}";
+            return "{\"msg\" : \"ERROR: El ID del Municipio debe ser numérico.\n" + e.getMessage() + "\"}";
         }
     }
 
@@ -1057,9 +1057,9 @@ public class EjbPmd {
                     .setParameter("idadmon", Integer.parseInt(idadmon)).getSingleResult();
 
             em.remove(admon);
-            return "{msg: 'OK. La Administración fue eliminada correctamente.'}";
+            return "{\"msg\" : \"OK. La Administración fue eliminada correctamente.\"}";
         } catch (NumberFormatException e) {
-            return "{msg: 'ERROR: El ID de la Administración debe ser numérico.\n" + e.getMessage() + "'}";
+            return "{\"msg\" : \"ERROR: El ID de la Administración debe ser numérico.\n" + e.getMessage() + "\"}";
         }
     }
 
@@ -1069,9 +1069,10 @@ public class EjbPmd {
                     .setParameter("iddepe", Integer.parseInt(iddepe)).getSingleResult();
 
             em.remove(depe);
-            return "{msg: 'OK. La Dependencia fue eliminada correctamente.'}";
+            em.flush();
+            return "{\"msg\" : \"OK. La Dependencia fue eliminada correctamente.\"}";
         } catch (NumberFormatException e) {
-            return "{msg: 'ERROR: El ID de la Dependencia debe ser numérico.\n" + e.getMessage() + "'}";
+            return "{\"msg\" : \"ERROR: El ID de la Dependencia debe ser numérico.\n" + e.getMessage() + "\"}";
         }
     }
 
@@ -1081,9 +1082,10 @@ public class EjbPmd {
                     .setParameter("idadmondepe", Integer.parseInt(idadmondepe)).getSingleResult();
 
             em.remove(ad);
-            return "{msg: 'OK. La relación Administración -> Dependencia fue eliminada correctamente.'}";
+            em.flush();
+            return "{\"msg\" : \"OK. La relación Administración -> Dependencia fue eliminada correctamente.\"}";
         } catch (NumberFormatException e) {
-            return "{msg: 'ERROR: El ID de Administracion -> Dependencia debe ser numérico.\n" + e.getMessage() + "'}";
+            return "{\"msg\" : \"ERROR: El ID de Administracion -> Dependencia debe ser numérico.\n" + e.getMessage() + "\"}";
         }
     }
 
@@ -1093,9 +1095,10 @@ public class EjbPmd {
                     .setParameter("iddepto", Integer.parseInt(iddepto)).getSingleResult();
 
             em.remove(d);
-            return "{msg: 'OK. El Departamento fue eliminado correctamente.'}";
+            em.flush();
+            return "{\"msg\" : \"OK. El Departamento fue eliminado correctamente.\"}";
         } catch (NumberFormatException e) {
-            return "{msg: 'ERROR: El ID del Departamento debe ser numérico.\n" + e.getMessage() + "'}";
+            return "{\"msg\" : \"ERROR: El ID del Departamento debe ser numérico.\n" + e.getMessage() + "\"}";
         }
     }
 
@@ -1105,9 +1108,10 @@ public class EjbPmd {
                     .setParameter("idemp", Integer.parseInt(idemp)).getSingleResult();
 
             em.remove(e);
-            return "{msg: 'OK. El Empleado fue eliminado correctamente.'}";
+            em.flush();
+            return "{\"msg\" : \"OK. El Empleado fue eliminado correctamente.\"}";
         } catch (NumberFormatException e) {
-            return "{msg: 'ERROR: El ID del Empleado debe ser numérico.\n" + e.getMessage() + "'}";
+            return "{\"msg\" : \"ERROR: El ID del Empleado debe ser numérico.\n" + e.getMessage() + "\"}";
         }
     }
 
@@ -1117,9 +1121,10 @@ public class EjbPmd {
                     .setParameter("idrol", Integer.parseInt(idrol)).getSingleResult();
 
             em.remove(r);
-            return "{msg: 'OK. El Rol fue eliminado correctamente.'}";
+            em.flush();
+            return "{\"msg\" : \"OK. El Rol fue eliminado correctamente.\"}";
         } catch (NumberFormatException e) {
-            return "{msg: 'ERROR: El ID del Rol debe ser numérico.\n" + e.getMessage() + "'}";
+            return "{\"msg\" : \"ERROR: El ID del Rol debe ser numérico.\n" + e.getMessage() + "\"}";
         }
     }
 
@@ -1129,9 +1134,10 @@ public class EjbPmd {
                     .setParameter("idusuario", Integer.parseInt(idusuario)).getSingleResult();
 
             em.remove(u);
-            return "{msg: 'OK. El Usuario fue eliminado correctamente.'}";
+            em.flush();
+            return "{\"msg\" : \"OK. El Usuario fue eliminado correctamente.\"}";
         } catch (NumberFormatException e) {
-            return "{msg: 'ERROR: El ID del Usuario debe ser numérico.\n" + e.getMessage() + "'}";
+            return "{\"msg\" : \"ERROR: El ID del Usuario debe ser numérico.\n" + e.getMessage() + "\"}";
         }
     }
 
@@ -1141,9 +1147,10 @@ public class EjbPmd {
                     .setParameter("idusuariorol", Integer.parseInt(idusuariorol)).getSingleResult();
 
             em.remove(ur);
-            return "{msg: 'OK. El Usuario -> Rol fue eliminado correctamente.'}";
+            em.flush();
+            return "{\"msg\" : \"OK. El Usuario -> Rol fue eliminado correctamente.\"}";
         } catch (NumberFormatException e) {
-            return "{msg: 'ERROR: El ID del Usuario -> Rol debe ser numérico.\n" + e.getMessage() + "'}";
+            return "{\"msg\" : \"ERROR: El ID del Usuario -> Rol debe ser numérico.\n" + e.getMessage() + "\"}";
         }
     }
 
@@ -1153,9 +1160,10 @@ public class EjbPmd {
                     .setParameter("idplan", Integer.parseInt(idplan)).getSingleResult();
 
             em.remove(p);
-            return "{msg: 'OK. El Plan fue eliminado correctamente.'}";
+            em.flush();
+            return "{\"msg\" : \"OK. El Plan fue eliminado correctamente.\"}";
         } catch (NumberFormatException e) {
-            return "{msg: 'ERROR: El ID del Plan debe ser numérico.\n" + e.getMessage() + "'}";
+            return "{\"msg\" : \"ERROR: El ID del Plan debe ser numérico.\n" + e.getMessage() + "\"}";
         }
     }
 
@@ -1165,9 +1173,10 @@ public class EjbPmd {
                     .setParameter("idcat", Integer.parseInt(idcat)).getSingleResult();
 
             em.remove(c);
-            return "{msg: 'OK. La Categoría fue eliminada correctamente.'}";
+            em.flush();
+            return "{\"msg\" : \"OK. La Categoría fue eliminada correctamente.\"}";
         } catch (NumberFormatException e) {
-            return "{msg: 'ERROR: El ID de la Categoría debe ser numérico.\n" + e.getMessage() + "'}";
+            return "{\"msg\" : \"ERROR: El ID de la Categoría debe ser numérico.\n" + e.getMessage() + "\"}";
         }
     }
 
@@ -1177,9 +1186,10 @@ public class EjbPmd {
                     .setParameter("idparticipacion", Integer.parseInt(idparticipacion)).getSingleResult();
 
             em.remove(p);
-            return "{msg: 'OK. La Participación Dependencia -> Categoría fue eliminada correctamente.'}";
+            em.flush();
+            return "{\"msg\" : \"OK. La Participación Dependencia -> Categoría fue eliminada correctamente.\"}";
         } catch (NumberFormatException e) {
-            return "{msg: 'ERROR: El ID de la Participación debe ser numérico.\n" + e.getMessage() + "'}";
+            return "{\"msg\" : \"ERROR: El ID de la Participación debe ser numérico.\n" + e.getMessage() + "\"}";
         }
     }
 
@@ -1189,9 +1199,10 @@ public class EjbPmd {
                     .setParameter("idobjetivo", Integer.parseInt(idobjetivo)).getSingleResult();
 
             em.remove(o);
-            return "{msg: 'OK. El Objetivo fue eliminado correctamente.'}";
+            em.flush();
+            return "{\"msg\" : \"OK. El Objetivo fue eliminado correctamente.\"}";
         } catch (NumberFormatException e) {
-            return "{msg: 'ERROR: El ID del Objetivo debe ser numérico.\n" + e.getMessage() + "'}";
+            return "{\"msg\" : \"ERROR: El ID del Objetivo debe ser numérico.\n" + e.getMessage() + "\"}";
         }
     }
 
@@ -1201,9 +1212,10 @@ public class EjbPmd {
                     .setParameter("idestrategia", Integer.parseInt(idestrategia)).getSingleResult();
 
             em.remove(e);
-            return "{msg: 'OK. La Estrategia fue eliminada correctamente.'}";
+            em.flush();
+            return "{\"msg\" : \"OK. La Estrategia fue eliminada correctamente.\"}";
         } catch (NumberFormatException e) {
-            return "{msg: 'ERROR: El ID de la Estrategia debe ser numérico.\n" + e.getMessage() + "'}";
+            return "{\"msg\" : \"ERROR: El ID de la Estrategia debe ser numérico.\n" + e.getMessage() + "\"}";
         }
     }
 
@@ -1213,9 +1225,10 @@ public class EjbPmd {
                     .setParameter("idactividad", Integer.parseInt(idactividad)).getSingleResult();
 
             em.remove(a);
-            return "{msg: 'OK. La Actividad fue eliminada correctamente.'}";
+            em.flush();
+            return "{\"msg\" : \"OK. La Actividad fue eliminada correctamente.\"}";
         } catch (NumberFormatException e) {
-            return "{msg: 'ERROR: El ID de la Actividad debe ser numérico.\n" + e.getMessage() + "'}";
+            return "{\"msg\" : \"ERROR: El ID de la Actividad debe ser numérico.\n" + e.getMessage() + "\"}";
         }
     }
 }
