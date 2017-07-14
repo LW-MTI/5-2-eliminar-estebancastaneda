@@ -28,14 +28,17 @@ and open the template in the editor.
                                 //var r = r1['id'] + "-" + r1['name'];
                                 var botones = "<button id='btnBorrar' class='btn btn-sm btn-danger' \n\
                                                             onClick=''>Borrar</button>";
-                                botones += "<button id='btnEditar' class='btn btn-sm btn-warning' \n\
-                                                        onClick=''>Editar</button>";
+                                botones += "<button id='btnEditar' class='btn btn-sm btn-warning' onClick='showDepartamento(<iddepto>, <iddepe>, \"<clavedepto>\", \"<nombredepto>\")'>Editar</button>";
+                                botones = botones.replace('<iddepto>', r1['iddepto']);
+                                botones = botones.replace('<iddepe>', r1['iddepe'].iddepe);
+                                botones = botones.replace('<clavedepto>', r1['clavedepto']);
+                                botones = botones.replace('<nombredepto>', r1['nombredepto']);
                                 return botones;
                             }
                         }
                     ]
                 });
-                
+
                 $('#frmInsertar').validate({
                     rules: {
                         iddepe: {required: true},
@@ -71,11 +74,50 @@ and open the template in the editor.
                     }
                 });
 
+                $('#frmActualizar').validate({
+                    rules: {
+                        iddepe2: {required: true},
+                        clavedepto2: {required: true},
+                        nombredepto2: {required: true},
+                    },
+                    messages: {
+                        iddepe2: {required: 'La Dependencia es requerida'},
+                        clavedepto2: {required: 'La clave es requerida'},
+                        nombredepto2: {required: 'El nombre es requerido'},
+                    },
+                    highlight: function (element) {
+                        $(element).closest('.form-group').addClass('has-error');
+                    },
+                    unhighlight: function (element) {
+                        $(element).closest('.form-group').removeClass('has-error');
+                    },
+                    errorElement: 'span',
+                    errorClass: 'help-block',
+                    errorPlacement: function (error, element) {
+                        if (element.parent('.input-group'.length)) {
+                            error.insertAfter(element.parent());
+                        } else {
+                            error.insertAfter(element);
+                        }
+                    },
+                    submitHandler: function (form) {
+                        console.log('ActualizarDepartamento - Formulario válido.');
+                        //alert('Formulario válido.');
+                        // llamar función para insertar registro
+                        updateDepartamento();
+                        return false;
+                    }
+                });
+
+                $('#btnGuardar').on('click', function () {
+                    $('#frmActualizar').submit();
+                });
+
                 /*Llenar select Dependencias(combo box)*/
                 $.getJSON('ConsultarDependencias', function (data) {
                     $.each(data, function (data, element) {
                         for (i = 0; i < element.length; i++) {
-                            $('#iddepe').append("<option value='" + element[i].iddepe + "'>" +
+                            $('.select-dependencia').append("<option value='" + element[i].iddepe + "'>" +
                                     element[i].clavedepe + " - " + element[i].nombredepe + "</option>");
                         }
                     });
@@ -100,6 +142,34 @@ and open the template in the editor.
                     alert(json.msg);
                 });
             }
+
+            function showDepartamento(iddepto, iddepe, clavedepto, nombredepto) {
+                $('#iddepto').val(iddepto);
+                $('#iddepe2').val(iddepe);
+                $('#clavedepto2').val(clavedepto);
+                $('#nombredepto2').val(nombredepto);
+                $('#mdlActualizar').modal('show');
+            }
+
+            function updateDepartamento() {
+                $.ajax({
+                    url: "ActualizarDepartamento",
+                    type: "POST",
+                    data: {
+                        iddepto: $('#iddepto').val(),
+                        iddepe: $('#iddepe2').val(),
+                        clavedepto: $('#clavedepto2').val(),
+                        nombredepto: $('#nombredepto2').val()
+                    }
+                }).done(function (json) {
+                    alert(json.msg);
+                    $('#tbDepartamentos').dataTable().api().ajax.reload();
+                    $('#mdlActualizar').modal('toggle');
+                }).fail(function (json) {
+                    alert(json.msg);
+                });
+            }
+
         </script>
     </head>
     <body>
@@ -113,18 +183,18 @@ and open the template in the editor.
             <div class="tab-content">
                 <div id="nuevoDepto" class="tab-pane fade in active">
                     <br/><br/>
-                    <form id="frmInsertar">
+                    <form method="POST" id="frmInsertar">
                         <div class="form-group">
                             <label for="iddepe">Dependencia:</label>
-                            <select class="form-control" name="iddepe" id="iddepe">
+                            <select class="form-control select-dependencia" name="iddepe" id="iddepe">
                                 <option value="0">Seleccione...</option>
                             </select>
                         </div>
-                        <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                        <div class="form-group">
                             <label for="clavedepto">Clave Departamento:</label>
                             <input class="form-control" type="text" name="clavedepto" id="clavedepto"/>
                         </div>
-                        <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                        <div class="form-group">
                             <label for="nombredepto">Nombre Departamento:</label>
                             <input class="form-control" type="text" name="nombredepto" id="nombredepto"/>
                         </div>
@@ -135,7 +205,7 @@ and open the template in the editor.
                         </div>
                     </form>
                 </div>
-                
+
                 <div id="consultaDepto" class="tab-pane fade">
                     <br/>
                     <div class="table-responsive">
@@ -154,6 +224,46 @@ and open the template in the editor.
                     </div>
                 </div>
             </div>
+
+            <!-- Modal window -->
+            <div id="mdlActualizar" class="modal">
+                <div class="modal-dialog">
+
+                    <div class="modal-content">
+
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal"
+                                    aria-hidden="true">&times;</button>
+                            <h3 class="modal-title">Modificar Entidad</h3>
+                        </div>
+
+                        <div class="modal-body">
+                            <form class="col-lg-12" id="frmActualizar" method="POST">
+                                <div class="form-group">
+                                    <label for="iddepe2">Dependencia:</label>
+                                    <select class="form-control select-dependencia" name="iddepe2" id="iddepe2">
+                                        <option value="0">Seleccione...</option>
+                                    </select>
+                                    <input type="hidden" id="iddepto" name="iddepto"/>
+                                </div>
+                                <div class="form-group">
+                                    <label for="clavedepto2">Clave Departamento:</label>
+                                    <input class="form-control" type="text" name="clavedepto2" id="clavedepto2"/>
+                                </div>
+                                <div class="form-group">
+                                    <label for="nombredepto2">Nombre Departamento:</label>
+                                    <input class="form-control" type="text" name="nombredepto2" id="nombredepto2"/>
+                                </div>
+                            </form>
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="button" id="btnGuardar" class="btn btn-sm btn-primary">Guardar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </body>
 </html>

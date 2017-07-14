@@ -21,6 +21,7 @@ import mx.edu.ittepic.pmdapp.ejbs.EjbPmd;
  */
 @WebServlet(name = "ActualizarRol", urlPatterns = {"/ActualizarRol"})
 public class ActualizarRol extends HttpServlet {
+
     @EJB
     private EjbPmd ejb;
 
@@ -41,7 +42,7 @@ public class ActualizarRol extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet ActualizarRol</title>");            
+            out.println("<title>Servlet ActualizarRol</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet ActualizarRol at " + request.getContextPath() + "</h1>");
@@ -81,16 +82,12 @@ public class ActualizarRol extends HttpServlet {
         response.setContentType("application/json; charset=UTF-8");
         response.setHeader("Cache-Control", "no-store");
         PrintWriter p = response.getWriter();
-        
-        try{
-            int idrol = Integer.parseInt(request.getParameter("idrol"));
-            String claverol = request.getParameter("claverol");
-            String nombrerol = request.getParameter("nombrerol");
-            
-            p.write(ejb.actualizarRol(idrol, claverol, nombrerol));
-        }catch(NumberFormatException e){
-            p.write("{msg:'ERROR: El ID del Rol debe ser numérico.\n" + e.getMessage() + "'}");
-        }
+
+        String idrol = request.getParameter("idrol");
+        String claverol = request.getParameter("claverol");
+        String nombrerol = request.getParameter("nombrerol");
+
+        p.write(ejb.actualizarRol(idrol, claverol, nombrerol));
     }
 
     /**

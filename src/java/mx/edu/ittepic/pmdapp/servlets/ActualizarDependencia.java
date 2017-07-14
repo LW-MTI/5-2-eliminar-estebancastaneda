@@ -77,19 +77,16 @@ public class ActualizarDependencia extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
+        request.setCharacterEncoding("UTF-8");
         response.setContentType("application/json; charset=UTF-8");
         response.setHeader("Cache-Control", "no-store");
         PrintWriter p = response.getWriter();
         
-        try{
-            int iddepe = Integer.parseInt(request.getParameter("iddepe"));
+            String iddepe = request.getParameter("iddepe");
             String clavedepe = request.getParameter("clavedepe");
             String nombredepe = request.getParameter("nombredepe");
             
             p.write(ejb.actualizarDependencia(iddepe, clavedepe, nombredepe));
-        }catch(NumberFormatException e){
-            p.write("{msg:'ERROR: El ID de la Dependencia debe ser numérico.\n" + e.getMessage() + "'}");
-        }
     }
 
     /**

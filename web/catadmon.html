@@ -9,6 +9,7 @@ and open the template in the editor.
         <title>PMD-Administración</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="js/funciones.js" type="text/javascript"></script>
         <script src="//code.jquery.com/jquery-1.12.4.js"></script>
         <script src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
         <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
@@ -27,12 +28,18 @@ and open the template in the editor.
                         {"data": "fechafin"},
                         {"data": "idmun.nombremun"},
                         {"data": "idmun.ident.abrevent"},
+//                        {"data": "idmun.ident.ident"},
                         {"data": function (r1) {
                                 //var r = r1['id'] + "-" + r1['name'];
-                                var botones = "<button id='btnBorrar' class='btn btn-sm btn-danger' \n\
-                                                            onClick=''>Borrar</button>";
-                                botones += "<button id='btnEditar' class='btn btn-sm btn-warning' \n\
-                                                        onClick=''>Editar</button>";
+                                var botones = "<button id='btnBorrar' class='btn btn-sm btn-danger' onClick=''>Borrar</button>";
+                                botones += "<button id='btnEditar' class='btn btn-sm btn-warning' onClick='showAdministracion(<idadmon>, <ident>, <idmun>, \"<claveadmon>\", \"<nombreadmon>\", \"<fechaini>\", \"<fechafin>\")'>Editar</button>";
+                                botones = botones.replace('<idadmon>', r1['idadmon']);
+                                botones = botones.replace('<ident>', r1['idmun'].ident.ident);
+                                botones = botones.replace('<idmun>', r1['idmun'].idmun);
+                                botones = botones.replace('<claveadmon>', r1['claveadmon']);
+                                botones = botones.replace('<nombreadmon>', r1['nombreadmon']);
+                                botones = botones.replace('<fechaini>', r1['fechaini']);
+                                botones = botones.replace('<fechafin>', r1['fechafin']);
                                 return botones;
                             }
                         }
@@ -82,7 +89,7 @@ and open the template in the editor.
                 $.getJSON('ConsultarEntidades', function (data) {
                     $.each(data, function (data, element) {
                         for (i = 0; i < element.length; i++) {
-                            $('#ident').append("<option value='" + element[i].ident + "'>" +
+                            $('.select-entidad').append("<option value='" + element[i].ident + "'>" +
                                     element[i].nombreent + " (" + element[i].claveent + ")</option>");
                         }
                     });
@@ -100,9 +107,67 @@ and open the template in the editor.
                         });
                     });
                 });
+
+                /*Llenar select dependiente (combo box)*/
+                $('#ident2').change(function () {
+                    $('#idmun2').empty();
+                    $.getJSON("ConsultarMunicipiosXIdent", {ident: $('#ident2').val()}, function (data) {
+                        $.each(data, function (key, element) {
+                            for (i = 0; i < element.length; i++) {
+                                $('#idmun2').append("<option value='" + element[i].idmun + "'>" +
+                                        element[i].nombremun + " (" + element[i].clavemun + ")</option>");
+                            }
+                        });
+                    });
+                });
                 
+                $('#frmActualizar').validate({
+                    rules: {
+                        idadmon: {required: true},
+                        idmun2: {required: true},
+                        claveadmon2: {required: true},
+                        nombreadmon2: {required: true},
+                        fechaini2: {required: true},
+                        fechafin2: {required: true}
+                    },
+                    messages: {
+                        idadmon: {required: 'El ID de Administración es requerido'},
+                        idmun2: {required: 'El municipio es requerido'},
+                        claveadmon2: {required: 'La clave es requerida'},
+                        nombreadmon2: {required: 'El nombre es requerido'},
+                        fechaini2: {required: 'La fecha de inicio es requerida'},
+                        fechafin2: {required: 'La fecha final es requerida'}
+                    },
+                    highlight: function (element) {
+                        $(element).closest('.form-group').addClass('has-error');
+                    },
+                    unhighlight: function (element) {
+                        $(element).closest('.form-group').removeClass('has-error');
+                    },
+                    errorElement: 'span',
+                    errorClass: 'help-block',
+                    errorPlacement: function (error, element) {
+                        if (element.parent('.input-group'.length)) {
+                            error.insertAfter(element.parent());
+                        } else {
+                            error.insertAfter(element);
+                        }
+                    },
+                    submitHandler: function (form) {
+                        console.log('ActualizarAdministración - Formulario válido.');
+                        //alert('Formulario válido.');
+                        // llamar función para insertar registro
+                        updateAdministracion();
+                        return false;
+                    }
+                });
+
+                $('#btnGuardar').on('click', function () {
+                    $('#frmActualizar').submit();
+                });
+
             });
-            
+
             function newAdministracion() {
                 $.ajax({
                     url: "InsertarAdministracion",
@@ -116,12 +181,61 @@ and open the template in the editor.
                     }
                 }).done(function (json) {
                     alert(json.msg);
+                    $('#ident').val(0);
+                    $('#idmun').val(0);
                     $('#claveadmon').val("");
                     $('#nombreadmon').val("");
                     $('#fechaini').val("");
                     $('#fechafin').val("");
                     $('#tbAdministraciones').dataTable().api().ajax.reload();
                 }).fail(function (json) {
+                    alert(json.msg);
+                });
+            }
+            
+            function showAdministracion(idadmon, ident, idmun, claveadmon, nombreadmon, fechaini, fechafin){
+                //var fechaInicio = new Date('Sep 17, 2014 12:00:00 AM');
+                var fechaInicio = new Date(fechaini);
+                var fechaFin = new Date(fechafin);
+                var dia, mes, anio;
+                
+                $('#idadmon').val(idadmon);
+                $('#ident2').val(ident);
+                $('#ident2').change();
+                $('#idmun2').val(idmun);
+                $('#claveadmon2').val(claveadmon);
+                $('#nombreadmon2').val(nombreadmon);
+                
+                dia = fechaInicio.getDate();
+                mes = fechaInicio.getMonth() + 1;
+                anio = fechaInicio.getFullYear();
+                $('#fechaini2').val(anio + '-' + rellenarCadena(''+mes, '0', 2, true) + '-' + dia);
+                
+                dia = fechaFin.getDate();
+                mes = fechaFin.getMonth() + 1;
+                anio = fechaFin.getFullYear();
+                $('#fechafin2').val(anio + '-' + rellenarCadena(''+mes, '0', 2, true) + '-' + dia);
+                
+                $('#mdlActualizar').modal("show");
+            }
+            
+            function updateAdministracion(){
+                $.ajax({
+                    url: "ActualizarAdministracion",
+                    type: "POST",
+                    data: {
+                        idadmon: $('#idadmon').val(),
+                        idmun: $('#idmun2').val(),
+                        claveadmon: $('#claveadmon2'),
+                        nombreadmon: $('#nombreadmon2').val()
+//                        fechaini: $('#fechaini2').val(),
+//                        fechafin: $('#fechafin2').val()
+                    }
+                }).done( function (json) {
+                    alert(json.msg);
+                    $('#tbAdministraciones').dataTable().api().ajax.reload();
+                    $('#mdlActualizar').modal('toggle');
+                }).fail(function(json){
                     alert(json.msg);
                 });
             }
@@ -143,14 +257,14 @@ and open the template in the editor.
 
                         <div class="form-group">
                             <label for="ident">Entidad:</label>
-                            <select class="form-control" name="ident" id="ident">
+                            <select class="form-control select-entidad" name="ident" id="ident">
                                 <option value="0">Seleccione...</option>
                             </select>
                         </div>
 
                         <div class="form-group">
                             <label for="idmun">Municipio:</label>
-                            <select class="form-control" name="idmun" id="idmun">
+                            <select class="form-control select-municipio" name="idmun" id="idmun">
                             </select>
                         </div>
 
@@ -195,6 +309,7 @@ and open the template in the editor.
                                     <th>Fin</th>
                                     <th>Nombre Mun.</th>
                                     <th>Abrev. Ent</th>
+<!--                                    <th>ID. Ent</th>-->
                                     <th>Opciones</th>
                                 </tr>
                             </thead>
@@ -203,5 +318,65 @@ and open the template in the editor.
                 </div>
             </div>
         </div>
+
+        <!-- Modal -->
+        <div class="modal" id="mdlActualizar" role="dialog">
+            <div class="modal-dialog">
+                <!--Modal content-->
+                <div class="modal-content">
+
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Modificar Administración Municipal</h4>
+                    </div>
+
+                    <div class="modal-body">
+                        <form method="POST" id="frmActualizar">
+
+                            <div class="form-group">
+                                <label for="ident2">Entidad:</label>
+                                <select class="form-control select-entidad" name="ident2" id="ident2">
+                                    <option value="0">Seleccione...</option>
+                                </select>
+                                <input type="hidden" name="idadmon" id="idadmon"/>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="idmun2">Municipio:</label>
+                                <select class="form-control select-municipio" name="idmun2" id="idmun2">
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="claveadmon2">Clave Administración:</label>
+                                <input class="form-control" type="text" name="claveadmon2" id="claveadmon2"/>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="nombreadmon2">Nombre Administración:</label>
+                                <input class="form-control" type="text" name="nombreadmon2" id="nombreadmon2"/>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="fechaini2">Fecha Inicio Administración:</label>
+                                <input class="form-control" type="date" name="fechaini2" id="fechaini2"/>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="fechafin2">Fecha Fin de Administración:</label>
+                                <input class="form-control" type="date" name="fechafin2" id="fechafin2"/>
+                            </div>
+
+                        </form>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" id="btnGuardar" class="btn btn-sm btn-primary">Guardar</button>
+                    </div>
+
+                </div><!-- class="modal-content" -->
+            </div><!-- class="modal-dialog" -->
+        </div> <!-- class="modal" -->
+
     </body>
 </html>

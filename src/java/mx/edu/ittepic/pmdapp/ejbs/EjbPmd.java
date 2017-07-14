@@ -7,6 +7,7 @@ package mx.edu.ittepic.pmdapp.ejbs;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import java.text.ParseException;
 import java.util.Date;
 import java.util.List;
 import javax.ejb.Stateless;
@@ -77,22 +78,22 @@ public class EjbPmd {
         }
     }
 
-    public String insertarAdministracion(String clave, String nombre, Date inicio, Date fin, int idmun) {
+    public String insertarAdministracion(String clave, String nombre, String fechaini, String fechafin, String idmun) {
         try {
             Municipio municipio = (Municipio) em.createNamedQuery("Municipio.findByIdmun")
-                    .setParameter("idmun", idmun)
+                    .setParameter("idmun", Integer.parseInt(idmun))
                     .getSingleResult();
             Administracion administracion = new Administracion();
 
             administracion.setClaveadmon(clave);
             administracion.setNombreadmon(nombre);
-            administracion.setFechaini(inicio);
-            administracion.setFechafin(fin);
+            administracion.setFechaini(Util.strToDate(fechaini, "yyyy-MM-dd"));
+            administracion.setFechafin(Util.strToDate(fechafin, "yyyy-MM-dd"));
             administracion.setIdmun(municipio);
 
             em.persist(administracion);
             return "{\"msg\": \"OK. Administración insertada correctamente.\"}";
-        } catch (Exception e) {
+        } catch (NumberFormatException | ParseException e) {
             return "{\"msg\": \"ERROR: No se pudo insertar la Administración.\n" + e.getMessage() + "\"}";
         }
     }
@@ -728,24 +729,24 @@ public class EjbPmd {
         }
     }
 
-    public String actualizarMunicipio(int idmun, String clavemun, String nombremun, int ident) {
+    public String actualizarMunicipio(String idmun, String clavemun, String nombremun, String ident) {
         try {
             Municipio mun = (Municipio) em.createNamedQuery("Municipio.findByIdmun")
-                    .setParameter("idmun", idmun)
+                    .setParameter("idmun", Integer.parseInt(idmun))
                     .getSingleResult();
             Entidad ent = (Entidad) em.createNamedQuery("Entidad.findByIdent")
-                    .setParameter("ident", ident)
+                    .setParameter("ident", Integer.parseInt(ident))
                     .getSingleResult();
 
-            mun.setIdmun(idmun);
+            //mun.setIdmun(idmun);
             mun.setClavemun(clavemun);
             mun.setNombremun(nombremun);
             mun.setIdent(ent);
 
             em.merge(mun);
-            return "{msg:'OK. Municipio actualizado correctamente.'}";
+            return "{\"msg\" : \"OK. Municipio actualizado correctamente.\"}";
         } catch (Exception e) {
-            return "{msg:'ERROR: No se pudo actualizar el Municipio.\n" + e.getMessage() + "'}";
+            return "{\"msg\" : \"ERROR: No se pudo actualizar el Municipio.\n" + e.getMessage() + "\"}";
         }
     }
 
@@ -773,10 +774,10 @@ public class EjbPmd {
         }
     }
 
-    public String actualizarDependencia(int iddepe, String clavedepe, String nombredepe) {
+    public String actualizarDependencia(String iddepe, String clavedepe, String nombredepe) {
         try {
             Dependencia depe = (Dependencia) em.createNamedQuery("Dependencia.findByIddepe")
-                    .setParameter("iddepe", iddepe)
+                    .setParameter("iddepe", Integer.parseInt(iddepe))
                     .getSingleResult();
 
             //depe.setIddepe(iddepe);
@@ -784,41 +785,41 @@ public class EjbPmd {
             depe.setNombredepe(nombredepe);
 
             em.merge(depe);
-            return "{msg:'OK. Dependencia actualizada correctamente.'}";
+            return "{\"msg\" : \"OK. Dependencia actualizada correctamente.\"}";
         } catch (Exception e) {
-            return "{msg:'ERROR: No se pudo actualizar la Dependencia.\n" + e.getMessage() + "'}";
+            return "{\"msg\" : \"ERROR: No se pudo actualizar la Dependencia.\n" + e.getMessage() + "\"}";
         }
     }
 
-    public String actualizarAdmondepe(int idadmondepe, int idadmon, int iddepe) {
+    public String actualizarAdmondepe(String idadmondepe, String idadmon, String iddepe) {
         try {
             Admondepe admondepe = (Admondepe) em.createNamedQuery("Admondepe.findByIdadmondepe")
-                    .setParameter("idadmondepe", idadmondepe)
+                    .setParameter("idadmondepe", Integer.parseInt(idadmondepe))
                     .getSingleResult();
             Administracion admon = (Administracion) em.createNamedQuery("Administracion.findByIdadmon")
-                    .setParameter("idadmon", idadmon)
+                    .setParameter("idadmon", Integer.parseInt(idadmon))
                     .getSingleResult();
             Dependencia depe = (Dependencia) em.createNamedQuery("Dependencia.findByIddepe")
-                    .setParameter("iddepe", iddepe)
+                    .setParameter("iddepe", Integer.parseInt(iddepe))
                     .getSingleResult();
 
             admondepe.setIdadmon(admon);
             admondepe.setIddepe(depe);
 
             em.merge(admondepe);
-            return "{msg:'OK. Administración -> Dependencia actualizada correctamente.'}";
-        } catch (Exception e) {
-            return "{msg:'ERROR: No se pudo actualizar la Administración -> Dependencia.\n" + e.getMessage() + "'}";
+            return "{\"msg\" : \"OK. Administración -> Dependencia actualizada correctamente.\"}";
+        } catch (NumberFormatException e) {
+            return "{\"msg\" : \"ERROR: No se pudo actualizar la Administración -> Dependencia.\n" + e.getMessage() + "\"}";
         }
     }
 
-    public String actualizarDepartamento(int iddepto, String clave, String nombre, int iddepe) {
+    public String actualizarDepartamento(String iddepto, String clave, String nombre, String iddepe) {
         try {
             Departamento depto = (Departamento) em.createNamedQuery("Departamento.findByIddepto")
-                    .setParameter("iddepto", iddepto)
+                    .setParameter("iddepto", Integer.parseInt(iddepto))
                     .getSingleResult();
             Dependencia depe = (Dependencia) em.createNamedQuery("Dependencia.findByIddepe")
-                    .setParameter("iddepe", iddepe)
+                    .setParameter("iddepe", Integer.parseInt(iddepe))
                     .getSingleResult();
 
             depto.setClavedepto(clave);
@@ -826,18 +827,18 @@ public class EjbPmd {
             depto.setIddepe(depe);
 
             em.merge(depto);
-            return "{msg: 'OK. Departamento actualizado correctamente.'}";
-        } catch (Exception e) {
-            return "{msg:'ERROR: No se pudo actualizar el Departamento.\n" + e.getMessage() + "'}";
+            return "{\"msg\" : \"OK. Departamento actualizado correctamente.\"}";
+        } catch (NumberFormatException e) {
+            return "{\"msg\" : \"ERROR: No se pudo actualizar el Departamento.\n" + e.getMessage() + "\"}";
         }
     }
 
-    public String actualizarEmpleado(int idemp, String paterno, String materno, String nombre, int iddepto) {
+    public String actualizarEmpleado(String idemp, String paterno, String materno, String nombre, String iddepto) {
         try {
             Empleado emp = (Empleado) em.createNamedQuery("Empleado.findByIdemp")
-                    .setParameter("idemp", idemp).getSingleResult();
+                    .setParameter("idemp", Integer.parseInt(idemp)).getSingleResult();
             Departamento depto = (Departamento) em.createNamedQuery("Departamento.findByIddepto")
-                    .setParameter("iddepto", iddepto).getSingleResult();
+                    .setParameter("iddepto", Integer.parseInt(iddepto)).getSingleResult();
 
             emp.setPaternoemp(paterno);
             emp.setMaternoemp(materno);
@@ -845,24 +846,24 @@ public class EjbPmd {
             emp.setIddepto(depto);
 
             em.merge(emp);
-            return "{msg: 'OK. Empleado actualizado correctamente.'}";
-        } catch (Exception e) {
-            return "{msg:'ERROR: No se pudo actualizar el Empleado.\n" + e.getMessage() + "'}";
+            return "{\"msg\" : \"OK. Empleado actualizado correctamente.\"}";
+        } catch (NumberFormatException e) {
+            return "{\"msg\" : \"ERROR: No se pudo actualizar el Empleado.\n" + e.getMessage() + "\"}";
         }
     }
 
-    public String actualizarRol(int idrol, String claverol, String nombrerol) {
+    public String actualizarRol(String idrol, String claverol, String nombrerol) {
         try {
             Rol rol = (Rol) em.createNamedQuery("Rol.findByIdrol")
-                    .setParameter("idrol", idrol).getSingleResult();
+                    .setParameter("idrol", Integer.parseInt(idrol)).getSingleResult();
 
             rol.setClaverol(claverol);
             rol.setNombrerol(nombrerol);
 
             em.merge(rol);
-            return "{msg: 'OK. Rol actualizado correctamente.'}";
-        } catch (Exception e) {
-            return "{msg: 'ERROR: No se pudo actualizar el Rol.\n" + e.getMessage() + "'}";
+            return "{\"msg\" : \"OK. Rol actualizado correctamente.\"}";
+        } catch (NumberFormatException e) {
+            return "{\"msg\" : \"ERROR: No se pudo actualizar el Rol.\n" + e.getMessage() + "\"}";
         }
     }
 
@@ -884,22 +885,22 @@ public class EjbPmd {
         }
     }
 
-    public String actualizarUsuariorol(int idusuariorol, int idusuario, int idrol) {
+    public String actualizarUsuariorol(String idusuariorol, String idusuario, String idrol) {
         try {
             Usuariorol ur = (Usuariorol) em.createNamedQuery("Usuariorol.findByIdusuariorol")
-                    .setParameter("idusuariorol", idusuariorol).getSingleResult();
+                    .setParameter("idusuariorol", Integer.parseInt(idusuariorol)).getSingleResult();
             Usuario u = (Usuario) em.createNamedQuery("Usuario.findByIdusuario")
-                    .setParameter("idusuario", idusuario).getSingleResult();
+                    .setParameter("idusuario", Integer.parseInt(idusuario)).getSingleResult();
             Rol r = (Rol) em.createNamedQuery("Rol.findByIdrol")
-                    .setParameter("idrol", idrol).getSingleResult();
+                    .setParameter("idrol", Integer.parseInt(idrol)).getSingleResult();
 
             ur.setIdusuario(u);
             ur.setIdrol(r);
 
             em.merge(ur);
-            return "{msg: 'OK. Usuario -> Rol actualizado correctamente.'}";
-        } catch (Exception e) {
-            return "{msg: 'ERROR: No se pudo actualizar el Usuario -> Rol.\n" + e.getMessage() + "'}";
+            return "{\"msg\" : \"OK. Usuario -> Rol actualizado correctamente.\"}";
+        } catch (NumberFormatException e) {
+            return "{\"msg\" : \"ERROR: No se pudo actualizar el Usuario -> Rol.\n" + e.getMessage() + "\"}";
         }
     }
 
@@ -941,23 +942,23 @@ public class EjbPmd {
         }
     }
 
-    public String actualizarParticipacion(int idparticipacion, int iddepe, int idcat) {
+    public String actualizarParticipacion(String idparticipacion, String iddepe, String idcat) {
         try {
             Participacion p = (Participacion) em.createNamedQuery("Participacion.findByIdparticipacion")
-                    .setParameter("idparticipacion", idparticipacion).getSingleResult();
+                    .setParameter("idparticipacion", Integer.parseInt(idparticipacion)).getSingleResult();
             Dependencia d = (Dependencia) em.createNamedQuery("Dependencia.findByIddepe")
-                    .setParameter("iddepe", iddepe).getSingleResult();
+                    .setParameter("iddepe", Integer.parseInt(iddepe)).getSingleResult();
             Categoriaplan c = (Categoriaplan) em.createNamedQuery("Categoriaplan.findByIdcat")
-                    .setParameter("idcat", idcat).getSingleResult();
+                    .setParameter("idcat", Integer.parseInt(idcat)).getSingleResult();
 
             p.setIddepe(d);
             p.setIdcat(c);
 
             em.merge(p);
-            return "{msg: 'OK. Participación Dependencia -> Categoría actualizada correctamente.'}";
-        } catch (Exception e) {
-            return "{msg: 'ERROR: No se pudo actualizar la Participación de la Dependencia en la Categoría.\n"
-                    + e.getMessage() + "'}";
+            return "{\"msg\" : \"OK. Participación Dependencia -> Categoría actualizada correctamente.\"}";
+        } catch (NumberFormatException e) {
+            return "{\"msg\" : \"ERROR: No se pudo actualizar la Participación de la Dependencia en la Categoría.\n"
+                    + e.getMessage() + "\"}";
         }
 
     }
@@ -980,21 +981,21 @@ public class EjbPmd {
         }
     }
 
-    public String actualizarEstrategia(int idestrategia, String claveestrategia, String estrategia, int idobjetivo) {
+    public String actualizarEstrategia(String idestrategia, String claveestrategia, String estrategia, String idobjetivo) {
         try {
             Estrategia e = (Estrategia) em.createNamedQuery("Estrategia.findByIdestrategia")
-                    .setParameter("idestrategia", idestrategia).getSingleResult();
+                    .setParameter("idestrategia", Integer.parseInt(idestrategia)).getSingleResult();
             Objetivo o = (Objetivo) em.createNamedQuery("Objetivo.findByIdobjetivo")
-                    .setParameter("idobjetivo", idobjetivo).getSingleResult();
+                    .setParameter("idobjetivo", Integer.parseInt(idobjetivo)).getSingleResult();
 
             e.setClaveestrategia(claveestrategia);
             e.setEstrategia(estrategia);
             e.setIdobjetivo(o);
 
             em.merge(e);
-            return "{msg: 'OK. Estrategia actualizada correctamente.'}";
-        } catch (Exception e) {
-            return "{msg: 'ERROR: No se pudo actualizar la Estrategia.\n" + e.getMessage() + "'}";
+            return "{\"msg\" : \"OK. Estrategia actualizada correctamente.\"}";
+        } catch (NumberFormatException e) {
+            return "{\"msg\" : \"ERROR: No se pudo actualizar la Estrategia.\n" + e.getMessage() + "\"}";
         }
     }
 

@@ -21,6 +21,7 @@ import mx.edu.ittepic.pmdapp.ejbs.EjbPmd;
  */
 @WebServlet(name = "ActualizarMunicipio", urlPatterns = {"/ActualizarMunicipio"})
 public class ActualizarMunicipio extends HttpServlet {
+
     @EJB
     private EjbPmd ejb;
 
@@ -41,7 +42,7 @@ public class ActualizarMunicipio extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet ActualizarMunicipio</title>");            
+            out.println("<title>Servlet ActualizarMunicipio</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet ActualizarMunicipio at " + request.getContextPath() + "</h1>");
@@ -76,21 +77,18 @@ public class ActualizarMunicipio extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+
+        request.setCharacterEncoding("UTF-8");
         response.setContentType("application/json; charset=UTF-8");
         response.setHeader("Cache-Control", "no-store");
         PrintWriter p = response.getWriter();
-        
-        try{
-            int idmun = Integer.parseInt(request.getParameter("idmun"));
-            String clavemun = request.getParameter("clavemun");
-            String nombremun = request.getParameter("nombremun");
-            int ident = Integer.parseInt(request.getParameter("ident"));
-            
-            p.write(ejb.actualizarMunicipio(idmun, clavemun, nombremun, ident));
-        }catch(NumberFormatException e){
-            p.write("{msg:'ERROR: El ID de la Entidad debe ser numérico.\n" + e.getMessage() + "'}");
-        }
+
+        String idmun = request.getParameter("idmun");
+        String clavemun = request.getParameter("clavemun");
+        String nombremun = request.getParameter("nombremun");
+        String ident = request.getParameter("ident");
+
+        p.write(ejb.actualizarMunicipio(idmun, clavemun, nombremun, ident));
     }
 
     /**

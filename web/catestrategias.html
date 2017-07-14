@@ -29,7 +29,11 @@ and open the template in the editor.
                                 var botones = "<button id='btnBorrar' class='btn btn-sm btn-danger' \n\
                                                             onClick=''>Borrar</button>";
                                 botones += "<button id='btnEditar' class='btn btn-sm btn-warning' \n\
-                                                        onClick=''>Editar</button>";
+                                                        onClick='showEstrategia(<idestrategia>, <idobjetivo>, \"<claveestrategia>\", \"<estrategia>\")'>Editar</button>";
+                                botones = botones.replace('<idestrategia>', r1['idestrategia']);
+                                botones = botones.replace('<idobjetivo>', r1['idobjetivo'].idobjetivo);
+                                botones = botones.replace('<claveestrategia>', r1['claveestrategia']);
+                                botones = botones.replace('<estrategia>', r1['estrategia']);
                                 return botones;
                             }
                         }
@@ -70,17 +74,57 @@ and open the template in the editor.
                         return false;
                     }
                 });
-                
+
+
+                $('#frmActualizar').validate({
+                    rules: {
+                        idobjetivo2: {required: true},
+                        claveestrategia2: {required: true},
+                        estrategia2: {required: true}
+                    },
+                    messages: {
+                        idobjetivo2: {required: 'El Objetivo es requerido'},
+                        claveestrategia2: {required: 'La clave es requerida'},
+                        estrategia2: {required: 'La Estrategia es requerida'}
+                    },
+                    highlight: function (element) {
+                        $(element).closest('.form-group').addClass('has-error');
+                    },
+                    unhighlight: function (element) {
+                        $(element).closest('.form-group').removeClass('has-error');
+                    },
+                    errorElement: 'span',
+                    errorClass: 'help-block',
+                    errorPlacement: function (error, element) {
+                        if (element.parent('.input-group'.length)) {
+                            error.insertAfter(element.parent());
+                        } else {
+                            error.insertAfter(element);
+                        }
+                    },
+                    submitHandler: function (form) {
+                        console.log('ActualizarEstrategia - Formulario válido.');
+                        //alert('Formulario válido.');
+                        // llamar función para insertar registro
+                        updateEstrategia();
+                        return false;
+                    }
+                });
+
+                $('#btnGuardar').on('click', function () {
+                    $('#frmActualizar').submit();
+                });
+
                 $.getJSON('ConsultarObjetivos', function (data) {
                     $.each(data, function (data, element) {
                         for (i = 0; i < element.length; i++) {
-                            $('#idobjetivo').append("<option value='" + element[i].idobjetivo + "'>" +
+                            $('.select-objetivo').append("<option value='" + element[i].idobjetivo + "'>" +
                                     element[i].idcat.clavecat + " - " + element[i].claveobjetivo + "</option>");
                         }
                     });
                 });
             });
-            
+
             function newEstrategia() {
                 $.ajax({
                     url: "InsertarEstrategia",
@@ -100,13 +144,40 @@ and open the template in the editor.
                     alert(json.msg);
                 });
             }
-            
+
+            function showEstrategia(idestrategia, idobjetivo, claveestrategia, estrategia) {
+                $('#idestrategia').val(idestrategia);
+                $('#idobjetivo2').val(idobjetivo);
+                $('#claveestrategia2').val(claveestrategia);
+                $('#estrategia2').val(estrategia);
+                $('#mdlActualizar').modal('show');
+            }
+
+            function updateEstrategia() {
+                $.ajax({
+                    url: "ActualizarEstrategia",
+                    type: "POST",
+                    data: {
+                        idestrategia: $('#idestrategia').val(),
+                        idobjetivo: $('#idobjetivo2').val(),
+                        claveestrategia: $('#claveestrategia2').val(),
+                        estrategia: $('#estrategia2').val()
+                    }
+                }).done(function (json) {
+                    alert(json.msg);
+                    $('#tbEstrategias').dataTable().api().ajax.reload();
+                    $('#mdlActualizar').modal('toggle');
+                }).fail(function (json) {
+                    alert(json.msg);
+                });
+            }
+
         </script>
     </head>
     <body>
         <div class="container">
             <h2>Catálogo de Estrategias</h2>
-           <hr/>
+            <hr/>
             <ul class="nav nav-tabs">
                 <li class="active"><a data-toggle="tab" href="#nuevaEst">Nueva Estrategia</a></li>
                 <li><a data-toggle="tab" href="#consultaEst">Consulta Estrategias</a></li>
@@ -118,30 +189,30 @@ and open the template in the editor.
                     <form method="POST" id="frmInsertar">
                         <div class="form-group">
                             <label for="idobjetivo">Objetivo:</label>
-                            <select class="form-control" name="idobjetivo" id="idobjetivo">
+                            <select class="form-control select-objetivo" name="idobjetivo" id="idobjetivo">
                                 <option value="0">Seleccione...</option>
                             </select>
                         </div>
-                        
+
                         <div class="form-group">
                             <label for="claveestrategia">Clave Estrategia:</label>
                             <input class="form-control" type="text" name="claveestrategia" id="claveestrategia"/>
                         </div>
-                        
+
                         <div class="form-group">
                             <label for="estrategia">Estrategia:</label>
-                            <input class="form-control" type="text" name="estrategia" id="estrategia"/>
+                            <textarea class="form-control" rows="5" name="estrategia" id="estrategia"></textarea>
                         </div>
-                        
+
                         <div class="form-group">
                             <button type="submit" class="btn btn-success col-sm-offset-4 col-sm-4">
                                 <span class="glyphicon glyphicon-save"></span> Guardar
                             </button>
                         </div>
-                        
+
                     </form>
                 </div>
-                
+
                 <div id="consultaEst" class="tab-pane fade">
                     <br/>
                     <div class="table-responsive">
@@ -159,6 +230,49 @@ and open the template in the editor.
                     </div>
                 </div>
             </div>
+
+            <!-- Modal window -->
+            <div id="mdlActualizar" class="modal">
+                <div class="modal-dialog">
+
+                    <div class="modal-content">
+
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal"
+                                    aria-hidden="true">&times;</button>
+                            <h3 class="modal-title">Modificar Entidad</h3>
+                        </div>
+
+                        <div class="modal-body">
+                            <form class="col-lg-12" id="frmActualizar" method="POST">
+                                <div class="form-group">
+                                    <label for="idobjetivo2">Objetivo:</label>
+                                    <select class="form-control select-objetivo" name="idobjetivo2" id="idobjetivo2">
+                                        <option value="0">Seleccione...</option>
+                                    </select>
+                                    <input type="hidden" id="idestrategia" name="idestrategia"/>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="claveestrategia2">Clave Estrategia:</label>
+                                    <input class="form-control" type="text" name="claveestrategia2" id="claveestrategia2"/>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="estrategia2">Estrategia:</label>
+                                    <textarea class="form-control" rows="5" name="estrategia2" id="estrategia2"></textarea>
+                                </div>
+
+                            </form>
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="button" id="btnGuardar" class="btn btn-sm btn-primary">Guardar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </body>
 </html>

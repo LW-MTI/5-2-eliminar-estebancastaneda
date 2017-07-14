@@ -28,7 +28,10 @@ and open the template in the editor.
                                 var botones = "<button id='btnBorrar' class='btn btn-sm btn-danger' \n\
                                                             onClick=''>Borrar</button>";
                                 botones += "<button id='btnEditar' class='btn btn-sm btn-warning' \n\
-                                                        onClick=''>Editar</button>";
+                                                        onClick='showParticipacion(<idparticipacion>, <iddepe>, <idcat>)'>Editar</button>";
+                                botones = botones.replace('<idparticipacion>', r1['idparticipacion']);
+                                botones = botones.replace('<iddepe>', r1['iddepe'].iddepe);
+                                botones = botones.replace('<idcat>', r1['idcat'].idcat);
                                 return botones;
                             }
                         }
@@ -38,7 +41,7 @@ and open the template in the editor.
                 $('#frmInsertar').validate({
                     rules: {
                         iddepe: {required: true},
-                        idcat: {required: true}                    },
+                        idcat: {required: true}},
                     messages: {
                         iddepe: {required: 'La dependencia es requerida'},
                         idcat: {required: 'La categoría es requerida'}
@@ -67,11 +70,47 @@ and open the template in the editor.
                     }
                 });
 
+                $('#frmActualizar').validate({
+                    rules: {
+                        iddepe2: {required: true},
+                        idcat2: {required: true}},
+                    messages: {
+                        iddepe2: {required: 'La dependencia es requerida'},
+                        idcat2: {required: 'La categoría es requerida'}
+                    },
+                    highlight: function (element) {
+                        $(element).closest('.form-group').addClass('has-error');
+                    },
+                    unhighlight: function (element) {
+                        $(element).closest('.form-group').removeClass('has-error');
+                    },
+                    errorElement: 'span',
+                    errorClass: 'help-block',
+                    errorPlacement: function (error, element) {
+                        if (element.parent('.input-group'.length)) {
+                            error.insertAfter(element.parent());
+                        } else {
+                            error.insertAfter(element);
+                        }
+                    },
+                    submitHandler: function (form) {
+                        console.log('AdmonDepe - Formulario válido.');
+                        //alert('Formulario válido.');
+                        // llamar función para insertar registro
+                        updateParticipacion();
+                        return false;
+                    }
+                });
+
+                $('#btnGuardar').on('click', function () {
+                    $('#frmActualizar').submit();
+                });
+
                 /*Llenar select Dependencias(combo box)*/
                 $.getJSON('ConsultarDependencias', function (data) {
                     $.each(data, function (data, element) {
                         for (i = 0; i < element.length; i++) {
-                            $('#iddepe').append("<option value='" + element[i].iddepe + "'>" +
+                            $('.select-dependencia').append("<option value='" + element[i].iddepe + "'>" +
                                     element[i].nombredepe + " (" + element[i].clavedepe + ")</option>");
                         }
                     });
@@ -80,13 +119,13 @@ and open the template in the editor.
                 $.getJSON("ConsultarCategorias", function (data) {
                     $.each(data, function (key, element) {
                         for (i = 0; i < element.length; i++) {
-                            $('#idcat').append("<option value='" + element[i].idcat + "'>" +
+                            $('.select-categoria').append("<option value='" + element[i].idcat + "'>" +
                                     element[i].nombrecat + " (" + element[i].idplan.claveplan + ")</option>");
                         }
                     });
                 });
             });
-                    
+
             function newParticipacion() {
                 $.ajax({
                     url: "InsertarParticipacion",
@@ -106,8 +145,33 @@ and open the template in the editor.
                     alert(json.msg);
                 });
             }
-            
-</script>
+
+            function showParticipacion(idparticipacion, iddepe, idcat) {
+                $('#idparticipacion').val(idparticipacion);
+                $('#iddepe2').val(iddepe);
+                $('#idcat2').val(idcat);
+                $('#mdlActualizar').modal('show');
+            }
+
+            function updateParticipacion() {
+                $.ajax({
+                    url: "ActualizarParticipacion",
+                    type: "POST",
+                    data: {
+                        idparticipacion: $('#idparticipacion').val(),
+                        iddepe: $('#iddepe2').val(),
+                        idcat: $('#idcat2').val(),
+                    }
+                }).done(function (json) {
+                    alert(json.msg);
+                    $('#tbParticipacion').dataTable().api().ajax.reload();
+                    $('#mdlActualizar').modal('toggle');
+                }).fail(function (json) {
+                    alert(json.msg);
+                });
+            }
+
+        </script>
     </head>
     <body>
         <div class="container">
@@ -124,14 +188,14 @@ and open the template in the editor.
                     <form method="POST" id="frmInsertar">
                         <div class="form-group">
                             <label for="iddepe">Dependencia:</label>
-                            <select class="form-control" name="iddepe" id="iddepe">
+                            <select class="form-control select-dependencia" name="iddepe" id="iddepe">
                                 <option value="0">Seleccione...</option>
                             </select>
                         </div>
 
                         <div class="form-group">
                             <label for="idcat">Categoría:</label>
-                            <select class="form-control" name="idcat" id="idcat">
+                            <select class="form-control select-categoria" name="idcat" id="idcat">
                                 <option value="0">Seleccione...</option>
                             </select>
                         </div>
@@ -161,6 +225,46 @@ and open the template in the editor.
                     </div>
                 </div>
             </div>
+
+            <!-- Modal window -->
+            <div id="mdlActualizar" class="modal">
+                <div class="modal-dialog">
+
+                    <div class="modal-content">
+
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal"
+                                    aria-hidden="true">&times;</button>
+                            <h3 class="modal-title">Modificar Participación.</h3>
+                        </div>
+
+                        <div class="modal-body">
+                            <form class="col-lg-12" id="frmActualizar" method="POST">
+                                <div class="form-group">
+                                    <label for="iddepe2">Dependencia:</label>
+                                    <select class="form-control select-dependencia" name="iddepe2" id="iddepe2">
+                                        <option value="0">Seleccione...</option>
+                                    </select>
+                                    <input type="hidden" id="idparticipacion" name="participacion"/>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="idcat2">Categoría:</label>
+                                    <select class="form-control select-categoria" name="idcat2" id="idcat2">
+                                        <option value="0">Seleccione...</option>
+                                    </select>
+                                </div>
+
+                            </form>
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="button" id="btnGuardar" class="btn btn-sm btn-primary">Guardar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </body>
 </html>

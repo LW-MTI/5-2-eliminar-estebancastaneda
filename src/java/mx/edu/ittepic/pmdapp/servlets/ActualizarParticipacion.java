@@ -21,6 +21,7 @@ import mx.edu.ittepic.pmdapp.ejbs.EjbPmd;
  */
 @WebServlet(name = "ActualizarParticipacion", urlPatterns = {"/ActualizarParticipacion"})
 public class ActualizarParticipacion extends HttpServlet {
+
     @EJB
     private EjbPmd ejb;
 
@@ -41,7 +42,7 @@ public class ActualizarParticipacion extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet ActualizarParticipacion</title>");            
+            out.println("<title>Servlet ActualizarParticipacion</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet ActualizarParticipacion at " + request.getContextPath() + "</h1>");
@@ -81,16 +82,12 @@ public class ActualizarParticipacion extends HttpServlet {
         response.setContentType("application/json; charset=UTF-8");
         response.setHeader("Cache-Control", "no-store");
         PrintWriter p = response.getWriter();
-        
-        try{
-            int idparticipacion = Integer.parseInt(request.getParameter("idparticipacion"));
-            int iddepe = Integer.parseInt(request.getParameter("iddepe"));
-            int idcat = Integer.parseInt(request.getParameter("idcat"));
-            
-            p.write(ejb.actualizarParticipacion(idparticipacion, iddepe, idcat));
-        }catch(NumberFormatException e){
-            p.write("{msg:'ERROR: El ID de la Participación debe ser numérico.\n" + e.getMessage() + "'}");
-        }
+
+        String idparticipacion = request.getParameter("idparticipacion");
+        String iddepe = request.getParameter("iddepe");
+        String idcat = request.getParameter("idcat");
+
+        p.write(ejb.actualizarParticipacion(idparticipacion, iddepe, idcat));
     }
 
     /**

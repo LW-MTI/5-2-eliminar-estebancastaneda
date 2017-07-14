@@ -82,17 +82,13 @@ public class ActualizarEmpleado extends HttpServlet {
         response.setHeader("Cache-Control", "no-store");
         PrintWriter p = response.getWriter();
         
-        try{
-            int idemp = Integer.parseInt(request.getParameter("idemp"));
+            String idemp = request.getParameter("idemp");
             String paternoemp = request.getParameter("paternoemp");
             String maternoemp = request.getParameter("maternoemp");
             String nombreemp = request.getParameter("nombreemp");
-            int iddepto = Integer.parseInt(request.getParameter("iddepto"));
+            String iddepto = request.getParameter("iddepto");
             
             p.write(ejb.actualizarEmpleado(idemp, paternoemp, maternoemp, nombreemp, iddepto));
-        }catch(NumberFormatException e){
-            p.write("{msg:'ERROR: El ID del Empleado debe ser numérico.\n" + e.getMessage() + "'}");
-        }
     }
 
     /**

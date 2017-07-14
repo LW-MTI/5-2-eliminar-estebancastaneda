@@ -28,6 +28,20 @@ public class Util {
         return new SimpleDateFormat(formato).format(fecha);
     }
 
+    /*Completar cadena con caracter a un número de caracteres indicado*/
+    public static String rellenarCadena(String cadena, char caracter, int numCaracteres, boolean porIzq) {
+        String filled = new String(cadena);
+
+        for (int i = 0; i < (numCaracteres - cadena.length()); i++) {
+            if (porIzq) {
+                filled = caracter + filled;
+            } else {
+                filled = filled + caracter;
+            }
+        }
+        return filled;
+    }
+
     // convert from UTF-8 -> internal Java String format
     public static String convertFromUTF8(String s) {
         String out = null;

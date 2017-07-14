@@ -29,14 +29,18 @@ and open the template in the editor.
                                 //var r = r1['id'] + "-" + r1['name'];
                                 var botones = "<button id='btnBorrar' class='btn btn-sm btn-danger' \n\
                                                             onClick=''>Borrar</button>";
-                                botones += "<button id='btnEditar' class='btn btn-sm btn-warning' \n\
-                                                        onClick=''>Editar</button>";
+                                botones += "<button id='btnEditar' class='btn btn-sm btn-warning' onClick='showUsuario(<idusuario>, <idemp>, <iddepto>, \"<usuario>\", \"<contrasena>\")'>Editar</button>";
+                                botones = botones.replace('<idusuario>', r1['idusuario']);
+                                botones = botones.replace('<idemp>', r1['idemp'].idemp);
+                                botones = botones.replace('<iddepto>', r1['idemp'].iddepto.iddepto);
+                                botones = botones.replace('<usuario>', r1['usuario']);
+                                botones = botones.replace('<contrasena>', r1['contrasena']);
                                 return botones;
                             }
                         }
                     ]
                 });
-                
+
                 $('#frmInsertar').validate({
                     rules: {
                         idemp: {required: true},
@@ -71,18 +75,18 @@ and open the template in the editor.
                         return false;
                     }
                 });
-                
+
                 /*Llenar select principal (combo box)*/
                 $.getJSON('ConsultarDepartamentos', function (data) {
                     $.each(data, function (data, element) {
                         for (i = 0; i < element.length; i++) {
-                            $('#iddepto').append("<option value='" +
+                            $('.select-departamento').append("<option value='" +
                                     element[i].iddepto + "'>" +
                                     element[i].iddepe.clavedepe + " / " + element[i].nombredepto + "</option>");
                         }
                     });
                 });
-                
+
                 /*Llenar select dependiente (combo box)*/
                 $('#iddepto').change(function () {
                     $('#idemp').empty();
@@ -95,9 +99,22 @@ and open the template in the editor.
                         });
                     });
                 });
+
+                /*Llenar select dependiente (combo box)*/
+                $('#iddepto2').change(function () {
+                    $('#idemp2').empty();
+                    $.getJSON("ConsultarEmpleadosXIddepto", {iddepto: $('#iddepto2').val()}, function (data) {
+                        $.each(data, function (key, element) {
+                            for (i = 0; i < element.length; i++) {
+                                $('#idemp2').append("<option value='" + element[i].idemp + "'>" +
+                                        element[i].paternoemp + " " + element[i].maternoemp + " " + element[i].nombreemp + "</option>");
+                            }
+                        });
+                    });
+                });
                 
             });
-            
+
             function newUsuario() {
                 $.ajax({
                     url: "InsertarUsuario",
@@ -118,12 +135,24 @@ and open the template in the editor.
                 });
             }
             
+            function showUsuario(idusuario, idemp, iddepto, usuario, contrasena){
+                $('#idusuario').val(idusuario);
+                $('#iddepto2').val(iddepto);
+                $('#iddepto2').change();
+                $('#idemp2').val(idemp);
+                $('#usuario2').val(usuario);
+                $('#idemp2').val(idemp);
+                $('#contrasena2').val(contrasena);
+                $('#idemp2').val('1');
+                $('#mdlActualizar').modal('show');
+            }
+
         </script>
     </head>
     <body>
         <div class="container">
             <h2>Catálogo de Usuarios</h2>
-           <hr/>
+            <hr/>
             <ul class="nav nav-tabs">
                 <li class="active"><a data-toggle="tab" href="#nuevoUsu">Nuevo Usuario</a></li>
                 <li><a data-toggle="tab" href="#consultaUsu">Consulta Usuarios</a></li>
@@ -135,37 +164,37 @@ and open the template in the editor.
                     <form method="POST" id="frmInsertar">
                         <div class="form-group">
                             <label for="iddepto">Depen. / Depto:</label>
-                            <select class="form-control" name="iddepto" id="iddepto">
+                            <select class="form-control select-departamento" name="iddepto" id="iddepto">
                                 <option value="0">Seleccione...</option>
                             </select>
                         </div>
-                        
+
                         <div class="form-group">
                             <label for="idemp">Empleado:</label>
                             <select class="form-control" name="idemp" id="idemp">
                                 <option value="0">Seleccione...</option>
                             </select>
                         </div>
-                        
+
                         <div class="form-group">
                             <label for="usuario">Nombre Usuario:</label>
                             <input class="form-control" type="text" name="usuario" id="usuario"/>
                         </div>
-                        
+
                         <div class="form-group">
                             <label for="contrasena">Contraseña:</label>
                             <input class="form-control" type="password" name="contrasena" id="contrasena"/>
                         </div>
-                        
+
                         <div class="form-group">
                             <button type="submit" class="btn btn-success col-sm-offset-4 col-sm-4">
                                 <span class="glyphicon glyphicon-save"></span> Guardar
                             </button>
                         </div>
-                        
+
                     </form>
                 </div>
-                
+
                 <div id="consultaUsu" class="tab-pane fade">
                     <br/>
                     <div class="table-responsive">
@@ -184,6 +213,56 @@ and open the template in the editor.
                     </div>
                 </div>
             </div>
+
+            <!-- Modal window -->
+            <div id="mdlActualizar" class="modal">
+                <div class="modal-dialog">
+
+                    <div class="modal-content">
+
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal"
+                                    aria-hidden="true">&times;</button>
+                            <h3 class="modal-title">Modificar Entidad</h3>
+                        </div>
+
+                        <div class="modal-body">
+                            <form class="col-lg-12" id="frmActualizar" method="POST">
+                                <div class="form-group">
+                                    <label for="iddepto2">Depen. / Depto:</label>
+                                    <select class="form-control select-departamento" name="iddepto2" id="iddepto2">
+                                        <option value="0">Seleccione...</option>
+                                    </select>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="idemp2">Empleado:</label>
+                                    <select class="form-control" name="idemp2" id="idemp2">
+                                        <option value="0">Seleccione...</option>
+                                    </select>
+                                    <input type="hidden" id="idusuario" name="idusuario"/>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="usuario2">Nombre Usuario:</label>
+                                    <input class="form-control" type="text" name="usuario2" id="usuario2"/>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="contrasena2">Contraseña:</label>
+                                    <input class="form-control" type="password" name="contrasena2" id="contrasena2"/>
+                                </div>
+
+                            </form>
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="button" id="btnGuardar" class="btn btn-sm btn-primary">Guardar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </body>
 </html>

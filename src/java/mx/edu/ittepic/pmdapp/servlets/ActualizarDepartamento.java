@@ -83,17 +83,12 @@ public class ActualizarDepartamento extends HttpServlet {
         response.setHeader("Cache-Control", "no-store");
         PrintWriter p = response.getWriter();
 
-        try {
-            int iddepto = Integer.parseInt(request.getParameter("iddepto"));
+            String iddepto = request.getParameter("iddepto");
             String clavedepto = request.getParameter("clavedepto");
             String nombredepto = request.getParameter("nombredepto");
-            int iddepe = Integer.parseInt(request.getParameter("iddepe"));
+            String iddepe = request.getParameter("iddepe");
             
             p.write(ejb.actualizarDepartamento(iddepto, clavedepto, nombredepto, iddepe));
-        } catch (NumberFormatException e) {
-            p.write("{msg:'ERROR: El ID del Departamento debe ser numérico.\n" + e.getMessage() + "'}");
-        }
-
     }
 
     /**

@@ -80,24 +80,19 @@ public class InsertarAdministracion extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
+        
+        request.setCharacterEncoding("UTF-8");
         response.setContentType("application/json; charset=UTF-8");
         response.setHeader("Cache-Control", "no-store");
         PrintWriter p = response.getWriter();
 
-        try {
             String clave = request.getParameter("claveadmon");
             String nombre = request.getParameter("nombreadmon");
-            Date inicio = Util.strToDate(request.getParameter("fechaini"), "dd-MM-yyyy");
-            Date fin = Util.strToDate(request.getParameter("fechafin"), "dd-MM-yyyy");
-            int idmun = Integer.parseInt(request.getParameter("idmun"));
+            String fechaini = request.getParameter("fechaini");
+            String fechafin = request.getParameter("fechafin");
+            String idmun = request.getParameter("idmun");
             
-            p.write(ejb.insertarAdministracion(clave, nombre, inicio, fin, idmun));
-        } catch (NumberFormatException e) {
-            p.write("{msg:'ERROR: ID de Municipio debe ser numérico.\n" + e.getMessage() + "'}");
-        }catch(ParseException e){
-            p.write("{msg:'ERROR: Error al obtener la fecha inicial o final.\n" + e.getMessage() + "'}");
-        }
+            p.write(ejb.insertarAdministracion(clave, nombre, fechaini, fechafin, idmun));
     }
 
     /**

@@ -27,8 +27,10 @@ and open the template in the editor.
                                 //var r = r1['id'] + "-" + r1['name'];
                                 var botones = "<button id='btnBorrar' class='btn btn-sm btn-danger' \n\
                                                             onClick=''>Borrar</button>";
-                                botones += "<button id='btnEditar' class='btn btn-sm btn-warning' \n\
-                                                        onClick=''>Editar</button>";
+                                botones += "<button id='btnEditar' class='btn btn-sm btn-warning' onClick='showRol(<idrol>, \"<claverol>\", \"<nombrerol>\")'>Editar</button>";
+                                botones = botones.replace('<idrol>', r1['idrol']);
+                                botones = botones.replace('<claverol>', r1['claverol']);
+                                botones = botones.replace('<nombrerol>', r1['nombrerol']);
                                 return botones;
                             }
                         }
@@ -67,6 +69,43 @@ and open the template in the editor.
                         return false;
                     }
                 });
+
+                $('#frmActualizar').validate({
+                    rules: {
+                        claverol2: {required: true},
+                        nombrerol2: {required: true}
+                    },
+                    messages: {
+                        claverol2: {required: 'La clave es requerida'},
+                        nombrerol2: {required: 'El nombre es requerido'}
+                    },
+                    highlight: function (element) {
+                        $(element).closest('.form-group').addClass('has-error');
+                    },
+                    unhighlight: function (element) {
+                        $(element).closest('.form-group').removeClass('has-error');
+                    },
+                    errorElement: 'span',
+                    errorClass: 'help-block',
+                    errorPlacement: function (error, element) {
+                        if (element.parent('.input-group'.length)) {
+                            error.insertAfter(element.parent());
+                        } else {
+                            error.insertAfter(element);
+                        }
+                    },
+                    submitHandler: function (form) {
+                        console.log('Formulario válido.');
+                        //alert('Formulario válido.');
+                        // llamar función para insertar registro
+                        updateRol();
+                        return false;
+                    }
+                });
+
+                $('#btnGuardar').on('click', function () {
+                    $('#frmActualizar').submit();
+                });
             });
             function newRol() {
                 $.ajax({
@@ -85,12 +124,38 @@ and open the template in the editor.
                     alert(json.msg);
                 });
             }
+
+            function showRol(idrol, claverol, nombrerol) {
+                $('#idrol').val(idrol);
+                $('#claverol2').val(claverol);
+                $('#nombrerol2').val(nombrerol);
+                $('#mdlActualizar').modal('show');
+            }
+            
+            function updateRol() {
+                $.ajax({
+                    url: "ActualizarRol",
+                    type: "POST",
+                    data: {
+                        idrol: $('#idrol').val(),
+                        claverol: $('#claverol2').val(),
+                        nombrerol: $('#nombrerol2').val()
+                    }
+                }).done(function (json) {
+                    alert(json.msg);
+                    $('#tbRoles').dataTable().api().ajax.reload();
+                    $('#mdlActualizar').modal('toggle');
+                }).fail(function (json) {
+                    alert(json.msg);
+                });
+            }
+
         </script>
     </head>
     <body>
         <div class="container">
             <h2>Catálogo de Roles</h2>
-           <hr/>
+            <hr/>
             <ul class="nav nav-tabs">
                 <li class="active"><a data-toggle="tab" href="#nuevoRol">Nuevo Rol</a></li>
                 <li><a data-toggle="tab" href="#consultaRol">Consulta Roles</a></li>
@@ -100,25 +165,25 @@ and open the template in the editor.
                 <div id="nuevoRol" class="tab-pane fade in active">
                     <br/><br/>
                     <form method="POST" id="frmInsertar">
-                        <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                        <div class="form-group">
                             <label for="claverol">Clave Rol:</label>
                             <input class="form-control" type="text" name="claverol" id="claverol"/>
                         </div>
-                        
-                        <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
+
+                        <div class="form-group">
                             <label for="nombrerol">Nombre Rol:</label>
                             <input class="form-control" type="text" name="nombrerol" id="nombrerol"/>
                         </div>
-                        
+
                         <div class="form-group">
                             <button type="submit" class="btn btn-success col-sm-offset-4 col-sm-4">
                                 <span class="glyphicon glyphicon-save"></span> Guardar
                             </button>
                         </div>
-                        
+
                     </form>
                 </div>
-                
+
                 <div id="consultaRol" class="tab-pane fade">
                     <br/>
                     <div class="table-responsive">
@@ -135,6 +200,42 @@ and open the template in the editor.
                     </div>
                 </div>
             </div>
+
+            <!-- Modal window -->
+            <div id="mdlActualizar" class="modal">
+                <div class="modal-dialog">
+
+                    <div class="modal-content">
+
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal"
+                                    aria-hidden="true">&times;</button>
+                            <h3 class="modal-title">Modificar Entidad</h3>
+                        </div>
+
+                        <div class="modal-body">
+                            <form class="col-lg-12" id="frmActualizar" method="POST">
+                                <div class="form-group">
+                                    <label for="claverol2">Clave Rol:</label>
+                                    <input class="form-control" type="text" name="claverol2" id="claverol2"/>
+                                    <input type="hidden" id="idrol" name="idrol"/>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="nombrerol2">Nombre Rol:</label>
+                                    <input class="form-control" type="text" name="nombrerol2" id="nombrerol2"/>
+                                </div>
+
+                            </form>
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="button" id="btnGuardar" class="btn btn-sm btn-primary">Guardar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </body>
 </html>

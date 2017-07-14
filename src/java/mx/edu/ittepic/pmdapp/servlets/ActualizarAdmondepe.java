@@ -21,6 +21,7 @@ import mx.edu.ittepic.pmdapp.ejbs.EjbPmd;
  */
 @WebServlet(name = "ActualizarAdmondepe", urlPatterns = {"/ActualizarAdmondepe"})
 public class ActualizarAdmondepe extends HttpServlet {
+
     @EJB
     private EjbPmd ejb;
 
@@ -41,7 +42,7 @@ public class ActualizarAdmondepe extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet ActualizarAdmondepe</title>");            
+            out.println("<title>Servlet ActualizarAdmondepe</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet ActualizarAdmondepe at " + request.getContextPath() + "</h1>");
@@ -76,20 +77,15 @@ public class ActualizarAdmondepe extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+
         response.setContentType("application/json; charset=UTF-8");
         response.setHeader("Cache-Control", "no-store");
         PrintWriter p = response.getWriter();
-        
-        try{
-            int idadmondepe = Integer.parseInt(request.getParameter("idadmondepe"));
-            int idadmon = Integer.parseInt(request.getParameter("idadmon"));
-            int iddepe = Integer.parseInt(request.getParameter("iddepe"));
-            
-            p.write(ejb.actualizarAdmondepe(idadmondepe, idadmon, iddepe));
-        }catch(NumberFormatException e){
-            p.write("{msg:'ERROR: El ID del registro debe ser numérico.\n" + e.getMessage() + "'}");
-        }
+
+        String idadmondepe = request.getParameter("idadmondepe");
+        String idadmon = request.getParameter("idadmon");
+        String iddepe = request.getParameter("iddepe");
+        p.write(ejb.actualizarAdmondepe(idadmondepe, idadmon, iddepe));
     }
 
     /**

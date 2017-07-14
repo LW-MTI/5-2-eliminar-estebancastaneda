@@ -21,6 +21,7 @@ import mx.edu.ittepic.pmdapp.ejbs.EjbPmd;
  */
 @WebServlet(name = "ActualizarUsuariorol", urlPatterns = {"/ActualizarUsuariorol"})
 public class ActualizarUsuariorol extends HttpServlet {
+
     @EJB
     private EjbPmd ejb;
 
@@ -41,7 +42,7 @@ public class ActualizarUsuariorol extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet ActualizarUsuariorol</title>");            
+            out.println("<title>Servlet ActualizarUsuariorol</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet ActualizarUsuariorol at " + request.getContextPath() + "</h1>");
@@ -81,16 +82,12 @@ public class ActualizarUsuariorol extends HttpServlet {
         response.setContentType("application/json; charset=UTF-8");
         response.setHeader("Cache-Control", "no-store");
         PrintWriter p = response.getWriter();
-        
-        try{
-            int idusuariorol = Integer.parseInt(request.getParameter("idusuariorol"));
-            int idusuario = Integer.parseInt(request.getParameter("idusuario"));
-            int idrol = Integer.parseInt(request.getParameter("idrol"));
-            
-            p.write(ejb.actualizarUsuariorol(idusuariorol, idusuario, idrol));
-        }catch(NumberFormatException e){
-            p.write("{msg:'ERROR: El ID del Usuario -> Rol debe ser numérico.\n" + e.getMessage() + "'}");
-        }
+
+        String idusuariorol = request.getParameter("idusuariorol");
+        String idusuario = request.getParameter("idusuario");
+        String idrol = request.getParameter("idrol");
+
+        p.write(ejb.actualizarUsuariorol(idusuariorol, idusuario, idrol));
     }
 
     /**
